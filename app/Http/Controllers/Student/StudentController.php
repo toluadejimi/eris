@@ -99,6 +99,7 @@ class StudentController extends CollegeBaseController
 
     public function registration()
     {
+
         $data = [];
         $data['blank_ins'] = new Student();
 
@@ -112,6 +113,7 @@ class StudentController extends CollegeBaseController
 
     public function register(AddValidation $request)
     {
+    
         if(!isset($request->reg_no)){
             //RegNo Generator Start
             $oldStudent = Student::where('faculty',$request->faculty)->orderBy('id', 'DESC')->first();
@@ -1382,6 +1384,8 @@ class StudentController extends CollegeBaseController
                 "extra_info"            => $row['extra_info'],
                 'created_by'            => auth()->user()->id
             ]);
+
+            dd($student);
 
             if($student){
                 //address info

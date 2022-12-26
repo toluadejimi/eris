@@ -30,7 +30,7 @@
                         <div class="align-right">
                         <a class="{!! request()->is('student/import*')?'btn-success':'btn-primary' !!} btn-sm" href="{{ route('student.import') }}"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Bulk Student Registration</a>
                         </div>
-                        {!! Form::open(['route' => $base_route.'.register', 'method' => 'POST', 'class' => 'form-horizontal',
+                        {!! Form::open(['route' => $base_route.'.register','method' => 'POST','class' => 'form-horizontal',
                         'id' => 'validation-form', "enctype" => "multipart/form-data"]) !!}
 
                         @include($view_path.'.registration.includes.form')

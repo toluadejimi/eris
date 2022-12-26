@@ -161,45 +161,45 @@ class CollegeBaseController extends Controller
 
     protected function profileImageSrc()
     {
-        if(auth()->user()->hasRole('student')) {
-            $id = auth()->user()->hook_id;
-            $student = Student::select('student_image')->find($id);
-            if($student->student_image){
-                $profileImageSrc = 'images/studentProfile/'.$student->student_image;
-            }else{
-                $profileImageSrc = null;
-            }
+        // if(auth()->user()->ro('student')) {
+        //     $id = auth()->user()->hook_id;
+        //     $student = Student::select('student_image')->find($id);
+        //     if($student->student_image){
+        //         $profileImageSrc = 'images/studentProfile/'.$student->student_image;
+        //     }else{
+        //         $profileImageSrc = null;
+        //     }
 
-        }elseif(auth()->user()->hasRole('guardian')){
-            $id = auth()->user()->hook_id;
-            $guardian = GuardianDetail::select('guardian_image')->find($id);
-            if($guardian->guardian_image){
-                $profileImageSrc = 'images/parents/'.$guardian->guardian_image;
-            }else{
-                $profileImageSrc = null;
-            }
-        }elseif(auth()->user()->hasRole('staff')){
-            $id = auth()->user()->hook_id;
-            $staff = Staff::select('staff_image')->find($id);
-            if($staff->staff_image){
-                $profileImageSrc = 'images/staff/'.$staff->staff_image;
-            }else{
-                $profileImageSrc = null;
-            }
+        // }elseif(auth()->user()->hasRole('guardian')){
+        //     $id = auth()->user()->hook_id;
+        //     $guardian = GuardianDetail::select('guardian_image')->find($id);
+        //     if($guardian->guardian_image){
+        //         $profileImageSrc = 'images/parents/'.$guardian->guardian_image;
+        //     }else{
+        //         $profileImageSrc = null;
+        //     }
+        // }elseif(auth()->user()->hasRole('staff')){
+        //     $id = auth()->user()->hook_id;
+        //     $staff = Staff::select('staff_image')->find($id);
+        //     if($staff->staff_image){
+        //         $profileImageSrc = 'images/staff/'.$staff->staff_image;
+        //     }else{
+        //         $profileImageSrc = null;
+        //     }
 
-        }else{
-            $id = auth()->user()->id;
-            $image = User::select('profile_image')->find($id);
-            if($image->profile_image){
-                $profileImageSrc = 'images/user/'.$image->profile_image;
-            }else{
-                $profileImageSrc = null;
-            }
+        // }else{
+        //     $id = auth()->user()->id;
+        //     $image = User::select('profile_image')->find($id);
+        //     if($image->profile_image){
+        //         $profileImageSrc = 'images/user/'.$image->profile_image;
+        //     }else{
+        //         $profileImageSrc = null;
+        //     }
 
-        }
+        // }
 
 
-        return $profileImageSrc;
+        // return $profileImageSrc;
 
     }
 

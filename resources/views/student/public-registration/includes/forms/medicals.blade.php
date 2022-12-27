@@ -97,6 +97,68 @@
 
 </div>
 
+<hr class="hr-8 mt-3">
+
+<div class="space-10"></div>
+
+<div class="form-group center">
+
+   
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-12 mt-5 mb-3">
+        <h5 class=""> Teahers will not let children go with any person unknown to them. Therefore, of anyone apart
+            from yourself is collecting your children,<br> please provide the following information and submit
+            photograph of each person.</h5>
+    </div>
+
+    {!! Form::label('pick_child', 'Name', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-4">
+        {!! Form::text('pick_child', null, [
+            'placeholder' => 'Enter full name',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'pick_child'])
+    </div>
+
+    {!! Form::label('pick_phone', 'Daytime Phone No', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('pick_phone', null, [
+            'placeholder' => 'Enter phone number',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'pick_phone'])
+    </div>
+
+</div>
+
+
+<div class="form-group">
+
+    {!! Form::label('pick_child_2', 'Name', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-4">
+        {!! Form::text('pick_child_2', null, [
+            'placeholder' => 'Enter full name',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'pick_child_2'])
+    </div>
+
+    {!! Form::label('pick_phone_2', 'Daytime Phone No', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-4">
+        {!! Form::text('pick_phone_2', null, [
+            'placeholder' => 'Enter phone number',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'pick_phone_2'])
+    </div>
+
+
+
+</div>
+
 
 <div class="form-group center">
 
@@ -398,7 +460,7 @@
         'class' => 'col-sm-4 control-label',
     ]) !!}
     <div class="col-sm-3">
-        {!! Form::text('dietary_needs', null, ['placeholder' => 'Enter Child name', 'class' => 'form-control ']) !!}
+        {!! Form::text('child_name_consent', null, ['placeholder' => 'Enter Child name', 'class' => 'form-control ']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'child_name_consent'])
     </div>
 

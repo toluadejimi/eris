@@ -287,7 +287,7 @@
     <div class="col-sm-2">
         {!! Form::text('year_group', null, [
             'placeholder' => 'Year Group',
-            'class' => 'form-control border-form date-picker input-mask-date',
+            'class' => 'form-control',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'year_group'])
     </div>
@@ -319,7 +319,7 @@
     <div class="col-sm-2">
         {!! Form::text('year_group_2', null, [
             'placeholder' => 'Year Group',
-            'class' => 'form-control border-form date-picker input-mask-date',
+            'class' => 'form-control border-form',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'year_group_2'])
     </div>
@@ -351,7 +351,7 @@
     <div class="col-sm-2">
         {!! Form::text('year_group_3', null, [
             'placeholder' => 'Year Group',
-            'class' => 'form-control border-form date-picker input-mask-date',
+            'class' => 'form-control',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'year_group_3'])
     </div>

@@ -376,7 +376,7 @@
             'placeholder' => 'e.g: English, Igbo',
             'class' => 'form-control border-form',
         ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'name_of_scholar_2'])
+        @include('includes.form_fields_validation_message', ['name' => 'mother_tongue'])
     </div>
 
 

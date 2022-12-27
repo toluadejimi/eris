@@ -86,10 +86,7 @@ class StudentPublicController extends CollegeBaseController
         ]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->with('error', 'Email Registred has been taken, use another email.');
         }
 
         $semSec = FacultySemester::where('faculty_id',$request->faculty)->first()->semester_id;
@@ -97,28 +94,32 @@ class StudentPublicController extends CollegeBaseController
         if (!$semSec)
             return parent::invalidRequest();
 
-        //RegNo Generator Start
-            $oldStudent = Student::where('faculty',$request->faculty)->orderBy('id', 'desc')->first();
-            if (!$oldStudent){
-                $sn = 1;
-            }else{
-                $oldReg = intval(substr($oldStudent->reg_no,-4));
-                $sn = $oldReg + 1;
-            }
+        // //RegNo Generator Start
+        //     $oldStudent = Student::where('faculty',$request->faculty)->orderBy('id', 'desc')->first();
+        //     if (!$oldStudent){
+        //         $sn = 1;
+        //     }else{
+        //         $oldReg = intval(substr($oldStudent->reg_no,-4));
+        //         $sn = $oldReg + 1;
+        //     }
 
-            $sn = substr("00000{$sn}", - 4);
-            $year = intval(substr(Year::where('active_status','=',1)->first()->title,-2));
-            $faculty = Faculty::find(intval($request->faculty));
-            $facultyCode = $faculty->faculty_code;
-            //$regNum = $faculty.'-'.$year.'-'.$sn;
-            $regNum = $facultyCode.$year.$sn;
-            $request->request->add(['reg_no' => $regNum]);
-        //reg generator End
+        //     $sn = substr("00000{$sn}", - 4);
+        //     $year = intval(substr(Year::where('active_status','=',1)->first()->title,-2));
+        //     $faculty = Faculty::find(intval($request->faculty));
+        //     $facultyCode = $faculty->faculty_code;
+        //     //$regNum = $faculty.'-'.$year.'-'.$sn;
+        //     $regNum = $facultyCode.$year.$sn;
+        //     $request->request->add(['reg_no' => $regNum]);
+        // //reg generator End
+
+
+        $regNum = $request->father_mobile_1;
+        $request->request->add(['reg_no' => $regNum]);
 
         $year = Year::where('active_status','=',1)->first()->title;
         //$regNum = $year.$request->faculty.$oldStudent->id;
         $request->request->add(['created_by' => 0]);
-        //$request->request->add(['reg_no' => $regNum]);
+        $request->request->add(['reg_no' => $regNum]);
         $request->request->add(['semester' => $semSec?$semSec:0]);
         $request->request->add(['academic_status' => 8]);
         $request->request->add(['status' => 'in-active']);
@@ -140,6 +141,8 @@ class StudentPublicController extends CollegeBaseController
         $request->request->add(['role_id' => 6]);
         $request->request->add(['hook_id' => $student->id]);
         $request->request->add(['name' => $name]);
+        $regNum = $request->mobile_1;
+        $request->request->add(['reg_id' => $regNum]);
         $request->request->add(['password' => bcrypt($request->get('password'))]);
         $request->request->add(['status' => 'active']);
 

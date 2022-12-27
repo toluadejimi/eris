@@ -25,7 +25,7 @@ class User extends Authenticatable implements AuditableContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','last_login_at','last_login_ip', 'profile_image', 'contact_number', 'address',  'role_id', 'hook_id', 'status'
+        'name', 'email', 'password','last_login_at','last_login_ip', 'profile_image', 'contact_number', 'address', 'reg_id',  'role_id', 'hook_id', 'status'
     ];
 
     /**

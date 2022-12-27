@@ -2,7 +2,7 @@
 <div class="tabbable">
     <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
         <li class="active">
-            <a data-toggle="tab" href="#registrationinfo"><i class="fa fa-user bigger-110"></i> General Information</a>
+            <a data-toggle="tab" href="#registrationinfo"><i class="fa fa-user bigger-110"></i> Scholar's Information</a>
         </li>
       {{--  <li>
             <a data-toggle="tab" href="#academicInfo"><i class="fa fa-certificate bigger-110"></i> Academic Info</a>
@@ -16,15 +16,16 @@
         <div id="registrationinfo" class="tab-pane active">
             @include('student.public-registration.includes.forms.generalinfo')
             @include('student.public-registration.includes.forms.parent')
+            @include('student.public-registration.includes.forms.medicals')
         </div>
 
-        {{--<div id="academicInfo" class="tab-pane">
-            @include('student.public-registration.includes.forms.academicinfo')
-        </div>
+        {{-- <div id="academicInfo" class="tab-pane active">
+           
+        </div> --}}
 
-        <div id="profileimage" class="tab-pane">
+        {{-- <div id="profileimage" class="tab-pane">
             @include('student.public-registration.includes.forms.profileimage')
-        </div>--}}
+        </div> --}}
     </div>
 
     <div class="space-4"></div>

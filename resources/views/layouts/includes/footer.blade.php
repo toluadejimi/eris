@@ -6,7 +6,7 @@
                         @if(isset($generalSetting->copyright))
                             {!! $generalSetting->copyright !!} | {{$generalSetting->buyer}}
                         @else
-                            <a href="http://businesswithtechnology.com" target="_blank">©BusinessWithTechnology</a>
+                            <a href="http://businesswithtechnology.com" target="_blank">©ERIS</a>
                         @endif
                         {{--[ License Info :- User : {{isset($generalSetting->buyer)?$generalSetting->buyer:''}} | Expired On : {{isset($generalSetting->license)?\Carbon\Carbon::parse($generalSetting->license)->format('d-m-Y'):''}}| Support Until : {{isset($generalSetting->support)?$generalSetting->support:''}}]--}}
                     </span>

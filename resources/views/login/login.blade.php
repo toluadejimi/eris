@@ -7,7 +7,7 @@
         @if(isset($data['general_setting']->institute))
             {{$data['general_setting']->institute}}
         @else
-            IMS | BusinessWithTechnology
+ERIS
         @endif
     </title>
 
@@ -105,7 +105,7 @@
                         @endif
                             <br>
                             <span class="green" style="font-size: 17pt;">
-                                Information Management System
+                                ERIS School Management System
                             </span>
                         </h1>
                     </div>
@@ -350,7 +350,7 @@
                         @if(isset($data['general_setting']->copyright))
                         {!! $data['general_setting']->copyright !!}
                         @else
-                            <a href="http://businesswithtechnology.com" target="_blank">©BusinessWithTechnology</a>
+                            <a href="http://businesswithtechnology.com" target="_blank">©ERIS</a>
                         @endif
                     </h5>
 

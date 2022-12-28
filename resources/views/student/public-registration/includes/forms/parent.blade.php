@@ -234,7 +234,7 @@
     <div class="form-group">
         {!! Form::label('guardian_mobile_1', 'Mobile 1', ['class' => 'col-sm-1 control-label']) !!}
         <div class="col-sm-2">
-            {!! Form::text('guardian_mobile_1', null, ['class' => 'form-control border-form input-mask-mobile', 'required']) !!}
+            {!! Form::text('guardian_mobile_1', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
             @include('includes.form_fields_validation_message', ['name' => 'guardian_mobile_1'])
         </div>
 

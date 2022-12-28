@@ -113,13 +113,13 @@ class StudentPublicController extends CollegeBaseController
         // //reg generator End
 
 
-        $regNum = $request->father_mobile_1;
-        $request->request->add(['reg_no' => $regNum]);
+        //$regNum = $request->father_mobile_1;
+        //$request->request->add(['reg_no' => $regNum]);
 
         $year = Year::where('active_status','=',1)->first()->title;
         //$regNum = $year.$request->faculty.$oldStudent->id;
         $request->request->add(['created_by' => 0]);
-        $request->request->add(['reg_no' => $regNum]);
+        //$request->request->add(['reg_no' => $regNum]);
         $request->request->add(['semester' => $semSec?$semSec:0]);
         $request->request->add(['academic_status' => 8]);
         $request->request->add(['status' => 'in-active']);
@@ -142,7 +142,7 @@ class StudentPublicController extends CollegeBaseController
         $request->request->add(['hook_id' => $student->id]);
         $request->request->add(['name' => $name]);
         $regNum = $request->mobile_1;
-        $request->request->add(['reg_id' => $regNum]);
+        $request->request->add(['reg_id' => $request->reg_no]);
         $request->request->add(['password' => bcrypt($request->get('password'))]);
         $request->request->add(['status' => 'active']);
 
@@ -155,7 +155,7 @@ class StudentPublicController extends CollegeBaseController
 
         $user->userRole()->sync($roles);
 
-        $PublishMessage = 'Dear, ' . $name.' Thank you for register with us. Your Registration Number is: '.$regNum.' Please Login and Edit your others info on Profile Section.' ;
+        //$PublishMessage = 'Dear, ' . $name.' Thank you for register with us. Your Registration Number is: '.$regNum.' Please Login and Edit your others info on Profile Section.' ;
 
         /*SMS & Email Alert*/
         // $alert = AlertSetting::select('sms','email','subject','template')->where('event','=','StudentRegistration')->first();

@@ -36,12 +36,23 @@
 
 <div class="form-group">
     {!! Form::label('reg_date', 'Date', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         {!! Form::text('reg_date', null, [
             'class' => 'form-control date-picker border-form input-mask-date',
             'readonly',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'reg_date'])
+    </div>
+
+
+    {!! Form::label('reg_no', 'REG NO', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('reg_no', null, [
+            'placeholder' => 'Reg No',
+            'class' => 'form-control border-form upper',
+            'required',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'reg_no'])
     </div>
 
 
@@ -79,7 +90,7 @@
 
 
     {!! Form::label('gender', 'Gender', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         {!! Form::select('gender', ['' => '', 'MALE' => 'MALE', 'FEMALE' => 'FEMALE', 'OTHER' => 'OTHER'], null, [
             'class' => 'form-control border-form',
             'required',

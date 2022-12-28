@@ -73,8 +73,8 @@
             f.guardian_first_name.value = f.father_first_name.value;
             f.guardian_middle_name.value = f.father_middle_name.value;
             f.guardian_last_name.value = f.father_last_name.value;
-            f.guardian_last_name.value = f.father_email.value;
-            f.guardian_last_name.value = f.father_mobile_1.value;
+            f.guardian_email.value = f.father_email.value;
+            f.guardian_mobile_1.value = f.father_mobile_1.value;
             f.guardian_relation.value = "FATHER";
             f.mother_as_guardian.checked == false;
             f.other_guardian.checked == false;
@@ -87,8 +87,8 @@
         if(f.guardian_is.value == 'mother_as_guardian') {
             f.guardian_first_name.value = f.mother_first_name.value;
             f.guardian_middle_name.value = f.mother_middle_name.value;
-            f.guardian_last_name.value = f.father_email.value;
-            f.guardian_last_name.value = f.mother_mobile_1.value;
+            f.guardian_email.value = f.father_email.value;
+            f.guardian_mobile_1.value = f.mother_mobile_1.value;
             f.guardian_last_name.value = f.mother_last_name.value;
             f.guardian_relation.value = "MOTHER";
             f.father_as_guardian.checked == false;

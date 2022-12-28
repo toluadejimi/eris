@@ -313,7 +313,7 @@
 
     <div class="col-sm-12 mt-5">
         <div class="label label-warning arrowed-in arrowed-right arrowed">EMERGRNCY CONTACT (In Case Parent/Guardiancs
-            cannot br contacted)</div>
+            cannot be contacted)</div>
     </div>
 
 </div>
@@ -324,19 +324,21 @@
 
     {!! Form::label('relative_name', 'RELATIVE/FRIEND NAME', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-2">
-        {!! Form::text('reletive_name', null, ['class' => 'form-control ']) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'reletive_name'])
+        {!! Form::text('relative_name', null, ['class' => 'form-control ']) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'relative_name'])
     </div>
 
-
-    {!! Form::label('hospital_doctor_name', 'FAMILY HOSPITAL/DOCTOR NAME', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('relative_no', 'RELATIVE PHONE NUMBER', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-2">
-        {!! Form::text('hospital_doctor_name', null, ['class' => 'form-control ']) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'hospital_doctor_name'])
+        {!! Form::text('relative_no', null, ['class' => 'form-control ']) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'relative_no'])
     </div>
 
 
-    {!! Form::label('doc_phone', 'PHONE NO', ['class' => 'col-sm-1 control-label']) !!}
+   
+
+
+    {!! Form::label('doc_phone', 'DOCTOR PHONE NO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-2">
         {!! Form::text('doc_phone', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'doc_phone'])
@@ -350,9 +352,15 @@
 
 
     {!! Form::label('hospital_address', 'OFFICE ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-10">
+    <div class="col-sm-6">
         {!! Form::text('hospital_address', null, ['class' => 'form-control ']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'hospital_address'])
+    </div>
+
+    {!! Form::label('hospital_doctor_name', 'FAMILY HOSPITAL/DOCTOR NAME', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('hospital_doctor_name', null, ['class' => 'form-control ']) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'hospital_doctor_name'])
     </div>
 
     <hr class="hr-8">

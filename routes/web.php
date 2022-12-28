@@ -11,6 +11,17 @@
 |
 */
 
+use App\Http\Controllers\Student\StudentPublicController;
+use Illuminate\Support\Facades\Route;
+
+
+
+
+
+
+
+Route::get('public-registration-success', [StudentPublicController::class, 'success' ]);
+
 /*Auth Routes*/
 Auth::routes();
 
@@ -238,10 +249,21 @@ Route::group(['prefix' => 'student/',                                   'as' => 
 
     Route::post('public-registration.register',       ['as' => '.public-registration.register',                       'uses' => 'StudentPublicController@register']);
 
+
 });
 
 //Public Registration- here
 Route::get('public-registration',                                   ['as' => 'public-registration.registration',                        'uses' => 'Student\StudentPublicController@registration']);
+
+
+
+
+
+
+
+
+
+
 
 /*Students Guardian Grouping*/
 Route::group(['prefix' => 'guardian/',                                   'as' => 'guardian',                                     'namespace' => 'Student\\'], function () {

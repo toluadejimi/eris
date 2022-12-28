@@ -83,6 +83,14 @@
    
 </div>
 
+<div class="form-group">
+    {!! Form::label('father_main_image', 'Father Picture', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-6">
+        {!! Form::file('father_main_image', ["class" => "form-control border-form"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'father_main_image'])
+    </div>
+</div>
+
 
 
 <div class="form-group">
@@ -148,6 +156,8 @@
    
 </div>
 
+
+
 <div class="form-group">
    
 
@@ -180,6 +190,19 @@
     </div>
    
 </div>
+
+<div class="form-group">
+    {!! Form::label('mother_main_image', 'Mother Picture', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-6">
+        {!! Form::file('mother_main_image', ["class" => "form-control border-form"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'mother_main_image'])
+    </div>
+</div>
+
+
+
+
+
 
 <hr class="hr-8">
 <div class="label label-warning arrowed-in arrowed-right arrowed">Guardian's Detail</div>
@@ -259,5 +282,13 @@
             {!! Form::text('guardian_address', null, ["class" => "form-control border-form upper", "required"]) !!}
             @include('includes.form_fields_validation_message', ['name' => 'guardian_address'])
         </div> --}}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('guardian_main_image', 'Other Guardian Picture', ['class' => 'col-sm-2 control-label']) !!}
+        <div class="col-sm-6">
+            {!! Form::file('guardian_main_image', ["class" => "form-control border-form"]) !!}
+            @include('includes.form_fields_validation_message', ['name' => 'guardian_main_image'])
+        </div>
     </div>
 </div>

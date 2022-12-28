@@ -30,6 +30,10 @@
     <!-- text fonts -->
     <link rel="stylesheet" href="{{ asset('assets/css/fonts.googleapis.com.css') }}" />
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+
     <!-- ace styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/ace.min.css') }}" class="ace-main-stylesheet"
         id="main-ace-style" />
@@ -146,6 +150,20 @@
                                             APPLICATION FOR ADMISSION</h3>
                                     </div>
                                 </div>
+
+
+
+                                @if (session()->has('message'))
+                                    <div class="alert alert-success">
+                                        {{ session()->get('message') }}
+                                    </div>
+                                @endif
+                                @if (session()->has('error'))
+                                    <div class="alert alert-danger">
+                                        {{ session()->get('error') }}
+                                    </div>
+                                @endif
+
                             </div>
                             <div class="clearfix hidden-print align-right">
                                 <div class="easy-link-menu">
@@ -158,25 +176,6 @@
                             @include('includes.validation_error_messages')
                             @include('includes.flash_messages')
 
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            @if (session()->has('message'))
-                                <div class="alert alert-success">
-                                    {{ session()->get('message') }}
-                                </div>
-                            @endif
-                            @if (session()->has('error'))
-                                <div class="alert alert-danger">
-                                    {{ session()->get('error') }}
-                                </div>
-                            @endif
 
 
                             {!! Form::open([

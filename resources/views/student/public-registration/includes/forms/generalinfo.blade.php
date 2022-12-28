@@ -195,6 +195,15 @@
 </div>
 
 
+<div class="form-group">
+    {!! Form::label('student_main_image', 'Scholar Profile Picture', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-4">
+        {!! Form::file('student_main_image', ["class" => "form-control border-form"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'student_main_image'])
+    </div>
+</div>
+
+
 
 
 <div class="form-group">

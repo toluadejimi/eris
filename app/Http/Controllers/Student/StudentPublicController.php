@@ -158,35 +158,37 @@ class StudentPublicController extends CollegeBaseController
         $PublishMessage = 'Dear, ' . $name.' Thank you for register with us. Your Registration Number is: '.$regNum.' Please Login and Edit your others info on Profile Section.' ;
 
         /*SMS & Email Alert*/
-        $alert = AlertSetting::select('sms','email','subject','template')->where('event','=','StudentRegistration')->first();
-        if(!$alert){
+        // $alert = AlertSetting::select('sms','email','subject','template')->where('event','=','StudentRegistration')->first();
+        // if(!$alert){
 
-        }else{
-            //Dear {{first_name}}, you are successfully registered in our institution with RegNo.{{reg_no}}. Thank You.
-            $subject = $alert->subject;
-            $message = $alert->template;
-            $message = str_replace('{{first_name}}', $student->first_name, $message );
-            $message = str_replace('{{reg_no}}', $student->reg_no, $message );
-            $emailIds[] = $student->email;
-            $contactNumbers[] = $addressinfo->mobile_1;
+        // }else{
+        //     //Dear {{first_name}}, you are successfully registered in our institution with RegNo.{{reg_no}}. Thank You.
+        //     $subject = $alert->subject;
+        //     $message = $alert->template;
+        //     $message = str_replace('{{first_name}}', $student->first_name, $message );
+        //     $message = str_replace('{{reg_no}}', $student->reg_no, $message );
+        //     $emailIds[] = $student->email;
+        //     $contactNumbers[] = $addressinfo->mobile_1;
 
-            /*Now Send SMS On First Mobile Number*/
-            if($alert->sms == 1){
-                $contactNumbers = $this->contactFilter($contactNumbers);
-                $smssuccess = $this->sendSMS($contactNumbers,$message);
-            }
+        //     /*Now Send SMS On First Mobile Number*/
+        //     if($alert->sms == 1){
+        //         $contactNumbers = $this->contactFilter($contactNumbers);
+        //         $smssuccess = $this->sendSMS($contactNumbers,$message);
+        //     }
 
-            /*Now Send Email With Subject*/
-            if($alert->email == 1){
-                $emailIds = $this->emailFilter($emailIds);
-                /*sending email*/
-                $emailSuccess = $this->sendEmail($emailIds, $subject, $message);
-            }
-        }
+        //     /*Now Send Email With Subject*/
+        //     if($alert->email == 1){
+        //         $emailIds = $this->emailFilter($emailIds);
+        //         /*sending email*/
+        //         $emailSuccess = $this->sendEmail($emailIds, $subject, $message);
+        //     }
+        // }
 
         //end sms email
-        $request->session()->flash($this->message_success, $PublishMessage);
-        return redirect()->route('login');
+        $request->session()->flash($this->message_success, $this->panel. ' Created Successfully.');
+
+       // $request->session()->flash($this->message_success, $PublishMessage);
+       return back();
     }
 
     public function edit(Request $request, $id)

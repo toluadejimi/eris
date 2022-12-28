@@ -5,7 +5,7 @@ namespace App\Models;
 class Student extends BaseModel
 {
     protected $fillable = ['created_by',  'pick_phone_2',  'pick_phone', 'pick_child', 'pick_child_2', 'body_max', 'child_name_consent', 'physical_activities_reasons', 'physical_activities', 'dietary_needs', 'hospital_address', 'medications', 'program_condition', 'other_information', 'weight', 'health_issues', 'other_health_issues', 'photo_publicity', 'emergency_relationship', 'challenges', 'hear_about_us', 'emergency_name', 'emergency_contact', 'last_updated_by', 'name_of_scholar_3', 'date_of_scholar_birth_3', 'reg_no', 'reg_date', 'university_reg', 'state_of_origin', 'lga', 'to_date_2', 'name_of_school', 'date_of_scholar_birth', 'year_group', 'name_of_scholar_2', 'date_of_scholar_birth_2', 'year_group_2', '', 'from_date', 'from_date_2', 'name_of_scholar', 'to_date', 'name_of_school_2', 'faculty', 'semester', 'batch',
-        'academic_status', 'first_name', 'middle_name', 'last_name', 'height', 'date_of_birth', 'gender', 'blood_group', 'nationality',
+        'academic_status', 'first_name', 'genotype', 'emergency_name_2', 'emergency_relationship_2', 'emergency_contact_2', 'middle_name', 'last_name', 'height', 'date_of_birth', 'gender', 'blood_group', 'nationality',
         'religion', 'caste', 'mother_tongue', 'email', 'extra_info', 'student_image', 'student_signature', 'status'];
 
     public function address()

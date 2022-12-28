@@ -51,7 +51,7 @@
         <li class="{!! request()->is('user-staff/subject*')?'active':'' !!} hover">
             <a href="{{ route('user-staff.subject') }}">
                 <i class="menu-icon  fa fa-list-alt" aria-hidden="true"></i>
-                <span class="menu-text"> Course </span>
+                <span class="menu-text"> Subject </span>
             </a>
             <b class="arrow"></b>
         </li>

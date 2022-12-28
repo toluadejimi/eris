@@ -15,7 +15,7 @@
                 <thead>
                 <tr>
                     <th width="5%">S.N.</th>
-                    <th>Course Title</th>
+                    <th>Subject Title</th>
                     <th width="10%">Marking</th>
                     <th width="30%">Info</th>
                 </tr>

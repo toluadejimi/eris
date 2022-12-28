@@ -1,52 +1,40 @@
 <span class="label label-info arrowed-in arrowed-right arrowed responsive">Red mark input are required. </span>
+<div class="label label-warning arrowed-in arrowed-right arrowed">Scholar's Information</div>
+
 <hr class="hr-16">
 <div class="form-group">
-    {!! Form::label('reg_no', 'REG.NO.', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-2">
+    {!! Form::label('reg_no', 'REG.NO.', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-1">
         {!! Form::text('reg_no', null, ["placeholder" => "", "class" => "form-control border-form input-mask-registration", "disabled"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'reg_no'])
     </div>
 
     {!! Form::label('reg_date', 'Date of Admission', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         {!! Form::text('reg_date', null, ["class" => "form-control date-picker border-form input-mask-date", "disabled"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'reg_date'])
     </div>
 
-    {!! Form::label('university_reg', 'UNIVERSITY REG. NO.', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::text('university_reg', null, ["placeholder" => "", "class" => "form-control border-form", "disabled"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'university_reg'])
+    {!! Form::label('state_of_origin', 'STATE OF ORIGIN', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('state_of_origin', null, ["placeholder" => "", "class" => "form-control border-form", "disabled"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'state_of_origin'])
+    </div>
+
+    <label class="col-sm-1 control-label">LGA</label>
+    <div class="col-sm-1">
+        {!! Form::text('lga', null, ["placeholder" => "", "class" => "form-control border-form", "disabled"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'lga'])
+    </div>
+
+    <label class="col-sm-1 control-label">Gender</label>
+    <div class="col-sm-1">
+        {!! Form::text('gender', null, ["placeholder" => "", "class" => "form-control border-form", "disabled"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'gender'])
     </div>
 </div>
 
-<div class="form-group">
-    <label class="col-sm-2 control-label">Class</label>
-    <div class="col-sm-5">
-        {!! Form::select('faculty', $data['faculties'], null, ['class' => 'form-control',"disabled"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'faculty'])
-    </div>
 
-    <label class="col-sm-2 control-label">Term/Sec</label>
-    <div class="col-sm-3">
-        {!! Form::select('semester', $data['semester'], null, ['class' => 'form-control',"disabled"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'semester'])
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="col-sm-2 control-label">Batch</label>
-    <div class="col-sm-5">
-        {!! Form::select('batch', $data['batch'], null, ['class' => 'form-control',"disabled"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'batch'])
-    </div>
-
-    <label class="col-sm-2 control-label">Status</label>
-    <div class="col-sm-3">
-        {!! Form::select('academic_status', $data['academic_status'], null, ['class' => 'form-control',"disabled"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'academic_status'])
-    </div>
-</div>
 
 <div class="form-group">
     {!! Form::label('first_name', 'NAME OF STUDENT', ['class' => 'col-sm-3 control-label',]) !!}
@@ -64,18 +52,70 @@
     </div>
 </div>
 
+
+
 <div class="form-group">
-    {!! Form::label('date_of_birth', 'Date of Birth', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('date_of_birth', 'Date of Birth', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-2">
         {!! Form::text('date_of_birth', null, ["class" => "form-control border-form date-picker input-mask-date","required"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'date_of_birth'])
     </div>
 
-    {!! Form::label('gender', 'Gender', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('nationality', 'Nationality', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-2">
-        {!! Form::select('gender', ['' => '','MALE' => 'MALE', 'FEMALE' => 'FEMALE', 'OTHER' => 'OTHER'], null, ['class'=>'form-control border-form',"required"]); !!}
-        @include('includes.form_fields_validation_message', ['name' => 'gender'])
+        {!! Form::text('nationality', null, ["placeholder" => "", "class" => "form-control border-form upper","required"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'nationality'])
     </div>
+
+    {!! Form::label('religion', 'Religion', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('religion', null, ["placeholder" => "", "class" => "form-control border-form upper"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'religion'])
+    </div>
+
+    {!! Form::label('mother_tongue', 'Language spoken', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('mother_tongue', null, ["class" => "form-control border-form upper"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'mother_tongue'])
+    </div>
+
+    
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+   
+
+    
+</div>
+
+<div class="form-group">
+   
+
+   
+
+</div>
+
+{{-- <div class="form-group">
+    {!! Form::label('extra_info', 'Extra Info', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-10">
+        {!! Form::textarea('extra_info', null, ["class" => "form-control border-form", "rows"=>"1"]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'extra_info'])
+    </div>
+</div> --}}
+
+
+
+
+
+<div class="label label-warning arrowed-in arrowed-right arrowed">Medical Information</div>
+<hr class="hr-8">
+<div class="form-group">
 
     {!! Form::label('blood_group', 'Blood Group', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-2">
@@ -83,71 +123,51 @@
         [ 'class'=>'form-control border-form']); !!}
         @include('includes.form_fields_validation_message', ['name' => 'blood_group'])
     </div>
+
+
+
 </div>
 
-<div class="form-group">
-    {!! Form::label('religion', 'Religion', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('religion', null, ["placeholder" => "", "class" => "form-control border-form upper"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'religion'])
-    </div>
 
-    {!! Form::label('caste', 'Caste', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-5">
-        {!! Form::text('caste', null, ["class" => "form-control border-form upper"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'caste'])
-    </div>
-</div>
-
-<div class="form-group">
-    {!! Form::label('nationality', 'Nationality', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::text('nationality', null, ["placeholder" => "", "class" => "form-control border-form upper","required"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'nationality'])
-    </div>
-
-    {!! Form::label('mother_tongue', 'Mother Tongue', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::text('mother_tongue', null, ["class" => "form-control border-form upper"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'mother_tongue'])
-    </div>
-
-    {!! Form::label('email', 'E-mail', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('email', null, ["class" => "form-control border-form"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'email'])
-    </div>
-</div>
-
-<div class="form-group">
-    {!! Form::label('extra_info', 'Extra Info', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-10">
-        {!! Form::textarea('extra_info', null, ["class" => "form-control border-form", "rows"=>"1"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'extra_info'])
-    </div>
-</div>
-
-<div class="label label-warning arrowed-in arrowed-right arrowed">Contact</div>
+<div class="label label-warning arrowed-in arrowed-right arrowed">Education Information</div>
 <hr class="hr-8">
 <div class="form-group">
-    {!! Form::label('home_phone', 'Phone', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('home_phone', null, ["class" => "form-control border-form input-mask-phone"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'home_phone'])
-    </div>
 
-    {!! Form::label('mobile_1', 'Mobile 1', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('mobile_1', null, ["class" => "form-control border-form input-mask-mobile","required"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'mobile_1'])
-    </div>
+        <label class="col-sm-2 control-label">Class</label>
+        <div class="col-sm-5">
+            {!! Form::select('faculty', $data['faculties'], null, ['class' => 'form-control',"disabled"]) !!}
+            @include('includes.form_fields_validation_message', ['name' => 'faculty'])
+        </div>
+    
+        <label class="col-sm-2 control-label">Term/Sec</label>
+        <div class="col-sm-3">
+            {!! Form::select('semester', $data['semester'], null, ['class' => 'form-control',"disabled"]) !!}
+            @include('includes.form_fields_validation_message', ['name' => 'semester'])
+        </div>
 
-    {!! Form::label('mobile_2', 'Mobile 2', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('mobile_2', null, ["class" => "form-control border-form input-mask-mobile"]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'mobile_2'])
-    </div>
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="label label-warning arrowed-in arrowed-right arrowed">Permanent Address</div>

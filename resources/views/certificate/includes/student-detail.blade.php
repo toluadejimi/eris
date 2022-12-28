@@ -46,10 +46,10 @@
                         @include('includes.form_fields_validation_message', ['name' => 'reg_date'])
                     </div>
 
-                    {!! Form::label('university_reg', 'UNIVERSITY REG. NO.', ['class' => 'col-sm-2 control-label']) !!}
+                    {!! Form::label('state_of_origin', 'STATE OF ORIGIN', ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-3">
-                        {!! Form::text('university_reg', null, ["placeholder" => "", "class" => "form-control border-form","readonly"]) !!}
-                        @include('includes.form_fields_validation_message', ['name' => 'university_reg'])
+                        {!! Form::text('state_of_origin', null, ["placeholder" => "", "class" => "form-control border-form","readonly"]) !!}
+                        @include('includes.form_fields_validation_message', ['name' => 'state_of_origin'])
                     </div>
                 </div>
 

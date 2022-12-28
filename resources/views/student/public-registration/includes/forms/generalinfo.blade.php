@@ -381,7 +381,7 @@
 
 
 
-    {!! Form::label('challenges', 'Does this chlid have any challenges? if so. Please specity', [
+    {!! Form::label('challenges', 'Does this chlid have any learning challenges? if so. Please specify', [
         'class' => 'col-sm-3 control-label',
     ]) !!}
     <div class="col-sm-4">

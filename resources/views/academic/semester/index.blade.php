@@ -57,7 +57,7 @@
             /*end capital function*/
 
             $('select[name="subject_id"]').select2({
-                placeholder: 'Search Course...',
+                placeholder: 'Search Subject...',
                 ajax: {
                     url: '{{ route('subject-name-autocomplete') }}',
                     dataType: 'json',

@@ -201,8 +201,8 @@ class PermissionTableSeeder extends Seeder
             [
                 'group'=>'Student Menu',
                 'name' => 'student-course',
-                'display_name' => 'Course',
-                'description' => 'Course Student Menu'
+                'display_name' => 'Subject',
+                'description' => 'Subject Student Menu'
             ],
             [
                 'group'=>'Student Menu',
@@ -294,8 +294,8 @@ class PermissionTableSeeder extends Seeder
             [
                 'group'=>'Guardian Menu',
                 'name' => 'guardian-student-course',
-                'display_name' => 'Course',
-                'description' => 'Course Guardian Menu'
+                'display_name' => 'Subject',
+                'description' => 'Subject Guardian Menu'
             ],
             [
                 'group'=>'Guardian Menu',

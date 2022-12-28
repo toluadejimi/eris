@@ -83,7 +83,7 @@
         <li class="{!! request()->is('user-student/subject*')?'active':'' !!} hover">
             <a href="{{ route('user-student.subject') }}">
                 <i class="menu-icon  fa fa-list-alt" aria-hidden="true"></i>
-                <span class="menu-text"> Course </span>
+                <span class="menu-text"> Subject </span>
             </a>
             <b class="arrow"></b>
         </li>
@@ -123,15 +123,15 @@
         @endpermission
 
         {{-- Download --}}
-        @permission('student-download')
+        {{-- @permission('student-download')
         <li class="{!! request()->is('user-student/download*')?'active':'' !!} hover">
             <a href="{{ route('user-student.download') }}">
                 <i class="menu-icon  fa fa-download" aria-hidden="true"></i>
                 <span class="menu-text"> Download </span>
             </a>
             <b class="arrow"></b>
-        </li>
-        @endpermission
+        </li> --}}
+        {{-- @endpermission --}}
 
         {{-- Examination --}}
         @permission('student-meeting')

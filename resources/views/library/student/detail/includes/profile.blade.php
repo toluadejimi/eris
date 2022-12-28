@@ -38,9 +38,9 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> Univ.Reg.: </div>
+                <div class="profile-info-name"> State of Origin: </div>
                 <div class="profile-info-value">
-                    <span class="editable" id="university_reg">{{ $data['student']->university_reg }}</span>
+                    <span class="editable" id="university_reg">{{ $data['student']->state_of_origin }}</span>
                 </div>
                 <div class="profile-info-name"> DOB : </div>
                 <div class="profile-info-value">
@@ -49,11 +49,11 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> Faculty: </div>
+                <div class="profile-info-name"> Class: </div>
                 <div class="profile-info-value">
                     <span class="editable" id="faculty">{{  ViewHelper::getFacultyTitle( $data['student']->faculty ) }}</span>
                 </div>
-                <div class="profile-info-name"> Semester :</div>
+                <div class="profile-info-name"> Term: </div>
                 <div class="profile-info-value">
                     <span class="editable" id="semester">{{  ViewHelper::getSemesterTitle( $data['student']->semester ) }}</span>
                 </div>

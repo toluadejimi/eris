@@ -12,7 +12,7 @@
         @include('includes.form_fields_validation_message', ['name' => 'period'])
     </div>
 
-    {!! Form::label('course', 'Course', ['class' => 'col-sm-1 control-label']) !!}
+    {!! Form::label('course', 'Subject', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-3">
         {!! Form::text('course', null, ["class" => "form-control border-form upper","required"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'course'])

@@ -11,7 +11,7 @@
 </div>
 
 <div class="col-sm-12 mt-5 mb-3">
-    <h5 class=""> Emergencey Contact in case we cannot contact you please list two local emergency contacts</h5>
+    <h5 class=""> Emergency Contact :- in case we cannot contact you please list two local emergency contacts</h5>
 </div>
 
 
@@ -45,6 +45,40 @@
             'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_relationship'])
+    </div>
+
+</div>
+
+
+<div class="form-group">
+    {!! Form::label('emergency_name_2', 'NAME', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('emergency_name_2', null, [
+            'placeholder' => 'Enter name',
+            'class' => 'form-control border-form upper',
+            'required',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'emergency_name_2'])
+    </div>
+
+    {!! Form::label('emergency_contact_2', 'Daily Telephone No', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('emergency_contact_2', null, [
+            'placeholder' => 'Enter phone no',
+            'class' => 'form-control border-form upper',
+            'required',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'emergency_contact_2'])
+    </div>
+
+    {!! Form::label('emergency_relationship_2', 'Relationship to Pupil', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('emergency_relationship_2', null, [
+            'placeholder' => 'e.g Aunt, Uncle, Nanny e.t.c',
+            'class' => 'form-control border-form upper',
+            'required',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'emergency_relationship_2'])
     </div>
 
 </div>
@@ -249,16 +283,22 @@
         @include('includes.form_fields_validation_message', ['name' => 'blood_group'])
     </div>
 
+    {!! Form::label('genotype', 'GENOTYPE', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('genotype', null, ['class' => 'form-control border-form input-mask-mobile', 'required']) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'genotype'])
+    </div>
+
     {!! Form::label('height', 'HEIGHT (INCHES)', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::number('height', null, ['class' => 'form-control border-form input-mask-mobile', 'required']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('height', null, ['class' => 'form-control', 'required']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'height'])
     </div>
 
 
     {!! Form::label('weight', 'WEIGHT (KG)', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::number('weight', null, ['class' => 'form-control', 'required']) !!}
+    <div class="col-sm-1">
+        {!! Form::text('weight', null, ['class' => 'form-control', 'required']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'weight'])
     </div>
 

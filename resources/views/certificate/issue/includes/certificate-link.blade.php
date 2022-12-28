@@ -20,5 +20,5 @@
 
 <a href="{{ route('certificate.course-completion.add', ['id' => encrypt($student->id)]) }}" target="_blank" class="label label-primary label-lg white">
     <i class="ace-icon fa fa-line-chart  align-top bigger-125 icon-on-right"></i>
-    Course Completion Certificate
+    Subject Completion Certificate
 </a>

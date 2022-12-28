@@ -30,11 +30,11 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name"> Faculty: </div>
+                <div class="profile-info-name"> Class: </div>
                 <div class="profile-info-value">
                     <span class="editable" id="faculty">{{  ViewHelper::getFacultyTitle( $data['student']->faculty ) }}</span>
                 </div>
-                <div class="profile-info-name"> Semester :</div>
+                <div class="profile-info-name"> Term: </div>
                 <div class="profile-info-value">
                     <span class="editable" id="semester">{{  ViewHelper::getSemesterTitle( $data['student']->semester ) }}</span>
                 </div>

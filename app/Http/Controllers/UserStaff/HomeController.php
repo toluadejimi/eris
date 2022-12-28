@@ -374,7 +374,7 @@ class HomeController extends CollegeBaseController
 
     public function subject()
     {
-        $this->panel = 'Course | Staff User';
+        $this->panel = 'Subject | Staff User';
         $id = auth()->user()->hook_id;
         $data = [];
         $data['subject'] = Subject::where('staff_id',$id)->orderBy('title')->get();

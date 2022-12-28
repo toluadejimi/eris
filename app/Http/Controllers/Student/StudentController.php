@@ -536,7 +536,7 @@ class StudentController extends CollegeBaseController
     {
         $data = [];
 
-        $data['row'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
+        $data['row'] = Student::select('students.id','students.name_of_school',  'students.health_issues',   'students.other_health_issues',  'students.photo_publicity',   'students.from_date', 'students.to_date', 'students.reg_no', 'students.reg_date', 'students.state_of_origin',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.middle_name',
             'students.last_name', 'students.date_of_birth', 'students.gender', 'students.blood_group', 'students.religion', 'students.caste', 'students.nationality',
             'students.mother_tongue', 'students.email', 'students.extra_info','students.student_image', 'students.student_signature', 'students.status',
@@ -579,6 +579,8 @@ class StudentController extends CollegeBaseController
 
     public function update(EditValidation $request, $id)
     {
+
+
         if (!$row = Student::find($id))
             return parent::invalidRequest();
 
@@ -623,6 +625,8 @@ class StudentController extends CollegeBaseController
             'mobile_2'   =>  $request->mobile_2
 
         ]);
+
+
 
         /*Update Associate Parents Info with Images*/
         $parent = $row->parents()->first();
@@ -851,7 +855,7 @@ class StudentController extends CollegeBaseController
             $courseCompletionCertificates = $row->courseCompletionCertificate()->get();
             if($courseCompletionCertificates->count() > 0){
                 $errCount = $errCount+1;
-                $errors[] = "Course Completion Certificate Found, Please Delete.";
+                $errors[] = "Subject Completion Certificate Found, Please Delete.";
             }
 
             //Transfer Certificate

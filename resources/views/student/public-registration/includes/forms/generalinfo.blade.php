@@ -28,7 +28,7 @@
 
   
     <div class="col-sm-12 mt-5">
-        <div class="label label-warning arrowed-in arrowed-right arrowed">SCHOLARS'S INFORMATION</div>
+        <div class="label label-warning arrowed-in arrowed-right arrowed">SCHOLAR'S INFORMATION</div>
     </div>
 
 </div>

@@ -279,20 +279,20 @@
 
     {!! Form::label('genotype', 'GENOTYPE', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-1">
-        {!! Form::text('genotype', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
+        {!! Form::text('genotype', null, ['class' => 'form-control']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'genotype'])
     </div>
 
     {!! Form::label('height', 'HEIGHT (INCHES)', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-1">
-        {!! Form::text('height', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::text('height', null, ['class' => 'form-control']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'height'])
     </div>
 
 
     {!! Form::label('weight', 'WEIGHT (KG)', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-1">
-        {!! Form::text('weight', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::text('weight', null, ['class' => 'form-control']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'weight'])
     </div>
 

@@ -186,7 +186,6 @@ class StudentPublicController extends CollegeBaseController
 
         //end sms email
         $request->session()->flash($this->message_success, $this->panel. ' Created Successfully.');
-
        // $request->session()->flash($this->message_success, $PublishMessage);
        return back();
     }

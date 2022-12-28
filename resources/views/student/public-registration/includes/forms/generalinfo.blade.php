@@ -36,7 +36,7 @@
 
 <div class="form-group">
     {!! Form::label('reg_date', 'Date', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         {!! Form::text('reg_date', null, [
             'class' => 'form-control date-picker border-form input-mask-date',
             'readonly',
@@ -59,7 +59,7 @@
 
     @if (!isset($data['row']))
         <label class="col-sm-1 control-label">Class</label>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <select name="faculty" class="chosen-select form-control" id="form-field-select-3"
                 data-placeholder="Choose a Class..." onChange="loadSemesters(this)">
                 <option value=""> </option>
@@ -90,12 +90,21 @@
 
 
     {!! Form::label('gender', 'Gender', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         {!! Form::select('gender', ['' => '', 'MALE' => 'MALE', 'FEMALE' => 'FEMALE', 'OTHER' => 'OTHER'], null, [
             'class' => 'form-control border-form',
             'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'gender'])
+    </div>
+
+    {!! Form::label('religion', 'Religion', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('religion', null, [
+            'placeholder' => 'Religion',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'religion'])
     </div>
 
 

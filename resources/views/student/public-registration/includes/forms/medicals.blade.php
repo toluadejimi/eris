@@ -22,7 +22,6 @@
         {!! Form::text('emergency_name', null, [
             'placeholder' => 'Enter name',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_name'])
     </div>
@@ -32,7 +31,6 @@
         {!! Form::text('emergency_contact', null, [
             'placeholder' => 'Enter phone no',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_contact'])
     </div>
@@ -42,7 +40,6 @@
         {!! Form::text('emergency_relationship', null, [
             'placeholder' => 'e.g Aunt, Uncle, Nanny e.t.c',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_relationship'])
     </div>
@@ -56,7 +53,6 @@
         {!! Form::text('emergency_name_2', null, [
             'placeholder' => 'Enter name',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_name_2'])
     </div>
@@ -66,7 +62,6 @@
         {!! Form::text('emergency_contact_2', null, [
             'placeholder' => 'Enter phone no',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_contact_2'])
     </div>
@@ -76,7 +71,6 @@
         {!! Form::text('emergency_relationship_2', null, [
             'placeholder' => 'e.g Aunt, Uncle, Nanny e.t.c',
             'class' => 'form-control border-form upper',
-            'required',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'emergency_relationship_2'])
     </div>
@@ -285,7 +279,7 @@
 
     {!! Form::label('genotype', 'GENOTYPE', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-1">
-        {!! Form::text('genotype', null, ['class' => 'form-control border-form input-mask-mobile', 'required']) !!}
+        {!! Form::text('genotype', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
         @include('includes.form_fields_validation_message', ['name' => 'genotype'])
     </div>
 

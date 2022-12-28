@@ -364,7 +364,7 @@
     <hr class="hr-8">
     <div class="col-sm-12 mt-5 mb-3">
         <h5 class="">When a child is sick or has sustained injuries, he/she will be attended to by the Emerald
-            Royal International Schools Doctor/Nurses but if the parents ptrfer otherwise,<br> please provide
+            Royal International Schools Doctor/Nurses but if the parents perfer otherwise,<br> please provide
             alternative written instruction and attach to this document</h5>
 
     </div>

@@ -1,3 +1,6 @@
+
+@if(Auth::user()->role_id == 1)
+
 <div class="widget-box transparent">
     <div class="widget-header widget-header-flat">
         <h4 class="widget-title lighter">
@@ -316,3 +319,5 @@
     </div><!-- /.widget-box -->
     --}}
 </div><!-- /.widget-box -->
+
+@endif

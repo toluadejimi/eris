@@ -1,3 +1,5 @@
+
+@if(Auth::user()->role_id == 1)
 <div class="row">
     <div class="col-md-2">
         <a href="{{ route('student') }}" class="easy-link-menu">
@@ -78,5 +80,7 @@
     </div>
 
 </div>
+
+@endif
 
 

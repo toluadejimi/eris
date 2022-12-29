@@ -230,60 +230,15 @@
     <div class="space-6"></div>
     <div class="profile-user-info profile-user-info-striped">
         <div class="profile-info-row">
-            @if($data['student']->address !="")
-                <div class="profile-info-name"> Address : </div>
+            @if($data['student']->father_residence_number !="")
+                <div class="profile-info-name"> Residence : </div>
                 <div class="profile-info-value">
-                    <span class="editable" id="permanent_place">{{ $data['student']->address }}</span>
+                    <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
                 </div>
             @endif
         </div>
     </div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->state !="")
-                <div class="profile-info-name"> State :</div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_district">{{ $data['student']->state }}</span>
-                </div>
-            @endif
-            @if($data['student']->country !="")
-                <div class="profile-info-name"> Country : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_zone">{{ $data['student']->country }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
-
-    <div class="space-6"></div>
-    <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Temporary Address</div>
-    <div class="space-6"></div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->temp_address !="")
-                <div class="profile-info-name"> Address : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_place">{{ $data['student']->temp_address }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->temp_state !="")
-                <div class="profile-info-name"> State :</div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_district">{{ $data['student']->temp_state }}</span>
-                </div>
-            @endif
-            @if($data['student']->temp_country !="")
-                <div class="profile-info-name"> Country : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_zone">{{ $data['student']->temp_country }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
+    
 
     <div class="space-6"></div>
     <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Parential Info</div>

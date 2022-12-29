@@ -30,38 +30,17 @@
 
 
 <div class="form-group">
-    {!! Form::label('father_address', 'RESIDENTIAL ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-5">
-        {!! Form::text('father_address', null, [
+    {!! Form::label('father_residence_number', 'RESIDENTIAL ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('father_residence_number', null, [
             'placeholder' => 'Enter Residential Address',
-            'class' => 'form-control border-form upper',
-        ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'father_address'])
-    </div>
-
-    {!! Form::label('father_occupation', 'FATHER OCCUPATION', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('father_occupation', null, [
-            'placeholder' => 'Enter father occupation',
-            'class' => 'form-control border-form upper',
-        ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'father_occupation'])
-    </div>
-   
-</div>
-
-<div class="form-group">
-   
-
-    {!! Form::label('father_office', 'EMPLOYER ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('father_office', null, [
-            'placeholder' => 'Enter employer address',
             'class' => 'form-control border-form upper',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'father_residence_number'])
     </div>
 
+
+    
     {!! Form::label('father_email', 'EMAIL', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-2">
         {!! Form::text('father_email', null, [
@@ -71,15 +50,51 @@
         @include('includes.form_fields_validation_message', ['name' => 'father_email'])
     </div>
 
-
-    {!! Form::label('father_mobile_1', 'PHONE', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
+    {!! Form::label('father_mobile_1', 'PHONE NUMBER', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
         {!! Form::text('father_mobile_1', null, [
             'placeholder' => 'Enter phone',
             'class' => 'form-control border-form upper',
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'father_mobile_1'])
     </div>
+
+
+   
+   
+</div>
+
+<div class="form-group">
+   
+    {!! Form::label('father_occupation', 'FATHER OCCUPATION', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('father_occupation', null, [
+            'placeholder' => 'Enter father occupation',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'father_occupation'])
+    </div>
+
+
+    {!! Form::label('father_office_number', 'EMPLOYER PHONE', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('father_office_number', null, [
+            'placeholder' => 'Enter phone',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'father_office_number'])
+    </div>
+
+    {!! Form::label('father_office', 'EMPLOYER ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('father_office', null, [
+            'placeholder' => 'Enter employer address',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'father_office'])
+    </div>
+
+  
    
 </div>
 
@@ -136,14 +151,40 @@
 
 
 <div class="form-group">
-    {!! Form::label('mother_address', 'RESIDENTIAL ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-5">
-        {!! Form::text('mother_address', null, [
+    {!! Form::label('mother_residence_number', 'RESIDENTIAL ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('mother_residence_number', null, [
             'placeholder' => 'Enter Residential Address',
             'class' => 'form-control border-form upper',
         ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'mother_address'])
+        @include('includes.form_fields_validation_message', ['name' => 'mother_residence_number'])
     </div>
+
+    
+    {!! Form::label('mother_email', 'EMAIL', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('father_email', null, [
+            'placeholder' => 'Enter  mother email',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'mother_email'])
+    </div>
+
+
+    {!! Form::label('mother_mobile_1', 'PHONE NUMBER', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('mother_mobile_1', null, [
+            'placeholder' => 'Enter mother phone',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'mother_mobile_1'])
+    </div>
+
+</div>
+
+
+<div class="form-group">
+   
 
     {!! Form::label('mother_occupation', 'MOTHER OCCUPATION', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-3">
@@ -153,43 +194,40 @@
         ]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'mother_occupation'])
     </div>
-   
-</div>
+
+
+    {!! Form::label('mother_office_number', 'EMPLOYER PHONE', ['class' => 'col-sm-1 control-label']) !!}
+    <div class="col-sm-2">
+        {!! Form::text('mother_office_number', null, [
+            'placeholder' => 'Enter employer phone number',
+            'class' => 'form-control border-form upper',
+        ]) !!}
+        @include('includes.form_fields_validation_message', ['name' => 'mother_office_number'])
+    </div>
 
 
 
-<div class="form-group">
-   
 
-    {!! Form::label('father_office', 'EMPLOYER ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('mother_office', 'EMPLOYER ADDRESS', ['class' => 'col-sm-1 control-label']) !!}
     <div class="col-sm-3">
-        {!! Form::text('father_office', null, [
+        {!! Form::text('mother_office', null, [
             'placeholder' => 'Enter employer address',
             'class' => 'form-control border-form upper',
         ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'father_residence_number'])
+        @include('includes.form_fields_validation_message', ['name' => 'mother_office'])
     </div>
 
-    {!! Form::label('father_email', 'EMAIL', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-2">
-        {!! Form::text('father_email', null, [
-            'placeholder' => 'Enter email',
-            'class' => 'form-control border-form upper',
-        ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'father_email'])
-    </div>
+    
 
 
-    {!! Form::label('father_mobile_1', 'PHONE', ['class' => 'col-sm-1 control-label']) !!}
-    <div class="col-sm-3">
-        {!! Form::text('father_mobile_1', null, [
-            'placeholder' => 'Enter phone',
-            'class' => 'form-control border-form upper',
-        ]) !!}
-        @include('includes.form_fields_validation_message', ['name' => 'father_mobile_1'])
-    </div>
+   
    
 </div>
+
+
+   
+
+
 
 <div class="form-group">
     {!! Form::label('mother_main_image', 'Mother Picture', ['class' => 'col-sm-2 control-label']) !!}

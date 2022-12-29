@@ -16,6 +16,8 @@ class ParentDetail extends BaseModel
     public function students()
     {
         return $this->belongsTo(Student::class, 'id');
+
+        
     }
 
 }

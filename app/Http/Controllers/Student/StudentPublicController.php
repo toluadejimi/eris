@@ -112,8 +112,6 @@ class StudentPublicController extends CollegeBaseController
 
 
         $pic = Str::random(6);
-       
-
         if ($request->hasFile('student_main_image')) {
             $student_image = $request->file('student_main_image');
             $student_image_name = $pic. '.' .$student_image->getClientOriginalExtension();
@@ -121,11 +119,9 @@ class StudentPublicController extends CollegeBaseController
         } else {
             $student_image_name = "";
         }
-
-
         $student = $request->request->add(['student_image' =>  $student_image_name]);
 
-        $student = Student::create($request->all());
+       
 
         $year = Year::where('active_status', '=', 1)->first()->title;
         //$regNum = $year.$request->faculty.$oldStudent->id;
@@ -133,6 +129,9 @@ class StudentPublicController extends CollegeBaseController
         $request->request->add(['semester' => $semSec ? $semSec : 0]);
         $request->request->add(['academic_status' => 8]);
         $request->request->add(['status' => 'in-active']);
+
+
+        $student = Student::create($request->all());
 
         $request->request->add(['students_id' => $student->id]);
         $addressinfo = Addressinfo::create($request->all());
@@ -143,35 +142,42 @@ class StudentPublicController extends CollegeBaseController
             'guardians_id' => $guardian->id,
         ]);
 
-        $parential_image_path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR;
 
+
+        $pic_f = Str::random(6);
         if ($request->hasFile('father_main_image')) {
             $father_image = $request->file('father_main_image');
-            $father_image_name = $student->reg_no . '_father.' . $father_image->getClientOriginalExtension();
-            $father_image->move($parential_image_path, $father_image_name);
+            $father_image_name = $pic_f. '.' .$father_image->getClientOriginalExtension();
+            $father_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $father_image_name);
         } else {
             $father_image_name = "";
         }
+        $parentdetail = $request->request->add(['father_image' => $father_image_name]);
 
+
+        $pic_m = Str::random(6);
         if ($request->hasFile('mother_main_image')) {
             $mother_image = $request->file('mother_main_image');
-            $mother_image_name = $student->reg_no . '_mother.' . $mother_image->getClientOriginalExtension();
-            $mother_image->move($parential_image_path, $mother_image_name);
+            $mother_image_name = $pic_m. '.' .$mother_image->getClientOriginalExtension();
+            $mother_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $mother_image_name);
         } else {
             $mother_image_name = "";
         }
+        $parentdetail = $request->request->add(['mother_image' => $mother_image_name]);
 
+
+        $pic_g = Str::random(6);
         if ($request->hasFile('guardian_main_image')) {
             $guardian_image = $request->file('guardian_main_image');
-            $guardian_image_name = $student->reg_no . '_guardian.' . $guardian_image->getClientOriginalExtension();
-            $guardian_image->move($parential_image_path, $guardian_image_name);
+            $guardian_image_name = $pic_g. '.' .$guardian_image->getClientOriginalExtension();
+            $guardian_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $guardian_image_name);
         } else {
             $guardian_image_name = "";
         }
+        $parentdetail = $request->request->add(['guardian_image' => $guardian_image_name]);
 
-        $request->request->add(['father_image' => $father_image_name]);
-        $request->request->add(['mother_image' => $mother_image_name]);
-        $request->request->add(['guardian_image' => $guardian_image_name]);
+        
+
 
         //create login access
         $name = isset($request->middle_name) ? $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name : $request->first_name . ' ' . $request->last_name;

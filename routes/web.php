@@ -247,13 +247,25 @@ Route::group(['prefix' => 'student/',                                   'as' => 
     Route::get('note/{id}/in-active',           ['as' => '.note.in-active',      'middleware' => ['ability:super-admin,student-note-in-active'],      'uses' => 'NoteController@inActive']);
     Route::post('note/bulk-action',             ['as' => '.note.bulk-action',    'middleware' => ['ability:super-admin,student-note-bulk-action'],      'uses' => 'NoteController@bulkAction']);
 
-    Route::post('public-registration.register',       ['as' => '.public-registration.register',                       'uses' => 'StudentPublicController@register']);
+   // Route::post('public-registration.register',       ['as' => '.public-registration.register',                       'uses' => 'StudentPublicController@register']);
 
 
 });
 
 //Public Registration- here
 Route::get('public-registration',                                   ['as' => 'public-registration.registration',                        'uses' => 'Student\StudentPublicController@registration']);
+
+Route::get('public-registration-success', [StudentPublicController::class, 'success' ]);
+
+
+
+Route::post('register-now', [StudentPublicController::class, 'register_now' ]);
+
+
+
+Route::get('public-registration-new', [StudentPublicController::class, 'student_registration' ]);
+
+
 
 
 

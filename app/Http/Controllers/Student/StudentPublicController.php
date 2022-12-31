@@ -51,8 +51,44 @@ class StudentPublicController extends CollegeBaseController
         $this->folder_path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder_name . DIRECTORY_SEPARATOR;
     }
 
+
+
+    public function student_registration()
+    {
+
+
+        return view('student.public-registration.register');
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
     public function registration()
     {
+
+
+
+
         if ($this->checkRegistrationStatus()) {
             $data = [];
             $data['blank_ins'] = new Student();
@@ -72,8 +108,25 @@ class StudentPublicController extends CollegeBaseController
         }
     }
 
+
+    public function register_now(Request $request){
+
+
+        
+
+        dd($request->all());
+
+    }
+
+
+
+
+
     public function register(AddValidation $request)
     {
+
+        dd('lol');
+
         //check user&student with valid email
         $validator = Validator::make($request->all(), [
             'email' => 'max:100 | unique:users,email',
@@ -99,7 +152,7 @@ class StudentPublicController extends CollegeBaseController
         //     }
 
         //     $sn = substr("00000{$sn}", - 4);
-              //$year = intval(substr(Year::where('active_status','=',1)->first()->title,-2));
+        //$year = intval(substr(Year::where('active_status','=',1)->first()->title,-2));
         //     $faculty = Faculty::find(intval($request->faculty));
         //     $facultyCode = $faculty->faculty_code;
         //     //$regNum = $faculty.'-'.$year.'-'.$sn;
@@ -178,6 +231,7 @@ class StudentPublicController extends CollegeBaseController
 
         
 
+      
 
         //create login access
         $name = isset($request->middle_name) ? $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name : $request->first_name . ' ' . $request->last_name;

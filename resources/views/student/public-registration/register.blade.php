@@ -1,309 +1,309 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta charset="utf-8" />
-    <title>
-        @if (isset($generalSetting->institute))
-            {{ $panel }} | {{ $generalSetting->institute }}
-        @else
-            {{ isset($panel) ? $panel : '' }} | ERIS
-        @endif
-    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Checkout example · Bootstrap v5.0</title>
 
-    <meta name="description" content="top menu &amp; navigation" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    @if (isset($generalSetting->favicon))
-        <link rel="icon"
-            href="{{ asset('images' . DIRECTORY_SEPARATOR . 'setting' . DIRECTORY_SEPARATOR . 'general' . DIRECTORY_SEPARATOR . $generalSetting->favicon) }}"
-            type="image/x-icon" />
-    @endif
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
 
-    <!-- bootstrap & fontawesome -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
 
-    <!-- page specific plugin styles -->
-    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css') }}" />
 
-    <!-- text fonts -->
-    <link rel="stylesheet" href="{{ asset('assets/css/fonts.googleapis.com.css') }}" />
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{{ url('') }}/public/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
-    </script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
 
-    <!-- ace styles -->
-    <link rel="stylesheet" href="{{ asset('assets/css/ace.min.css') }}" class="ace-main-stylesheet"
-        id="main-ace-style" />
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="{{ asset('assets/css/ace-part2.min.css') }}" class="ace-main-stylesheet" />
-        <![endif]-->
-    <link rel="stylesheet" href="{{ asset('assets/css/ace-skins.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/ace-rtl.min.css') }}" />
-
-    <!-- inline styles related to this page -->
-
-    <!--[if lte IE 9]>
-        <link rel="stylesheet" href="{{ asset('assets/css/ace-ie.min.css') }}" />
-        <![endif]-->
-
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
-
-    <!-- ace settings handler -->
-    <script src="{{ asset('assets/js/ace-extra.min.js') }}"></script>
-
-    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
-
-    <!--[if lte IE 8]>
-        <script src="{{ asset('assets/js/html5shiv.min.js') }}"></script>
-        <script src="{{ asset('assets/js/respond.min.js') }}"></script>
-        <![endif]-->
-
-    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.custom.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker3.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/nepali.datepicker.v2.2.min.css') }}" />
-
-    <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
-    <!-- page specific plugin styles -->
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/chosen.min.css') }}" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Fugaz+One|Lobster|Merienda|Righteous|Black+Ops+One|Gilda+Display"
-        rel="stylesheet">
-    @yield('css')
-
-    @yield('top-script')
-
-</head>
-
-<body class="no-skin">
-    {{-- Preloader Css --}}
-    {{-- <style>
-        #overlay {
-            background: #E4E6E9;
-            color: #666666;
-            position: fixed;
-            height: 100%;
-            width: 100%;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            float: left;
-            text-align: center;
-            padding-top: 25%;
-            font-size: 4em;
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
         }
     </style>
-    <div id="overlay">
-        <i class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
-    </div> --}}
-
-    <div class="main-container ace-save-state" id="main-container">
-        <script type="text/javascript">
-            try {
-                ace.settings.loadState('main-container')
-            } catch (e) {}
-        </script>
 
 
-        <div class="main-content">
-            <div class="main-content-inner">
-                <div class="page-content">
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+</head>
 
-                    {{-- <div class="page-header">
-                        <h1>
-                            @include($view_path.'.includes.breadcrumb-primary')
-                            <small>
-                                <i class="ace-icon fa fa-angle-double-right"></i>
-                                Registration
-                            </small>
-                        </h1>
-                    </div><!-- /.page-header --> --}}
+<body class="bg-light">
 
-                    <div class="row">
-                        <div class="col-xs-12 ">
-                            <!-- PAGE CONTENT BEGINS -->
-                            <div class="row">
-                                <div class="col-md-2 col-print-2 align-left">
-                                    @if (isset($generalSetting->logo))
-                                        <img id=""
-                                            src="{{ asset('images' . DIRECTORY_SEPARATOR . 'setting' . DIRECTORY_SEPARATOR . 'general' . DIRECTORY_SEPARATOR . $generalSetting->logo) }}"
-                                            width="150">
-                                    @endif
-                                </div>
-                                <div class="col-md-10 col-print-10 align-right">
-                                    <div class="text-center">
-                                        <h2 class="no-margin-top text-uppercase"
-                                            style="font-family: 'Merienda', cursive; font-size: 30px">
-                                            <strong>{{ isset($generalSetting->institute) ? $generalSetting->institute : 'EduFirm Web Portal Online Registration' }}</strong>
-                                        </h2>
-                                        <h5 class="no-margin-top">
-                                            {{ isset($generalSetting->address) ? $generalSetting->address : '' }},
-                                            {{ isset($generalSetting->phone) ? $generalSetting->phone : '' }},
-                                            {{ isset($generalSetting->email) ? $generalSetting->email : '' }}
-                                        </h5>
-                                        <h3 class="text-uppercase no-margin-top"
-                                            style="font-family: 'Righteous', cursive; font-size: 35px">ONLINE
-                                            APPLICATION FOR ADMISSION</h3>
-                                    </div>
-                                </div>
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
+    @endif
 
 
 
-                                @if (session()->has('message'))
-                                    <div class="alert alert-success">
-                                        {{ session()->get('message') }}
-                                    </div>
-                                @endif
-                                @if (session()->has('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session()->get('error') }}
-                                    </div>
-                                @endif
 
-                            </div>
-                            <div class="clearfix hidden-print align-right">
-                                <div class="easy-link-menu">
-                                    <a class="btn-primary btn-sm" href="{{ route('login') }}"><i class="fa fa-user"
-                                            aria-hidden="true"></i>&nbsp;Login</a>
-                                </div>
-                                <hr class="hr-6 ">
-                            </div>
-
-                            @include('includes.validation_error_messages')
-                            @include('includes.flash_messages')
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
 
 
+                <img class="d-block mx-auto mb-4" src="https://portal.eris.com.ng/images/setting/general/6835.png"
+                    alt="" width="90" height="80">
 
-                            {!! Form::open([
-                                'route' => 'student.public-registration.register',
-                                'method' => 'POST',
-                                'class' => 'form-horizontal',
-                                'id' => 'validation-form',
-                                'enctype' => 'multipart/form-data',
-                            ]) !!}
+                <div class="text-center" style="font-family: 'futura', strong; font-size: 40px"> EMERALD ROYAL INT'L
+                    SCHOOL </div>
+                <div class="text-center" style="font-family: 'futura', normal; font-size: 18px"> Plot 437, Cadastral
+                    Zone. 08-04, Mpape 2. Jikoko Layout by New Standard Hotel, Abuja. <br> 08111111964, 08111111965 <br>
+                    info@eris.com.ng
+                </div>
 
-                            @include($view_path . '.includes.form')
+                <div class="text-center mt-5" style="font-family: 'futura', bold; font-size: 20px"> ONLINE
+                    APPLICATION FOR ADMISSION </div>
 
-                            <div class="clearfix form-actions">
-                                <div class="col-md-12 align-right">
-                                    <button class="btn" type="reset">
-                                        <i class="fa fa-undo bigger-110"></i>
-                                        Reset
-                                    </button>
-
-                                    <button class="btn btn-primary" type="submit" value="Save" name="add_student"
-                                        id="add-student">
-                                        <i class="fa fa-save bigger-110"></i>
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="hr hr-24"></div>
-
-                            {!! Form::close() !!}
-
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.page-content -->
             </div>
-        </div><!-- /.main-content -->
 
-        <div class="footer">
-            <div class="footer-inner hidden-print">
-                <div class="footer-content">
-                    <span class="bigger-120">
-                        <span class="blue bolder">
-                            @if (isset($generalSetting->copyright))
-                                {!! $generalSetting->copyright !!}
-                            @else
-                                <a href="http://businesswithtechnology.com" target="_blank">©ERIS</a>
-                            @endif
-                        </span>
-                    </span>
 
-                    {{-- <span class="action-buttons">
-                        <a href="#">
-                            <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-                        </a>
+            <div class="text-center" style="font-family: 'futura', normal; font-size: 12px">
 
-                        <a href="#">
-                            <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-                        </a>
+                <div class="col-sm-12 mt-3 mb-3">
+                    <h6 class="">APPLICATION REQUIRMENTS</h6>
+                </div>
 
-                        <a href="#">
-                            <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-                        </a>
-                    </span> --}}
+
+                <ul>
+
+                    <p>A Completed Application Form<br>
+                        A Copy of report from previous school<br>
+                        2 passport size photographs<br>
+                        A Copy of birth cerificate or international<br>
+                        Immunization Record<br>
+                        A Completed Emerald Royal International School Medical Form<br>
+                    </p>
+
+
+
+                </ul>
+
+
+
+            </div>
+
+
+            <div class="row g-5">
+                <div class="col-md-7 col-lg-12">
+                    <hr>
+
+                    <h4 class="mb-3">SCHOLAR'S INFO</h4>
+
+
+                    <form class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-sm-3">
+                                <label for="firstName" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="lastName" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <label for="lastName" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="col-12">
+                                <label for="username" class="form-label">Username</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" class="form-control" id="username" placeholder="Username"
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Your username is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="email" class="form-label">Email <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="email" class="form-control" id="email"
+                                    placeholder="you@example.com">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter your shipping address.
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="address2" class="form-label">Address 2 <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control" id="address2"
+                                    placeholder="Apartment or suite">
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="country" class="form-label">Country</label>
+                                <select class="form-select" id="country" required>
+                                    <option value="">Choose...</option>
+                                    <option>United States</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid country.
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="state" class="form-label">State</label>
+                                <select class="form-select" id="state" required>
+                                    <option value="">Choose...</option>
+                                    <option>California</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="zip" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="zip" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Zip code required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="same-address">
+                            <label class="form-check-label" for="same-address">Shipping address is the same as my
+                                billing address</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="save-info">
+                            <label class="form-check-label" for="save-info">Save this information for next
+                                time</label>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h4 class="mb-3">Payment</h4>
+
+                        <div class="my-3">
+                            <div class="form-check">
+                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input"
+                                    checked required>
+                                <label class="form-check-label" for="credit">Credit card</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input"
+                                    required>
+                                <label class="form-check-label" for="debit">Debit card</label>
+                            </div>
+                            <div class="form-check">
+                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input"
+                                    required>
+                                <label class="form-check-label" for="paypal">PayPal</label>
+                            </div>
+                        </div>
+
+                        <div class="row gy-3">
+                            <div class="col-md-6">
+                                <label for="cc-name" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                                <small class="text-muted">Full name as displayed on card</small>
+                                <div class="invalid-feedback">
+                                    Name on card is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="cc-number" class="form-label">Credit card number</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Credit card number is required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Expiration date required
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Security code required
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                    </form>
                 </div>
             </div>
-            {{-- <footer class="onlyprint">footer text for print<!--Content Goes Here--></footer> --}}
-        </div>
+        </main>
 
-        <!-- basic scripts -->
-        <!--[if !IE]> -->
-        <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
-        {{-- <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script> --}}
-        <!-- <![endif]-->
-
-        <!--[if IE]>
-        <script src="{{ asset('assets/js/jquery-1.11.3.min.js') }}"></script>
-        <![endif]-->
-
-        <script type="text/javascript">
-            if ('ontouchstart' in document.documentElement) document.write(
-                "<script src='{{ asset('assets/js/jquery.mobile.custom.min.js') }}'>" + "<" + "/script>");
-        </script>
-
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-
-        {{-- <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script> --}}
-
-        <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2017–2021 Company Name</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Privacy</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Support</a></li>
+            </ul>
+        </footer>
+    </div>
 
 
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
-        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-        </a>
-    </div><!-- /.main-container -->
-
-    <!-- page specific plugin scripts -->
-    <!-- ace scripts -->
-    <script src="{{ asset('assets/js/ace-elements.min.js') }}"></script>
-    <script src="{{ asset('assets/js/ace.min.js') }}"></script>
-
-    <!-- inline scripts related to this page -->
-    <script type="text/javascript"></script>
-
-
-    {{-- PReloader JS --}}
-    <script>
-        $(document).ready(function() {
-            jQuery('#overlay').fadeOut("fast");
-
-
-
-            $('#add-student').click(function() {
-                var password = $('input[name="password"]').val();
-                var confirmPassword = $('input[name="confirmPassword"]').val();
-
-                if (password != confirmPassword) {
-                    toastr.warning('Password & Confirm Password Must be Same.');
-                    return false;
-                }
-
-            });
-        });
-    </script>
-    @include('student.public-registration.includes.student-comman-script')
-    @include('includes.scripts.inputMask_script')
-    @include('includes.scripts.datepicker_script')
-
+    <script src="form-validation.js"></script>
 </body>
 
 </html>

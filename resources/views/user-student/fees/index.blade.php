@@ -52,6 +52,13 @@
                                         </a>
                                     </li>
 
+                                    <li>
+                                        <a data-toggle="tab" href="#pay-online">
+                                            <i class="blue ace-icon fa fa-calculator bigger-140"></i>
+                                            Bank Transfer
+                                        </a>
+                                    </li>
+
                                 </ul>
 
                                 <div class="tab-content no-border padding-24">

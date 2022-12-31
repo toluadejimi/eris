@@ -228,16 +228,10 @@
     <div class="space-6"></div>
     <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Permanent Address</div>
     <div class="space-6"></div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->address !="")
-                <div class="profile-info-name"> Address : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_place">{{ $data['student']->address }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
+      <div class="profile-info-name"> Residence : </div>
+      <div class="profile-info-value">
+          <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
+      </div>
     <div class="profile-user-info profile-user-info-striped">
         <div class="profile-info-row">
             @if($data['student']->state !="")
@@ -290,23 +284,22 @@
     @if($data['student']->grandfather_first_name !="")
         <div class="space-6"></div>
         <div class="profile-user-info profile-user-info-striped">
-            <div class="profile-info-row">
-                <div class="profile-info-name"> Grand Father :  </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="temporary_place">{{ $data['student']->grandfather_first_name.' '.$data['student']->grandfather_middle_name.' '.$data['student']->grandfather_last_name }}</span>
-                </div>
+            <div class="profile-info-name"> Residence : </div>
+            <div class="profile-info-value">
+                <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
             </div>
         </div>
     @endif
     <div class="space-6"></div>
     <div class="profile-user-info profile-user-info-striped">
         <div class="profile-info-row">
-            @if($data['student']->father_first_name !="")
-                <div class="profile-info-name"> Father Name :  </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="temporary_place">{{ $data['student']->father_first_name.' '.$data['student']->father_middle_name.' '.$data['student']->father_last_name }}</span>
-                </div>
-            @endif
+            @if($data['student']->father_residence_number !="")
+            <div class="profile-info-name"> Residence : </div>
+            <div class="profile-info-value">
+                <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
+            </div>
+        @endif
+
             @if($data['student']->father_eligibility !="")
                 <div class="profile-info-name"> Eligibility :</div>
                 <div class="profile-info-value">

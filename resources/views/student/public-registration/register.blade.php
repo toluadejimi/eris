@@ -43,7 +43,7 @@
 
 <body class="bg-light">
 
- 
+
 
 
 
@@ -51,7 +51,7 @@
     <div class="container">
         <main>
 
-      
+
 
 
             <div class="py-5 text-center">
@@ -104,42 +104,42 @@
 
                 <div>
                     @if ($message = Session::get('success'))
-                    <div class="alert alert-success alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>	
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
                             <strong>{{ $message }}</strong>
-                    </div>
+                        </div>
                     @endif
-                    
-                    
+
+
                     @if ($message = Session::get('error'))
-                    <div class="alert alert-danger alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>	
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
                             <strong>{{ $message }}</strong>
-                    </div>
+                        </div>
                     @endif
-                    
-                    
+
+
                     @if ($message = Session::get('warning'))
-                    <div class="alert alert-warning alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>	
-                        <strong>{{ $message }}</strong>
-                    </div>
+                        <div class="alert alert-warning alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ $message }}</strong>
+                        </div>
                     @endif
-                    
-                    
+
+
                     @if ($message = Session::get('info'))
-                    <div class="alert alert-info alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>	
-                        <strong>{{ $message }}</strong>
-                    </div>
+                        <div class="alert alert-info alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>{{ $message }}</strong>
+                        </div>
                     @endif
-                    
-                    
+
+
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>	
-                        Please check the form below for errors
-                    </div>
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            Please check the form below for errors
+                        </div>
                     @endif
                 </div>
 
@@ -238,7 +238,8 @@
 
                             <div class="col-sm-3">
                                 <label for="gender" class="form-label">Gender</label>
-                                <select class="form-select" name="gender"required aria-label="Default select example">
+                                <select class="form-select" name="gender"required
+                                    aria-label="Default select example">
                                     <option selected>choose gender</option>
                                     <option value="MALE">Male</option>
                                     <option value="FEMALE">Female</option>
@@ -287,8 +288,8 @@
 
                             <div class="col-sm-3">
                                 <label for="reg_date" class="form-label">Reg Date</label>
-                                <input type="date" class="form-control"  id="reg_date" name="reg_date" placeholder=""
-                                    value="" required>
+                                <input type="date" class="form-control" id="reg_date" name="reg_date"
+                                    placeholder="" value="" required>
                                 <div class="invalid-feedback">
                                     REG Date is required.
                                 </div>
@@ -304,39 +305,39 @@
                             </div>
 
 
-                            
-                            
+
+
 
                             <div class="col-sm-6">
 
-                            @if (!isset($data['row']))
-                                <label for="student_main_image" class="form-label">Class</label>
-                                <div class="col-sm-4">
-                                    <select name="faculty" class="form-select" id="form-field-select-3"
-                                        data-placeholder="Choose a Class..." onChange="loadSemesters(this)">
-                                        <option value=""> Select Class</option>
-                                        @foreach ($data['faculties'] as $key => $faculty)
-                                            <option value="{{ $key }}">{{ $faculty }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            @else
-                                <label class="col-sm-2 control-label">Class</label>
-                                <div class="col-sm-4">
-                                    {!! Form::select('faculty', $data['faculties'], null, ['class' => 'form-control', 'disabled']) !!}
-                                    @include('includes.form_fields_validation_message', [
-                                        'name' => 'faculty',
-                                    ])
-                                </div>
+                                @if (!isset($data['row']))
+                                    <label for="student_main_image" class="form-label">Class</label>
+                                    <div class="col-sm-4">
+                                        <select name="faculty" class="form-select" id="form-field-select-3"
+                                            data-placeholder="Choose a Class..." onChange="loadSemesters(this)">
+                                            <option value=""> Select Class</option>
+                                            @foreach ($data['faculties'] as $key => $faculty)
+                                                <option value="{{ $key }}">{{ $faculty }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @else
+                                    <label class="col-sm-2 control-label">Class</label>
+                                    <div class="col-sm-4">
+                                        {!! Form::select('faculty', $data['faculties'], null, ['class' => 'form-control', 'disabled']) !!}
+                                        @include('includes.form_fields_validation_message', [
+                                            'name' => 'faculty',
+                                        ])
+                                    </div>
 
-                                <label class="col-sm-1 control-label">Term/Sec</label>
-                                <div class="col-sm-2">
-                                    {!! Form::select('semester', $data['semester'], null, ['class' => 'form-control', 'disabled']) !!}
-                                    @include('includes.form_fields_validation_message', [
-                                        'name' => 'semester',
-                                    ])
-                                </div>
-                            @endif
+                                    <label class="col-sm-1 control-label">Term/Sec</label>
+                                    <div class="col-sm-2">
+                                        {!! Form::select('semester', $data['semester'], null, ['class' => 'form-control', 'disabled']) !!}
+                                        @include('includes.form_fields_validation_message', [
+                                            'name' => 'semester',
+                                        ])
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
@@ -1183,488 +1184,458 @@
 
                         </div>
 
-                        
-                        
 
 
 
+
+
+
+
+
+
+                        <hr class="hr-8">
+                        <div class="col-sm-12 mt-2 mb-3">
+                            <h4 class="">EMERGRNCY CONTACT</h4>
+                            <h6 class=""> In
+                                Case Parent/Guardiancs
+                                cannot be contacted</h6>
+
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+
+                            {!! Form::label('relative_name', 'RELATIVE/FRIEND NAME', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::text('relative_name', null, ['class' => 'form-control ']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'relative_name',
+                                ])
+                            </div>
+
+                            {!! Form::label('relative_no', 'RELATIVE PHONE NUMBER', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::text('relative_no', null, ['class' => 'form-control ']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'relative_no',
+                                ])
+                            </div>
+
+
+
+
+
+                            {!! Form::label('doc_phone', 'DOCTOR PHONE NO', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::text('doc_phone', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'doc_phone',
+                                ])
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+
+                            {!! Form::label('hospital_address', 'OFFICE ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-4">
+                                {!! Form::text('hospital_address', null, ['class' => 'form-control ']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'hospital_address',
+                                ])
+                            </div>
+
+                            {!! Form::label('hospital_doctor_name', 'FAMILY HOSPITAL/DOCTOR NAME', ['class' => 'col-sm-3 control-label']) !!}
+                            <div class="col-sm-3">
+                                {!! Form::text('hospital_doctor_name', null, ['class' => 'form-control ']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'hospital_doctor_name',
+                                ])
+                            </div>
+
+                            <hr class="hr-8">
+                            <div class="col-sm-12 mt-2 mb-3">
+                                <h6 class="">When a child is sick or has sustained injuries, he/she will be
+                                    attended to by the Emerald
+                                    Royal International Schools Doctor/Nurses but if the parents prefer otherwise,
+                                    please provide
+                                    alternative written instruction</h6>
+
+                            </div>
+
+                            <div class="col-sm-9">
+                                <label for="written_instructions" class="form-label">Does this chlid have any learning
+                                    challenges? if
+                                    so. Please specify</label>
+                                <textarea class="form-control" placeholder="Type Here" name="written_instructions" placeholder="Type here"
+                                    value="" style="height: 100px"></textarea>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                        <hr class="hr-8">
+                        <h4 class="">CHILD CONDITIONS</h4>
+
+                        <div class="row g-3 mt-3">
+
+
+                            {!! Form::label('medications', 'PLEASE CHOOSE', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::select(
+                                    'medications',
+                                    [
+                                        'None' => 'NONE',
+                                        'allergies' => 'ALLERGIES',
+                                        'asthma' => 'ASTHMA',
+                                        'slight' => 'SLIGHT',
+                                        'hearning' => 'HEARNING',
+                                        'dental' => 'DENTAL',
+                                        'fear_phobia' => 'FEAR/PHOBIA',
+                                        'diabetes' => 'DIABETES',
+                                        'bleeding_disorder' => 'BLEEDING DISORDER (EX NOSE BLEEDING)',
+                                        'muscular_skeletal' => 'MUSCULAR/SKELETAL (BACK, KNEE, ANKLE, JOINTS ETC)',
+                                        'constant_headaches' => 'CONSTANT HEADACHE/MIGRAINE',
+                                        'medication' => 'IS YOUR CHILD CURRENTLY ON MEDICATION',
+                                    ],
+                                    null,
+                                    ['class' => 'form-control border-form'],
+                                ) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'medications',
+                                ])
+
+
+                            </div>
+
+
+
+
+                            <div class="row g-3 mt-3">
+
+                                <div class="col-sm-12 mt-2 mb-3">
+
+                                    <h6 class="">If your child suffers from a condition other than any of those
+                                        listed,which you
+                                        think may be aggravated by full participation in school programmers e.g. Sport
+                                        activities. Please
+                                        provide details of condition below</h6>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row g-3 mt-3">
+
+                                {!! Form::label('program_condition', 'PLEASE SPECIFY', ['class' => 'col-sm-2 control-label']) !!}
+                                <div class="col-sm-10">
+                                    {!! Form::textarea('program_condition', null, ['class' => 'form-control ']) !!}
+                                    @include('includes.form_fields_validation_message', [
+                                        'name' => 'program_condition',
+                                    ])
+                                </div>
+
+                                {!! Form::label('releveant_details', 'RELEVANT DETAILS OF ABOVE ILLNESS', ['class' => 'col-sm-3 control-label']) !!}
+                                <div class="col-sm-9">
+                                    {!! Form::textarea('releveant_details', null, ['class' => 'form-control ']) !!}
+                                    @include('includes.form_fields_validation_message', [
+                                        'name' => 'releveant_details',
+                                    ])
+                                </div>
+
+                                {!! Form::label('dietary_needs', 'SPECIAL DIETARY NEEDS', ['class' => 'col-sm-3 control-label']) !!}
+                                <div class="col-sm-9">
+                                    {!! Form::textarea('dietary_needs', null, ['class' => 'form-control ']) !!}
+                                    @include('includes.form_fields_validation_message', [
+                                        'name' => 'dietary_needs',
+                                    ])
+                                </div>
+
+                            </div>
+
+
+                            <div class="row g-3 mt-3">
+
+                                {!! Form::label(
+                                    'physical_activities',
+                                    'HE/SHE is physically fit to participate in all school physical atheletics and activities ',
+                                    ['class' => 'col-sm-4 control-label'],
+                                ) !!}
+                                <div class="col-sm-2">
+                                    {!! Form::select(
+                                        'physical_activities',
+                                        [
+                                            'yes' => 'YES',
+                                            'no' => 'NO',
+                                        ],
+                                        null,
+                                        ['class' => 'form-control border-form'],
+                                    ) !!}
+                                    @include('includes.form_fields_validation_message', [
+                                        'name' => 'physical_activities',
+                                    ])
+                                </div>
+
+
+                                {!! Form::label('physical_activities_reasons', 'If NO please state reason ', [
+                                    'class' => 'col-sm-2 control-label',
+                                ]) !!}
+                                <div class="col-sm-4">
+                                    {!! Form::textarea('physical_activities_reasons', null, ['class' => 'form-control ']) !!}
+                                    @include('includes.form_fields_validation_message', [
+                                        'name' => 'physical_activities_reasons',
+                                    ])
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="row g-3 mt-3">
+                                <hr>
+                                <h4>Portal Login
+                                    Information</h4>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+                            {!! Form::label('email', 'E-mail', ['class' => 'col-sm-1 control-label']) !!}
+                            <div class="col-sm-3">
+                                {!! Form::text('email', null, ['class' => 'form-control border-form', 'required']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'email',
+                                ])
+                            </div>
+
+                            {!! Form::label('password', 'Password', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::password('password', ['placeholder' => '', 'class' => 'form-control border-form', 'required']) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'password',
+                                ])
+                            </div>
+
+                            {!! Form::label('confirmPassword', 'Confirm Password', ['class' => 'col-sm-2 control-label']) !!}
+                            <div class="col-sm-2">
+                                {!! Form::password('confirmPassword', [
+                                    'placeholder' => '',
+                                    'class' => 'form-control border-form' /*,"onkeyup"=>"passCheck()"*/,
+                                    'required',
+                                ]) !!}
+                                @include('includes.form_fields_validation_message', [
+                                    'name' => 'confirmPassword',
+                                ])
+                            </div>
+                        </div>
+
+
+                        <hr>
+
+                        <div class="row g-3 mt-3 center">
+                            <div class="col-sm-6 center">
+                                <button class="w-10 btn btn-success btn-lg btn-block" type="submit">Register
+                                    Scholar</button>
+                            </div>
+
+                            <div class="col-sm-6 center">
+                                <a class="btn btn-primary w-10 btn btn-secondary btn-lg btn-block" href="login"
+                                    role="button">Login to portal</a>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-
-
-                
-                <hr class="hr-8">
-                <div class="col-sm-12 mt-2 mb-3">
-                    <h4 class="">EMERGRNCY CONTACT</h4>
-                    <h6 class=""> In
-                        Case Parent/Guardiancs
-                        cannot be contacted</h6>
-
-                </div>
-
-
-                <div class="row g-3 mt-3">
-
-
-                    {!! Form::label('relative_name', 'RELATIVE/FRIEND NAME', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-2">
-                        {!! Form::text('relative_name', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'relative_name',
-                        ])
-                    </div>
-
-                    {!! Form::label('relative_no', 'RELATIVE PHONE NUMBER', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-2">
-                        {!! Form::text('relative_no', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'relative_no',
-                        ])
-                    </div>
-
-
-
-
-
-                    {!! Form::label('doc_phone', 'DOCTOR PHONE NO', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-2">
-                        {!! Form::text('doc_phone', null, ['class' => 'form-control border-form input-mask-mobile']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'doc_phone',
-                        ])
-                    </div>
-
-
-                </div>
-
-
-                <div class="row g-3 mt-3">
-
-
-                    {!! Form::label('hospital_address', 'OFFICE ADDRESS', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-4">
-                        {!! Form::text('hospital_address', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'hospital_address',
-                        ])
-                    </div>
-
-                    {!! Form::label('hospital_doctor_name', 'FAMILY HOSPITAL/DOCTOR NAME', ['class' => 'col-sm-3 control-label']) !!}
-                    <div class="col-sm-3">
-                        {!! Form::text('hospital_doctor_name', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'hospital_doctor_name',
-                        ])
-                    </div>
-
-                    <hr class="hr-8">
-                    <div class="col-sm-12 mt-2 mb-3">
-                        <h6 class="">When a child is sick or has sustained injuries, he/she will be
-                            attended to by the Emerald
-                            Royal International Schools Doctor/Nurses but if the parents prefer otherwise,
-                            please provide
-                            alternative written instruction</h6>
-
-                    </div>
-
-                    <div class="col-sm-9">
-                        <label for="written_instructions" class="form-label">Does this chlid have any learning
-                            challenges? if
-                            so. Please specify</label>
-                        <textarea class="form-control" placeholder="Type Here" name="written_instructions" placeholder="Type here"
-                            value="" style="height: 100px"></textarea>
-
-                    </div>
-
-
-
-                </div>
-
-
-                <hr class="hr-8">
-                <h4 class="">CHILD CONDITIONS</h4>
-
-                <div class="row g-3 mt-3">
-
-
-                    {!! Form::label('medications', 'PLEASE CHOOSE', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-2">
-                        {!! Form::select(
-                            'medications',
-                            [
-                                'None' => 'NONE',
-                                'allergies' => 'ALLERGIES',
-                                'asthma' => 'ASTHMA',
-                                'slight' => 'SLIGHT',
-                                'hearning' => 'HEARNING',
-                                'dental' => 'DENTAL',
-                                'fear_phobia' => 'FEAR/PHOBIA',
-                                'diabetes' => 'DIABETES',
-                                'bleeding_disorder' => 'BLEEDING DISORDER (EX NOSE BLEEDING)',
-                                'muscular_skeletal' => 'MUSCULAR/SKELETAL (BACK, KNEE, ANKLE, JOINTS ETC)',
-                                'constant_headaches' => 'CONSTANT HEADACHE/MIGRAINE',
-                                'medication' => 'IS YOUR CHILD CURRENTLY ON MEDICATION',
-                            ],
-                            null,
-                            ['class' => 'form-control border-form'],
-                        ) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'medications',
-                        ])
-
-
-                    </div>
-
-
-
-
-                    <div class="row g-3 mt-3">
-
-                    <div class="col-sm-12 mt-2 mb-3">
-
-                        <h6 class="">If your child suffers from a condition other than any of those
-                            listed,which you
-                            think may be aggravated by full participation in school programmers e.g. Sport
-                            activities. Please
-                            provide details of condition below</h6>
-
-                    </div>
-
-                </div>
-
-                <div class="row g-3 mt-3">
-
-                    {!! Form::label('program_condition', 'PLEASE SPECIFY', ['class' => 'col-sm-2 control-label']) !!}
-                    <div class="col-sm-10">
-                        {!! Form::textarea('program_condition', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'program_condition',
-                        ])
-                    </div>
-
-                    {!! Form::label('releveant_details', 'RELEVANT DETAILS OF ABOVE ILLNESS', ['class' => 'col-sm-3 control-label']) !!}
-                    <div class="col-sm-9">
-                        {!! Form::textarea('releveant_details', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'releveant_details',
-                        ])
-                    </div>
-
-                    {!! Form::label('dietary_needs', 'SPECIAL DIETARY NEEDS', ['class' => 'col-sm-3 control-label']) !!}
-                    <div class="col-sm-9">
-                        {!! Form::textarea('dietary_needs', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'dietary_needs',
-                        ])
-                    </div>
-
-                </div>
-
-
-                <div class="row g-3 mt-3">
-
-                    {!! Form::label(
-                        'physical_activities',
-                        'HE/SHE is physically fit to participate in all school physical atheletics and activities ',
-                        ['class' => 'col-sm-4 control-label'],
-                    ) !!}
-                    <div class="col-sm-2">
-                        {!! Form::select(
-                            'physical_activities',
-                            [
-                                'yes' => 'YES',
-                                'no' => 'NO',
-                            ],
-                            null,
-                            ['class' => 'form-control border-form'],
-                        ) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'physical_activities',
-                        ])
-                    </div>
-
-
-                    {!! Form::label('physical_activities_reasons', 'If NO please state reason ', [
-                        'class' => 'col-sm-2 control-label',
-                    ]) !!}
-                    <div class="col-sm-4">
-                        {!! Form::textarea('physical_activities_reasons', null, ['class' => 'form-control ']) !!}
-                        @include('includes.form_fields_validation_message', [
-                            'name' => 'physical_activities_reasons',
-                        ])
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="row g-3 mt-3">
-                    <hr>
-                    <h4>Portal Login
-                        Information</h4>
-
-                </div>
-
             </div>
 
 
-            <div class="row g-3 mt-3">
-                {!! Form::label('email', 'E-mail', ['class' => 'col-sm-1 control-label']) !!}
-                <div class="col-sm-3">
-                    {!! Form::text('email', null, ['class' => 'form-control border-form', 'required']) !!}
-                    @include('includes.form_fields_validation_message', [
-                        'name' => 'email',
-                    ])
-                </div>
-
-                {!! Form::label('password', 'Password', ['class' => 'col-sm-2 control-label']) !!}
-                <div class="col-sm-2">
-                    {!! Form::password('password', ['placeholder' => '', 'class' => 'form-control border-form', 'required']) !!}
-                    @include('includes.form_fields_validation_message', [
-                        'name' => 'password',
-                    ])
-                </div>
-
-                {!! Form::label('confirmPassword', 'Confirm Password', ['class' => 'col-sm-2 control-label']) !!}
-                <div class="col-sm-2">
-                    {!! Form::password('confirmPassword', [
-                        'placeholder' => '',
-                        'class' => 'form-control border-form' /*,"onkeyup"=>"passCheck()"*/,
-                        'required',
-                    ]) !!}
-                    @include('includes.form_fields_validation_message', [
-                        'name' => 'confirmPassword',
-                    ])
-                </div>
-            </div>
+        </main>
 
 
+        <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                //date
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
 
-
-
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to
-                    checkout</button>
-                </form>
-            </div>
-    </div>
-
-    {{-- <span class="bigger-120">
-        <span class="blue bolder">
-            @if (isset($generalSetting->copyright))
-                {!! $generalSetting->copyright !!}
-            @else
-                <a href="#" target="_blank">©ERIS</a>
-            @endif
-        </span>
-    </span> --}}
-    </main>
-
-
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            //date
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-
-            var yyyy = today.getFullYear();
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-            var today = yyyy + '-' + mm + '-' + dd;
-            $("#reg_date").val(today);
-            $(".reg_date").val(today);
-            /*enddate*/
-
-
-
-            document.getElementById('guardian-detail').style.display = 'block';
-
-
-
-        });
-
-
-        /*Change Field Value on Capital Letter When Keyup*/
-        $(function() {
-            $('.upper').keyup(function() {
-                this.value = this.value.toUpperCase();
-            });
-        });
-        /*end capital function*/
-
-
-
-
-
-        function loadSemesters($this) {
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('student.find-semester') }}',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    faculty_id: $this.value
-                },
-                success: function(response) {
-                    var data = $.parseJSON(response);
-                    if (data.error) {
-                        $.notify(data.message, "warning");
-                    } else {
-                        //$('.semester').html('').append('<option value="0">Select Term/Sec</option>');
-                        $.each(data.semester, function(key, valueObj) {
-                            $('.semester').append('<option value="' + valueObj.id + '">' + valueObj
-                                .semester + '</option>');
-                        });
-                    }
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
                 }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = yyyy + '-' + mm + '-' + dd;
+                $("#reg_date").val(today);
+                $(".reg_date").val(today);
+                /*enddate*/
+
+
+
+                document.getElementById('guardian-detail').style.display = 'block';
+
+
+
             });
 
-        }
 
-
-        /*copy Father Detail on Guardian Detail*/
-        /*guardian_is*/
-        function FatherAsGuardian(f) {
-            document.getElementById('guardian-detail').style.display = 'block';
-            if (f.guardian_is.value == 'father_as_guardian') {
-                f.guardian_first_name.value = f.father_first_name.value;
-                f.guardian_middle_name.value = f.father_middle_name.value;
-                f.guardian_last_name.value = f.father_last_name.value;
-                f.guardian_email.value = f.father_email.value;
-                f.guardian_mobile_1.value = f.father_mobile_1.value;
-                f.guardian_relation.value = "FATHER";
-                f.mother_as_guardian.checked == false;
-                f.other_guardian.checked == false;
-            }
-        }
-
-        /*copy Mother Detail on Guardian Detail*/
-        function MotherAsGuardian(f) {
-            document.getElementById('guardian-detail').style.display = 'block';
-            if (f.guardian_is.value == 'mother_as_guardian') {
-                f.guardian_first_name.value = f.mother_first_name.value;
-                f.guardian_middle_name.value = f.mother_middle_name.value;
-                f.guardian_email.value = f.father_email.value;
-                f.guardian_mobile_1.value = f.mother_mobile_1.value;
-                f.guardian_last_name.value = f.mother_last_name.value;
-                f.guardian_relation.value = "MOTHER";
-                f.father_as_guardian.checked == false;
-                f.other_guardian.checked == false;
-            }
-        }
-
-        /*Blank Guardian Detail to Enter New*/
-        function OtherGuardian(f) {
-            document.getElementById('guardian-detail').style.display = 'block';
-            if (f.guardian_is.value == 'other_guardian') {
-                f.guardian_first_name.value = "";
-                f.guardian_middle_name.value = "";
-                f.guardian_last_name.value = "";
-                f.guardian_mobile_1.value = "";
-                f.guardian_relation.value = "";
-                f.father_as_guardian.checked == false;
-                f.mother_as_guardian.checked == false;
-            }
-        }
-
-        if (!ace.vars['touch']) {
-            $('.chosen-select').chosen({
-                allow_single_deselect: true
+            /*Change Field Value on Capital Letter When Keyup*/
+            $(function() {
+                $('.upper').keyup(function() {
+                    this.value = this.value.toUpperCase();
+                });
             });
-            //resize the chosen on window resize
+            /*end capital function*/
 
-            $(window)
-                .off('resize.chosen')
-                .on('resize.chosen', function() {
+
+
+
+
+            function loadSemesters($this) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('student.find-semester') }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        faculty_id: $this.value
+                    },
+                    success: function(response) {
+                        var data = $.parseJSON(response);
+                        if (data.error) {
+                            $.notify(data.message, "warning");
+                        } else {
+                            //$('.semester').html('').append('<option value="0">Select Term/Sec</option>');
+                            $.each(data.semester, function(key, valueObj) {
+                                $('.semester').append('<option value="' + valueObj.id + '">' + valueObj
+                                    .semester + '</option>');
+                            });
+                        }
+                    }
+                });
+
+            }
+
+
+            /*copy Father Detail on Guardian Detail*/
+            /*guardian_is*/
+            function FatherAsGuardian(f) {
+                document.getElementById('guardian-detail').style.display = 'block';
+                if (f.guardian_is.value == 'father_as_guardian') {
+                    f.guardian_first_name.value = f.father_first_name.value;
+                    f.guardian_middle_name.value = f.father_middle_name.value;
+                    f.guardian_last_name.value = f.father_last_name.value;
+                    f.guardian_email.value = f.father_email.value;
+                    f.guardian_mobile_1.value = f.father_mobile_1.value;
+                    f.guardian_relation.value = "FATHER";
+                    f.mother_as_guardian.checked == false;
+                    f.other_guardian.checked == false;
+                }
+            }
+
+            /*copy Mother Detail on Guardian Detail*/
+            function MotherAsGuardian(f) {
+                document.getElementById('guardian-detail').style.display = 'block';
+                if (f.guardian_is.value == 'mother_as_guardian') {
+                    f.guardian_first_name.value = f.mother_first_name.value;
+                    f.guardian_middle_name.value = f.mother_middle_name.value;
+                    f.guardian_email.value = f.father_email.value;
+                    f.guardian_mobile_1.value = f.mother_mobile_1.value;
+                    f.guardian_last_name.value = f.mother_last_name.value;
+                    f.guardian_relation.value = "MOTHER";
+                    f.father_as_guardian.checked == false;
+                    f.other_guardian.checked == false;
+                }
+            }
+
+            /*Blank Guardian Detail to Enter New*/
+            function OtherGuardian(f) {
+                document.getElementById('guardian-detail').style.display = 'block';
+                if (f.guardian_is.value == 'other_guardian') {
+                    f.guardian_first_name.value = "";
+                    f.guardian_middle_name.value = "";
+                    f.guardian_last_name.value = "";
+                    f.guardian_mobile_1.value = "";
+                    f.guardian_relation.value = "";
+                    f.father_as_guardian.checked == false;
+                    f.mother_as_guardian.checked == false;
+                }
+            }
+
+            if (!ace.vars['touch']) {
+                $('.chosen-select').chosen({
+                    allow_single_deselect: true
+                });
+                //resize the chosen on window resize
+
+                $(window)
+                    .off('resize.chosen')
+                    .on('resize.chosen', function() {
+                        $('.chosen-select').each(function() {
+                            var $this = $(this);
+                            $this.next().css({
+                                'width': $this.parent().width()
+                            });
+                        })
+                    }).trigger('resize.chosen');
+                //resize chosen on sidebar collapse/expand
+                $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+                    if (event_name != 'sidebar_collapsed') return;
                     $('.chosen-select').each(function() {
                         var $this = $(this);
                         $this.next().css({
                             'width': $this.parent().width()
                         });
                     })
-                }).trigger('resize.chosen');
-            //resize chosen on sidebar collapse/expand
-            $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
-                if (event_name != 'sidebar_collapsed') return;
-                $('.chosen-select').each(function() {
-                    var $this = $(this);
-                    $this.next().css({
-                        'width': $this.parent().width()
-                    });
-                })
-            });
-        }
-    </script>
+                });
+            }
+        </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
 
-    <script src="form-validation.js"></script>
+        <script src="form-validation.js"></script>
 
-    <div class="footer">
-        <div class="footer-inner hidden-print">
-            <div class="footer-content">
-                <span class="bigger-120">
-                    <span class="blue bolder">
-                        @if (isset($generalSetting->copyright))
-                            {!! $generalSetting->copyright !!}
-                        @else
-                            <a href="http://businesswithtechnology.com" target="_blank">©ERIS</a>
-                        @endif
-                    </span>
-                </span>
+        <!-- basic scripts -->
+            <!--[if !IE]> -->
+            <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
+            {{-- <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script> --}}
+            <!-- <![endif]-->
 
-                {{-- <span class="action-buttons">
-                            <a href="#">
-                                <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-                            </a>
-    
-                            <a href="#">
-                                <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-                            </a>
-    
-                            <a href="#">
-                                <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-                            </a>
-                        </span> --}}
-            </div>
-        </div>
-        {{-- <footer class="onlyprint">footer text for print<!--Content Goes Here--></footer> --}}
-    </div>
-
-    <!-- basic scripts -->
-    <!--[if !IE]> -->
-    <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script> --}}
-    <!-- <![endif]-->
-
-    <!--[if IE]>
+            <!--[if IE]>
             <script src="{{ asset('assets/js/jquery-1.11.3.min.js') }}"></script>
             <![endif]-->
 
-    <script type="text/javascript">
-        if ('ontouchstart' in document.documentElement) document.write(
-            "<script src='{{ asset('assets/js/jquery.mobile.custom.min.js') }}'>" + "<" + "/script>");
-    </script>
+            <script type="text/javascript">
+                if ('ontouchstart' in document.documentElement) document.write(
+                    "<script src='{{ asset('assets/js/jquery.mobile.custom.min.js') }}'>" + "<" + "/script>");
+            </script>
 
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
-    {{-- <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script> --}}
+            {{-- <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script> --}}
 
-    <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+            <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 
 
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
     </div><!-- /.main-container -->
 
     <!-- page specific plugin scripts -->

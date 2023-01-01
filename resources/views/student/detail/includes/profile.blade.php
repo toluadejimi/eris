@@ -229,6 +229,7 @@
     <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Permanent Address</div>
     <div class="space-6"></div>
       <div class="profile-info-name"> Residence : </div>
+      <div class="profile-info-name"> Residence : </div>
       <div class="profile-info-value">
           <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
       </div>

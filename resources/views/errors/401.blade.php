@@ -16,7 +16,7 @@
                                 <span class="blue bigger-125">
                                     <i class="ace-icon fa fa-certificate"></i>
                                 </span>
-                                Unauthorized License
+                                Unau License
                             </h1>
                             <hr />
                             <h2>{{ $exception->getMessage() }}:</h2>
@@ -43,7 +43,7 @@
                             <ul class="list-unstyled spaced inline bigger-110 margin-15">
                                 <li>
                                     <i class="ace-icon fa fa-hand-o-right blue"></i>
-                                    Input Correct Purchase Code on .env PURCHASE_CODE variable
+                                    Input Correct  Code on .env PURCHASE_CODE variable
                                 </li>
                                 <li>
                                     <i class="ace-icon fa fa-hand-o-right blue"></i>

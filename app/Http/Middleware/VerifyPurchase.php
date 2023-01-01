@@ -19,7 +19,7 @@ class VerifyPurchase
 
     public function handle($request, Closure $next)
     {
-        $this->getPurchaseDetail();
+       // $this->getPurchaseDetail();
         return $next($request);
     }
 }

@@ -29,10 +29,11 @@ use App\Models\Year;
 use App\Traits\SmsEmailScope;
 use App\Traits\UserScope;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-
 
 class StudentPublicController extends CollegeBaseController
 {
@@ -51,43 +52,15 @@ class StudentPublicController extends CollegeBaseController
         $this->folder_path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder_name . DIRECTORY_SEPARATOR;
     }
 
-
-
     public function student_registration()
     {
 
-
         return view('student.public-registration.register');
 
-
-
-
-
-
-
-
-
-
-
     }
-    
-
-
-
-
-
-
-
-
-
-
-
 
     public function registration()
     {
-
-
-
 
         if ($this->checkRegistrationStatus()) {
             $data = [];
@@ -108,19 +81,150 @@ class StudentPublicController extends CollegeBaseController
         }
     }
 
+    public function register_now(Request $request)
+    {
 
-    public function register_now(Request $request){
+        $reg_no = $request->reg_no;
+
+        try {
 
 
-        
+            $get_reg_no = Student::where('reg_no', $reg_no)
+            ->first()->reg_no ?? null;
 
-        dd($request->all());
+        if ($get_reg_no == $reg_no) {
+            return 'Student Already Registred';
+        }
+
+            //check user&student with valid email
+            $validator = Validator::make($request->all(), [
+                'email' => 'max:100 | unique:users,email',
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', 'Email Registred has been taken, use another email.');
+            }
+
+            $semSec = FacultySemester::where('faculty_id', $request->faculty)->first()->semester_id;
+
+            if (!$semSec) {
+                return parent::invalidRequest();
+            }
+
+            $pic = Str::random(6);
+            if ($request->hasFile('student_main_image')) {
+                $student_image = $request->file('student_main_image');
+                $student_image_name = $pic . '.' . $student_image->getClientOriginalExtension();
+                $student_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'studentProfile' . DIRECTORY_SEPARATOR, $student_image_name);
+            } else {
+                $student_image_name = "";
+            }
+            $student = $request->request->add(['student_image' => $student_image_name]);
+
+
+            $pic = Str::random(6);
+            if ($request->hasFile('pick_main_image')) {
+                $pick_image = $request->file('pick_main_image');
+                $pick_image_name = $pic . '.' . $pick_image->getClientOriginalExtension();
+                $pick_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'pickprofile' . DIRECTORY_SEPARATOR, $pick_image_name);
+            } else {
+                $pick_image_name = "";
+            }
+            $student = $request->request->add(['pick_image' => $pick_image_name]);
+
+            $pic = Str::random(6);
+            if ($request->hasFile('pick2_main_image')) {
+                $pick2_image = $request->file('pick2_main_image');
+                $pick2_image_name = $pic . '.' . $pick2_image->getClientOriginalExtension();
+                $pick2_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'pickprofile' . DIRECTORY_SEPARATOR, $pick2_image_name);
+            } else {
+                $pick2_image_name = "";
+            }
+            $student = $request->request->add(['pick2_image' => $pick2_image_name]);
+
+            $year = Year::where('active_status', '=', 1)->first()->title;
+            //$regNum = $year.$request->faculty.$oldStudent->id;
+            $request->request->add(['created_by' => 0]);
+            $request->request->add(['semester' => $semSec ? $semSec : 0]);
+            $request->request->add(['academic_status' => 8]);
+            $request->request->add(['status' => 'in-active']);
+
+            $student = Student::create($request->all());
+
+            $request->request->add(['students_id' => $student->id]);
+            $addressinfo = Addressinfo::create($request->all());
+            $guardian = GuardianDetail::create($request->all());
+
+            $studentGuardian = StudentGuardian::create([
+                'students_id' => $student->id,
+                'guardians_id' => $guardian->id,
+            ]);
+
+            $pic_f = Str::random(6);
+            if ($request->hasFile('father_main_image')) {
+                $father_image = $request->file('father_main_image');
+                $father_image_name = $pic_f . '.' . $father_image->getClientOriginalExtension();
+                $father_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $father_image_name);
+            } else {
+                $father_image_name = "";
+            }
+            $parentdetail = $request->request->add(['father_image' => $father_image_name]);
+
+            $pic_m = Str::random(6);
+            if ($request->hasFile('mother_main_image')) {
+                $mother_image = $request->file('mother_main_image');
+                $mother_image_name = $pic_m . '.' . $mother_image->getClientOriginalExtension();
+                $mother_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $mother_image_name);
+            } else {
+                $mother_image_name = "";
+            }
+            $parentdetail = $request->request->add(['mother_image' => $mother_image_name]);
+
+            $pic_g = Str::random(6);
+            if ($request->hasFile('guardian_main_image')) {
+                $guardian_image = $request->file('guardian_main_image');
+                $guardian_image_name = $pic_g . '.' . $guardian_image->getClientOriginalExtension();
+                $guardian_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $guardian_image_name);
+            } else {
+                $guardian_image_name = "";
+            }
+            $parentdetail = $request->request->add(['guardian_image' => $guardian_image_name]);
+
+            //create login access
+            $name = isset($request->middle_name) ? $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name : $request->first_name . ' ' . $request->last_name;
+            $request->request->add(['role_id' => 6]);
+            $request->request->add(['hook_id' => $student->id]);
+            $request->request->add(['name' => $name]);
+            $regNum = $request->mobile_1;
+            $request->request->add(['reg_id' => $request->reg_no]);
+            $request->request->add(['password' => bcrypt($request->get('password'))]);
+            $request->request->add(['status' => 'active']);
+
+            $user = User::create($request->all());
+            $roles = [];
+            $roles[] = [
+                'user_id' => $user->id,
+                'role_id' => $request->role_id,
+            ];
+
+            $parentdetail = ParentDetail::create($request->all());
+
+            $user->userRole()->sync($roles);
+
+         
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        //check user&student with valid email
+        $validator = Validator::make($request->all(), [
+            'email' => 'max:100 | unique:users,email',
+        ]);
+
+        return redirect('public-registration-success');
 
     }
-
-
-
-
 
     public function register(AddValidation $request)
     {
@@ -163,18 +267,15 @@ class StudentPublicController extends CollegeBaseController
         //$regNum = $request->father_mobile_1;
         //$request->request->add(['reg_no' => $regNum]);
 
-
         $pic = Str::random(6);
         if ($request->hasFile('student_main_image')) {
             $student_image = $request->file('student_main_image');
-            $student_image_name = $pic. '.' .$student_image->getClientOriginalExtension();
+            $student_image_name = $pic . '.' . $student_image->getClientOriginalExtension();
             $student_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'studentProfile' . DIRECTORY_SEPARATOR, $student_image_name);
         } else {
             $student_image_name = "";
         }
-        $student = $request->request->add(['student_image' =>  $student_image_name]);
-
-       
+        $student = $request->request->add(['student_image' => $student_image_name]);
 
         $year = Year::where('active_status', '=', 1)->first()->title;
         //$regNum = $year.$request->faculty.$oldStudent->id;
@@ -182,7 +283,6 @@ class StudentPublicController extends CollegeBaseController
         $request->request->add(['semester' => $semSec ? $semSec : 0]);
         $request->request->add(['academic_status' => 8]);
         $request->request->add(['status' => 'in-active']);
-
 
         $student = Student::create($request->all());
 
@@ -195,43 +295,35 @@ class StudentPublicController extends CollegeBaseController
             'guardians_id' => $guardian->id,
         ]);
 
-
-
         $pic_f = Str::random(6);
         if ($request->hasFile('father_main_image')) {
             $father_image = $request->file('father_main_image');
-            $father_image_name = $pic_f. '.' .$father_image->getClientOriginalExtension();
+            $father_image_name = $pic_f . '.' . $father_image->getClientOriginalExtension();
             $father_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $father_image_name);
         } else {
             $father_image_name = "";
         }
         $parentdetail = $request->request->add(['father_image' => $father_image_name]);
 
-
         $pic_m = Str::random(6);
         if ($request->hasFile('mother_main_image')) {
             $mother_image = $request->file('mother_main_image');
-            $mother_image_name = $pic_m. '.' .$mother_image->getClientOriginalExtension();
+            $mother_image_name = $pic_m . '.' . $mother_image->getClientOriginalExtension();
             $mother_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $mother_image_name);
         } else {
             $mother_image_name = "";
         }
         $parentdetail = $request->request->add(['mother_image' => $mother_image_name]);
 
-
         $pic_g = Str::random(6);
         if ($request->hasFile('guardian_main_image')) {
             $guardian_image = $request->file('guardian_main_image');
-            $guardian_image_name = $pic_g. '.' .$guardian_image->getClientOriginalExtension();
+            $guardian_image_name = $pic_g . '.' . $guardian_image->getClientOriginalExtension();
             $guardian_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $guardian_image_name);
         } else {
             $guardian_image_name = "";
         }
         $parentdetail = $request->request->add(['guardian_image' => $guardian_image_name]);
-
-        
-
-      
 
         //create login access
         $name = isset($request->middle_name) ? $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name : $request->first_name . ' ' . $request->last_name;
@@ -284,7 +376,7 @@ class StudentPublicController extends CollegeBaseController
         // }
 
         //end sms email
-        //return back()->with('success','Student created successfully!');    
+        //return back()->with('success','Student created successfully!');
         //$request->session()->flash($this->message_success, $PublishMessage);
         $request->session()->flash($this->message_success, $this->panel . ' Info Created  Successfully.');
         //return redirect()->route($this->base_route);
@@ -537,17 +629,10 @@ class StudentPublicController extends CollegeBaseController
         }
     }
 
+    public function success()
+    {
 
-
-
-
-
-
-    public function success(){
-
-    return view('student.public-registration.success');
-
-
+        return view('student.public-registration.success');
 
     }
 

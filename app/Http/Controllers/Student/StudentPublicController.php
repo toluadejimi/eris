@@ -217,11 +217,7 @@ class StudentPublicController extends CollegeBaseController
             return $e->getMessage();
         }
 
-        //check user&student with valid email
-        $validator = Validator::make($request->all(), [
-            'email' => 'max:100 | unique:users,email',
-        ]);
-
+   
         return redirect('public-registration-success');
 
     }

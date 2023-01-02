@@ -254,7 +254,7 @@
 
 
                             <div class="col-sm-4">
-                                <label for="religion" class="form-label">Nationality</label>
+                                <label for="religion" class="form-label">Religion</label>
                                 <input type="text" class="form-control" name="religion" placeholder=""
                                     value="" required>
                                 <div class="invalid-feedback">
@@ -677,27 +677,27 @@
 
                             <div class="col-sm-4">
                                 <label for="mother_mobile_1" class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" name="mother_last_name" placeholder=""
+                                <input type="text" class="form-control" name="mother_mobile_1" placeholder=""
                                     value="">
                             </div>
 
 
                             <div class="col-sm-4">
-                                <label for="mother_first_name" class="form-label">Mother's Occupation</label>
-                                <input type="text" class="form-control" name="mother_first_name" placeholder=""
+                                <label for="mother_occupation" class="form-label">Mother's Occupation</label>
+                                <input type="text" class="form-control" name="mother_occupation" placeholder=""
                                     value="">
                             </div>
 
                             <div class="col-sm-4">
-                                <label for="mother_first_name" class="form-label">Mother's Occupation</label>
-                                <input type="text" class="form-control" name="mother_first_name" placeholder=""
+                                <label for="mother_office_number" class="form-label">Employer's Phone</label>
+                                <input type="text" class="form-control" name="mother_office_number" placeholder=""
                                     value="">
                             </div>
 
 
                             <div class="col-sm-4">
-                                <label for="mother_office_number" class="form-label">Mother's Phone Number</label>
-                                <input type="text" class="form-control" name="mother_office_number"
+                                <label for="mother_office" class="form-label">Employer's Address</label>
+                                <input type="text" class="form-control" name="mother_office"
                                     placeholder="" value="">
                             </div>
 

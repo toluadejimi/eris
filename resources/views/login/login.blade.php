@@ -59,7 +59,7 @@
 									</div>
 		            </div>
 		          </form>
-		          <p class="text-center"><a href="/public-registration">New Scholar Registration</a></p>
+		          <p class="text-center"><a href="public-registration">New Scholar Registration</a></p>
 		        </div>
 		      </div>
 				</div>

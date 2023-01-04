@@ -85,16 +85,27 @@ class StudentPublicController extends CollegeBaseController
     {
 
         $reg_no = $request->reg_no;
+		$email = $request->email;
+
+		
 
         try {
-
+			
+			 $get_email = User::where('email', $email)
+            ->first()->email ?? null;
+			
 
             $get_reg_no = Student::where('reg_no', $reg_no)
             ->first()->reg_no ?? null;
 
-        if ($get_reg_no == $reg_no) {
+            if ($get_reg_no == $reg_no) {
             return 'Student Already Registred';
-        }
+            }
+			
+			
+			if ($get_email == $email) {
+            return 'Student Login Email Registred';
+            }
 
             //check user&student with valid email
             $validator = Validator::make($request->all(), [

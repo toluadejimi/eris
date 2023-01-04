@@ -32,7 +32,7 @@
 			      		</div>
 							
 			      	</div>
-				<form action="/login" method="POST" class="signin-form">
+				<form action="login" method="POST" class="signin-form">
                     @csrf
 			      		<div class="form-group mb-3">
 			      			<label class="label" for="name">EMAIL</label>

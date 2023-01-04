@@ -46,8 +46,8 @@
       </div>
         <h3 class="mt-3 mb-4">Scholar's Registred Successfully</h3> 
         <hr>
-            <a  href="/public-registration" type="button" class="btn btn-success">Register another scholar's information</a>
-            <a href="/login" type="button" class="btn btn-primary">Login</a>
+            <a  href="public-registration" type="button" class="btn btn-success">Register another scholar's information</a>
+            <a href="school/login" type="button" class="btn btn-primary">Login</a>
       </div>
      
     </body>

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -152,7 +152,7 @@
             <div class="row g-5">
                 <div class="col-md-7 col-lg-12">
                     <hr>
-                    <form enctype="multipart/form-data" method="POST" action="/register-now">
+                    <form enctype="multipart/form-data" method="POST" action="register-now">
                         @csrf
 
                         <h4 class="mb-3">SCHOLAR'S

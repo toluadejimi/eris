@@ -16,7 +16,7 @@
             <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
                 <span class="sr-only">Toggle user menu</span>
 
-                            <img id="avatar" class="nav-user-photo" alt="" src="{{url('')/public/assets/images/avatars/book.png}}" width="300px" />
+                            <img id="avatar" class="nav-user-photo" alt="" src="{{url('')/assets/images/avatars/book.png}}" width="300px" />
             </button>
 
             <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#sidebar">

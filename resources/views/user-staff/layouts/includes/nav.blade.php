@@ -35,7 +35,8 @@
                 <li class="light-blue dropdown-modal user-min">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         @if(isset($profileImageSrc) && $profileImageSrc !== null)
-                     <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/asset/{{Auth::user()->profile_image}}" width="300px" />
+                     <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff{{Auth::user()->profile_image}}" width="300px" />
+
                         @else
                             <img class="nav-user-photo" src="{{ asset('assets/images/avatars/user.jpg') }}" alt="" />
                         @endif

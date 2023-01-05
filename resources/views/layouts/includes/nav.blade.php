@@ -16,7 +16,7 @@
             <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
                 <span class="sr-only">Toggle user menu</span>
 
-                <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff{{Auth::user()->profile_image}}" width="300px" />
+                <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff/{{Auth::user()->profile_image}}" width="300px" />
             </button>
 
             <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#sidebar">
@@ -35,10 +35,10 @@
                 <li class="light-blue dropdown-modal user-min">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         @if(isset($profileImageSrc) && $profileImageSrc !== null)
-                     <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff{{Auth::user()->profile_image}}" width="300px" />
+                     <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff/{{Auth::user()->profile_image}}" width="300px" />
 
                         @else
-                 <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff{{Auth::user()->profile_image}}" width="300px" />
+                 <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/staff/{{Auth::user()->profile_image}}" width="300px" />
 
                         @endif
 

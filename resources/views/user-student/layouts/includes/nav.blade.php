@@ -37,7 +37,7 @@
                         @if(isset($profileImageSrc) && $profileImageSrc !== null)
                      <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/user/{{Auth::user()->profile_image}}" width="300px" />
                         @else
-                            <img class="nav-user-photo" src="{{ asset('assets/images/avatars/user.jpg') }}" alt="" />
+                            <img class="nav-user-photo" src="{{ asset('assets/images/avatars/book.png') }}" alt="" />
                         @endif
                         <span class="user-info">
                             <small>Welcome,</small>

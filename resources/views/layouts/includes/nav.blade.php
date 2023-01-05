@@ -17,6 +17,7 @@
                 <span class="sr-only">Toggle user menu</span>
 
                 
+
                 <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/user/{{Auth::user()->profile_image}}" width="300px" />
             </button>
 

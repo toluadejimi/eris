@@ -6,9 +6,9 @@
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     @if(isset($generalSetting->institute))
                         {{$generalSetting->institute}}
-                        <strong class="text-capitalize orange2"> IMS </strong>
+                        <strong class="text-capitalize orange2"> ERIS IMS </strong>
                     @else
-                        UNLIMITED Edu Firm
+                        ERIS IMS
                     @endif
                 </small>
             </a>
@@ -16,7 +16,7 @@
             <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
                 <span class="sr-only">Toggle user menu</span>
 
-                <img src="{{ asset('assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
+                <img id="avatar" class="nav-user-photo" alt="" src="{{ asset($profileImageSrc) }}" width="300px" />
             </button>
 
             <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#sidebar">

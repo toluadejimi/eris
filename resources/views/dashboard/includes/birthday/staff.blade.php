@@ -6,7 +6,6 @@
             <th>Reg.Num</th>
             <th>Staff Name</th>
             <th>Designation</th>
-            <th>DateofBirth</th>
             {{--<th>Age</th>--}}
         </tr>
         </thead>
@@ -19,7 +18,9 @@
                     <td><a href="{{ route('staff.view', ['id' => $staff->id]) }}">{{ $staff->reg_no }}</a></td>
                     <td><a href="{{ route('staff.view', ['id' => $staff->id]) }}"> {{ $staff->first_name.' '.$staff->middle_name.' '. $staff->last_name }}</a></td>
                     <td>{{ ViewHelper::getDesignationId($staff->designation) }}</td>
+                    @if (Auth::user()->role_id == 3 && Auth::user()->role_id == 1 )
                     <td>{{\Carbon\Carbon::parse($staff->date_of_birth)->format('Y-m-d')}}</td>
+                    @endif
                     {{--<td>{{\Carbon\Carbon::parse($staff->date_of_birth)->age}}</td>--}}
                 </tr>
                 @php($i++)

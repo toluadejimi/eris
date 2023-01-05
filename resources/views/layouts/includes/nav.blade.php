@@ -16,6 +16,7 @@
             <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
                 <span class="sr-only">Toggle user menu</span>
 
+                
                 <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/public/images/user/{{Auth::user()->profile_image}}" width="300px" />
             </button>
 

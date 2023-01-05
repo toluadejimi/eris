@@ -312,7 +312,7 @@
 
 
     <div class="col-sm-12 mt-5">
-        <div class="label label-warning arrowed-in arrowed-right arrowed">EMERGRNCY CONTACT (In Case Parent/Guardiancs
+        <div class="label label-warning arrowed-in arrowed-right arrowed">EMERGENCY CONTACT (In Case Parent/Guardiancs
             cannot be contacted)</div>
     </div>
 

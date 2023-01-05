@@ -1195,7 +1195,7 @@
 
                         <hr class="hr-8">
                         <div class="col-sm-12 mt-2 mb-3">
-                            <h4 class="">EMERGRNCY CONTACT</h4>
+                            <h4 class="">EMERGENCY CONTACT</h4>
                             <h6 class=""> In
                                 Case Parent/Guardiancs
                                 cannot be contacted</h6>

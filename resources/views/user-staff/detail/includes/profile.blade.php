@@ -191,7 +191,7 @@
     </div>
 
     <div class="space-6"></div>
-    <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Temporary Address</div>
+     {{-- <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Temporary Address</div> --}}
     <div class="space-6"></div>
     <div class="profile-user-info profile-user-info-striped">
         <div class="profile-info-row">

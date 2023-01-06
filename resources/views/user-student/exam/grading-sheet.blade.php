@@ -51,9 +51,9 @@
                                                     <tr>
                                                         <th rowspan="2" class="text-center">SN</th>
                                                         <th colspan="2" class="text-center">SUBJECT / COURSE</th>
-                                                        <th rowspan="2" class="text-center">CREDIT</th>
-                                                        <th colspan="3" class="text-center">OBTAINED GRADE</th>
-                                                        <th rowspan="2"  class="text-center">GRADE POINT</th>
+                                                        {{-- <th rowspan="2" class="text-center">CREDIT</th> --}}
+                                                        <th colspan="4" class="text-center">OBTAINED GRADE</th>
+                                                        {{-- <th rowspan="2"  class="text-center">TOTAL GRADE</th> --}}
                                                         {{--<th rowspan="2"  class="text-center">REMARK</th>--}}
                                                     </tr>
                                                     <tr>
@@ -61,7 +61,7 @@
                                                         <th>TITLE</th>
                                                         <th>THEORY</th>
                                                         <th>PRACTICAL</th>
-                                                        <th>FINAL GRADE</th>
+                                                        <th>TOTAL GRADE</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -73,12 +73,14 @@
                                                                 <td>{{ $i }}</td>
                                                                 <td>{{ViewHelper::getSubjectCodeById($subject->subjects_id)}}</td>
                                                                 <td>{{ViewHelper::getSubjectById($subject->subjects_id)}}</td>
-                                                                <td class="text-center">{{ViewHelper::getSubCreditById($subject->subjects_id)}}</td>
-                                                                <td class="text-center">{{$subject->obtain_score_theory?$subject->obtain_score_theory:'-'}}</td>
+                                                                <td class="text-center">{{$subject->obtain_score_theory ?? 0}}</td>
                                                                 <td class="text-center">{{$subject->obtain_score_practical?$subject->obtain_score_practical:'-'}}</td>
-                                                                <td class="text-center">{{$subject->final_grade?$subject->final_grade:'-'}}</td>
+
+                                                                {{-- <td class="text-center">{{ViewHelper::getSubCreditById($subject->subjects_id)}}</td> --}}
+                                                                {{-- <td class="text-center">{{$subject->final_grade?$subject->final_grade:'-'}}</td> --}}
+                                                                {{-- <td>{{$subject->remark?$subject->remark:'-'}}</td> --}}
                                                                 <td class="text-center">{{$subject->grade_point?$subject->grade_point:'-'}}</td>
-                                                                {{--<td>{{$subject->remark?$subject->remark:'-'}}</td>--}}
+
                                                             </tr>
                                                             @php($i++)
                                                         @endforeach
@@ -86,15 +88,10 @@
                                                     </tbody>
                                                     <tfoot>
 
-                                                        @if ($student->gpa_point == 100)
-                                                        <td colspan="3" class="text-right"> EXCELLENT RESULT </td>
-                                                       
-                                                        @else
-                                                        <td colspan="3" class="text-right"> {{isset($student->remark)?$student->remark:''}}</td>
+                                                      
                                                         <td colspan="3" class="text-right">AVERAGE MARK : {{isset($student->average_point)?$student->average_point:''}}</td>
-                                                        <td colspan="3" class="text-right">TOTAL MARK : {{$student->gpa_point}}</td>
+                                                        <td colspan="5" class="text-right">TOTAL MARK : {{$student->gpa_point}}</td>
       
-                                                        @endif
                                                       
 
                                                    
@@ -119,13 +116,18 @@
                                                 <table width="100%">
                                                     <tr>
                                                         <td class="text-left">
-                                                            <strong>Date of Result Publication : {{ \Carbon\Carbon::parse(now())->format('Y-m-d')}}</strong>
+                                                            <strong style="border-top:1px black solid;">HEAD INSTRUCTOR  {{ \Carbon\Carbon::parse(now())->format('Y-m-d')}} </strong>
                                                             {{--<br>
                                                             <strong>Date of Issue : {{ \Carbon\Carbon::parse(now())->format('Y-m-d')}}</strong>--}}
                                                         </td>
+                                                        <img id="avatar" class="nav-user-photo" alt="" src="{{ asset('assets/images/avatars/stamp.png') }}" width="100px" />
+
+
                                                         <td class="text-center"><strong style="border-top:1px black solid;"></strong></td>
                                                         <td class="text-center"><strong style="border-top:1px black solid;"></strong></td>
-                                                        <td class="text-right"><strong style="border-top:1px black solid;">Controller of Examination</strong></td>
+                                                        <td  class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">Date of Result Publication : {{ \Carbon\Carbon::parse(now())->format('Y-m-d')}}</strong></td>
+
+                                                       
                                                     </tr>
                                                 </table>
                                             </div>

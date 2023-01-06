@@ -632,8 +632,8 @@ class HomeController extends CollegeBaseController
                 /*th absent*/
                 if($absent_theory != 1) {
                     if ($full_mark_theory > 0) {
-                        $th_per = ($obtain_mark_theory * 100) / $full_mark_theory;
-                        $subject->obtain_score_theory = $th_per ==0?'*NG':$this->getGrade($semester, $th_per);
+                        //$th_per = ($obtain_mark_theory * 100) / $full_mark_theory;
+                        $subject->obtain_score_theory; //= $th_per ==0?'*NG':$this->getGrade($semester, $th_per);
                     }
                 }else{
                     $subject->obtain_score_theory = "*AB";

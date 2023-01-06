@@ -946,6 +946,11 @@ class HomeController extends CollegeBaseController
 
     public function examScore(Request $request, $year=null,$month=null,$exam=null,$faculty=null,$semester=null)
     {
+
+dd('hello');
+
+
+
         $id = auth()->user()->hook_id;
         $student_id = $id;
         $data = [];

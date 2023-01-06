@@ -661,6 +661,11 @@ class HomeController extends CollegeBaseController
                 $subject->obtainedMark = $obtainedMark = $obtain_mark_theory + $obtain_mark_practical;
                 $subject->percentage = $percentage = ($obtainedMark*100)/ $totalMark;
                 //verify both th & pr absent
+               
+               
+               
+               
+               
                 if($absentBoth == false) {
                     $subject->final_grade = $this->getGrade($semester, $percentage);
                     $subject->grade_point = number_format((float)$this->getPoint($semester, $percentage),2);
@@ -726,6 +731,10 @@ class HomeController extends CollegeBaseController
         $data['exam'] = $exam;
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
+
+
+        dd($totalMark);
+
 
         return view(parent::loadDataToView($this->view_path.'.exam.grading-sheet'), compact('data'));
     }

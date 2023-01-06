@@ -572,6 +572,9 @@ class HomeController extends CollegeBaseController
 
     public function examScore(Request $request, $id, $year=null,$month=null,$exam=null,$faculty=null,$semester=null)
     {
+
+        dd('hello');
+        
         $this->panel = 'Exam Score';
         $id = Crypt::decryptString($id);
 
@@ -732,8 +735,6 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
-
-        dd($totalMark);
 
 
         return view(parent::loadDataToView($this->view_path.'.exam.grading-sheet'), compact('data'));

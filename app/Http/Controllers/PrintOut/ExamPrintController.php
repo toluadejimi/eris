@@ -467,7 +467,6 @@ class ExamPrintController extends CollegeBaseController
     public function examMarkLedger(Request $request)
     {
 
-        dd('hello');
         
         if ($request->has('chkIds')) {
             $exam_schedule_id = explode(',', $request->get('exam_schedule_id'));
@@ -503,6 +502,9 @@ class ExamPrintController extends CollegeBaseController
                     $pr = $subject->obtain_mark_practical;
                     $absent_theory = $subject->absent_theory;
                     $absent_practical = $subject->absent_practical;
+
+
+                    dd($pr);
 
                     /*theory mark comparision*/
                     if(isset($subject->pass_mark_theory) && $subject->pass_mark_theory != null){

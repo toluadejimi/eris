@@ -947,8 +947,6 @@ class HomeController extends CollegeBaseController
     public function examScore(Request $request, $year=null,$month=null,$exam=null,$faculty=null,$semester=null)
     {
 
-dd('hello');
-
 
 
         $id = auth()->user()->hook_id;
@@ -992,6 +990,12 @@ dd('hello');
 
                 if(!$joinSub) return back();
 
+
+
+
+            
+
+
                 $subject->subjects_id = $joinSub->subjects_id;
 
                 $subject->sorting_order = $joinSub->sorting_order;
@@ -1003,6 +1007,10 @@ dd('hello');
                 $absent_theory = $subject->absent_theory;
                 $obtain_mark_practical = $subject->obtain_mark_practical;
                 $absent_practical = $subject->absent_practical;
+
+
+
+                dd($obtain_mark_theory);
 
                 /*th absent*/
                 if($absent_theory != 1) {
@@ -1035,6 +1043,9 @@ dd('hello');
                 $subject->totalMark = $totalMark = $full_mark_theory + $full_mark_practical;
                 $subject->obtainedMark = $obtainedMark = $obtain_mark_theory + $obtain_mark_practical;
                 $subject->percentage = $percentage = ($obtainedMark*100)/ $totalMark;
+                
+                
+                
                 //verify both th & pr absent
                 if($absentBoth == false) {
                     $subject->final_grade = $this->getGrade($semester, $percentage);
@@ -1084,6 +1095,8 @@ dd('hello');
             $value->total_mark_theory = $obtainedMarkTh;
             $value->total_mark_practical = $obtainedMarkPr;
             $value->total_obtain = $obtainedMark;
+
+
             /*Calculate percentage*/
             $value->percentage = $percentage = ($obtainedMark*100)/ $totalMark;
 

@@ -315,7 +315,6 @@ class ExamPrintController extends CollegeBaseController
     public function gradingSystem(Request $request)
     {
 
-        dd('hello');
 
 
         if ($request->has('chkIds')) {
@@ -468,6 +467,8 @@ class ExamPrintController extends CollegeBaseController
     public function examMarkLedger(Request $request)
     {
 
+        dd('hello');
+        
         if ($request->has('chkIds')) {
             $exam_schedule_id = explode(',', $request->get('exam_schedule_id'));
             $student_id = $request->get('chkIds');

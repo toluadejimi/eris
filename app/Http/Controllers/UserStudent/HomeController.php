@@ -947,8 +947,7 @@ class HomeController extends CollegeBaseController
     public function examScore(Request $request, $year=null,$month=null,$exam=null,$faculty=null,$semester=null)
     {
 
-
-
+       
         $id = auth()->user()->hook_id;
         $student_id = $id;
         $data = [];
@@ -959,6 +958,9 @@ class HomeController extends CollegeBaseController
             ['faculty_id', '=' , $faculty],
             ['semesters_id', '=' , $semester],
         ];
+
+       
+
 
         $examSchedule = ExamSchedule::where($whereCondition)
             ->where('publish_status',1)
@@ -975,12 +977,14 @@ class HomeController extends CollegeBaseController
             ->where('id', $student_id)
             ->get();
 
+
         /*filter student with schedule subject mark ledger*/
         $filteredStudent  = $students->filter(function ($value, $key) use ($exam_schedule_id, $semester){
             $subject = $value->markLedger()
                 ->select( 'exam_schedule_id',  'obtain_mark_theory', 'obtain_mark_practical','absent_theory','absent_practical')
                 ->whereIn('exam_schedule_id', $exam_schedule_id)
                 ->get();
+        
 
             //filter subject and joint mark from schedules;
             $filteredSubject  = $subject->filter(function ($subject, $key) use($semester){
@@ -988,13 +992,10 @@ class HomeController extends CollegeBaseController
                     ->select('subjects_id','full_mark_theory', 'pass_mark_theory', 'full_mark_practical', 'pass_mark_practical','sorting_order')
                     ->first();
 
+
+
+
                 if(!$joinSub) return back();
-
-
-
-
-            
-
 
                 $subject->subjects_id = $joinSub->subjects_id;
 
@@ -1009,24 +1010,26 @@ class HomeController extends CollegeBaseController
                 $absent_practical = $subject->absent_practical;
 
 
+               // dd($obtain_mark_theory, $subject->sorting_order);
 
-                dd($obtain_mark_theory);
 
                 /*th absent*/
                 if($absent_theory != 1) {
                     if ($full_mark_theory > 0) {
-                        $th_per = ($obtain_mark_theory * 100) / $full_mark_theory;
-                        $subject->obtain_score_theory = $th_per ==0?'*NG':$this->getGrade($semester, $th_per);
+                        $th_per = $obtain_mark_theory;
+                        $subject->obtain_score_theory  = $th_per; //==0?'*NG':$this->getGrade($semester, $th_per);
                     }
                 }else{
                     $subject->obtain_score_theory = "*AB";
                 }
 
+               // dd($subject->obtain_score_theory, $th_per);
+
                 /*pr absent*/
                 if($absent_practical != 1) {
                     if($full_mark_practical > 0) {
-                        $pr_per = ($obtain_mark_practical * 100) / $full_mark_practical;
-                        $subject->obtain_score_practical = $pr_per ==0?"*NG":$this->getGrade($semester, $pr_per);
+                        $pr_per = $obtain_mark_practical; //* 100) / $full_mark_practical;
+                        $subject->obtain_score_practical = $pr_per; // ==0?"*NG":$this->getGrade($semester, $pr_per);
                     }
                 }else{
                     $pr_per = 0;
@@ -1043,13 +1046,11 @@ class HomeController extends CollegeBaseController
                 $subject->totalMark = $totalMark = $full_mark_theory + $full_mark_practical;
                 $subject->obtainedMark = $obtainedMark = $obtain_mark_theory + $obtain_mark_practical;
                 $subject->percentage = $percentage = ($obtainedMark*100)/ $totalMark;
-                
-                
-                
                 //verify both th & pr absent
                 if($absentBoth == false) {
                     $subject->final_grade = $this->getGrade($semester, $percentage);
-                    $subject->grade_point = number_format((float)$this->getPoint($semester, $percentage),2);
+                    $subject->grade_point = $subject->obtain_score_theory + $subject->obtain_score_pratical; //number_format((float)$this->getPoint($semester, $percentage),2);
+                    
                     $subject->remark = $this->getRemark($semester, $percentage);
                 }else{
                     $subject->final_grade = "*MG";
@@ -1071,8 +1072,15 @@ class HomeController extends CollegeBaseController
                 return is_numeric($value);
             });
 
-            $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection);// / $subject->count();
             $value->gpa_point = number_format((float)$gradePoint, 2);
+
+
+            
+            $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
+            $value->average_point = number_format((float)$gradePoint, 2);
+
+
 
             /*calculate total mark & percentage*/
             $otm = array_pluck($value->subjects,'obtain_mark_theory');
@@ -1095,8 +1103,6 @@ class HomeController extends CollegeBaseController
             $value->total_mark_theory = $obtainedMarkTh;
             $value->total_mark_practical = $obtainedMarkPr;
             $value->total_obtain = $obtainedMark;
-
-
             /*Calculate percentage*/
             $value->percentage = $percentage = ($obtainedMark*100)/ $totalMark;
 

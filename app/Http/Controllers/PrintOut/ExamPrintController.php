@@ -504,8 +504,6 @@ class ExamPrintController extends CollegeBaseController
                     $absent_practical = $subject->absent_practical;
 
 
-                    dd($pr);
-
                     /*theory mark comparision*/
                     if(isset($subject->pass_mark_theory) && $subject->pass_mark_theory != null){
                         if($absent_theory == 1) {

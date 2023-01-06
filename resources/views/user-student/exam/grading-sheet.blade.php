@@ -69,6 +69,7 @@
                                                         @php($i=1)
                                                         @foreach($student->subjects as $subject)
                                                             <tr>
+                                                                
                                                                 <td>{{ $i }}</td>
                                                                 <td>{{ViewHelper::getSubjectCodeById($subject->subjects_id)}}</td>
                                                                 <td>{{ViewHelper::getSubjectById($subject->subjects_id)}}</td>
@@ -84,14 +85,33 @@
                                                     @endif
                                                     </tbody>
                                                     <tfoot>
-                                                    <td colspan="3" class="text-right">AVERAGE GRADE : {{ isset($student->gpa_average)?$student->gpa_average:'' }}</td>
-                                                    <td colspan="3" class="text-right">GRADE POINT AVERAGE : {{isset($student->gpa_point)?$student->gpa_point:''}}</td>
-                                                    <td colspan="3" class="text-right">REMARK : {{isset($student->remark)?$student->remark:''}}</td>
+
+                                                        @if ($student->gpa_point == 100)
+                                                        <td colspan="3" class="text-right"> EXCELLENT RESULT </td>
+                                                       
+                                                        @else
+                                                        <td colspan="3" class="text-right"> {{isset($student->remark)?$student->remark:''}}</td>
+                                                        <td colspan="3" class="text-right">AVERAGE MARK : {{isset($student->average_point)?$student->average_point:''}}</td>
+                                                        <td colspan="3" class="text-right">TOTAL MARK : {{$student->gpa_point}}</td>
+      
+                                                        @endif
+                                                      
+
+                                                   
+
                                                     </tfoot>
                                                 </table>
                                             </div>
-                                            <div class="smaller-80">
-                                                <strong>Abbreviations | </strong><strong>TH</strong>:Theory,<strong>PR</strong>:Practical,<strong>*AB</strong>:Absent,<strong>*NG</strong>:No Grade,<strong>*MG</strong>:Missing Grade, <strong>*MP</strong>:Missing Point
+
+
+                                            <div class="smaller-100">
+                                                @if ($student->average_point < 50)
+                                                <strong>PRINCIPAL'S COMMENT: | Poor Academic Perfomance. More Room for Improvment.
+                                                @elseif ($student->average_point < 70)
+                                                <strong>PRINCIPAL'S COMMENT: | Good Academic Perfomance. More Room for Improvment.
+                                                @else
+                                                <strong>PRINCIPAL'S COMMENT: | Excellent Academic Perfomance. Keep It Up.
+                                                @endif
                                             </div>
                                             <div class="space-32"></div>
                                             <div class="space-32"></div>

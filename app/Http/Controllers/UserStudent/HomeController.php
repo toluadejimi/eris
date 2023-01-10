@@ -50,6 +50,10 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use URL;
+use Redirect;
+use Session;
+
+
 
 class HomeController extends CollegeBaseController
 {
@@ -842,25 +846,42 @@ class HomeController extends CollegeBaseController
     /*Exam group*/
     public function exams()
     {
+
+        $get_fee_owe = FeeMaster::where('students_id', Auth::id())
+        ->sum('fee_amount');
+
+        $get_fee_paid = FeeCollection::where('students_id', Auth::id())
+        ->sum('paid_amount');
+
+
+        if($get_fee_owe > $get_fee_paid){
+            $owing = true;
+            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
+        } else{
+            $owing = false;
+        }
+
+
+
         $this->panel = "Exams";
         $id = auth()->user()->hook_id;
         $data = [];
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
-        $year = Year::where('active_status', 1)->first();
-        if (!$year) {
-            return back();
-        }
+        //$year = Year::where('active_status', 1)->first();
+        // if (!$year) {
+        //     return back();
+        //}
 
         $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
         //->where([['semesters_id',$semester->id],['years_id',$year->id]])
-            ->where('semesters_id', $semester->id)
+            //->where('semesters_id', $semester->id)
             ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
             ->orderBy('years_id', 'desc')
             ->orderBy('months_id', 'asc')
             ->get();
 
-        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data'));
+        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
     }
 
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)

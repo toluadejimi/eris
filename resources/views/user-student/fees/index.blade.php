@@ -22,9 +22,15 @@
 
                 <div class="row">
                     <div class="col-xs-12 ">
-                        @include('includes.flash_messages')
+                           
+                        {{-- @include('includes.flash_messages') --}}
                         <!-- PAGE CONTENT BEGINS -->
-                        <div class="form-horizontal">
+                       
+                        @if (Session::has('message'))
+                        <div class="alert alert-info">{{ Session::get('message') }}</div>
+                        @endif
+
+
                             <div class="hr hr-4 hr-dotted"></div>
                             <div class="row text-uppercase">
                                 <div class="col-sm-5 pull-right align-right">

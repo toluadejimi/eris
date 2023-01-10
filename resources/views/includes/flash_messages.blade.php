@@ -30,6 +30,7 @@
         </button>
         <i class="ace-icon fa fa-hand-o-right"></i>
         {{ session()->get('message_danger') }}
+        
     </div>
 
 @endif

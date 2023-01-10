@@ -221,8 +221,8 @@
                 <tfoot>
 
 
-                    <td colspan="5" class="text-right">AVERAGE MARK : {{$average}}</td>
-                    <td colspan="8" class="text-right">TOTAL MARK : {{ $totalmarks }}
+                    <b><td colspan="5" class="text-right">AVERAGE MARK : {{$average}}</b></td>
+                    <B><td colspan="8" class="text-right">TOTAL MARK : {{ $totalmarks }}</b>
                     </td>
 
 

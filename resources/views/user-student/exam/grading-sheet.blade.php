@@ -195,10 +195,15 @@
                         <td class="text-center">{{$subject->total ?? 0}}</td>
                         <td> @if ($subject->total >= 90)
                             EXECELLENT
-                            @elseif (($subject->total >= 80 && $subject->total <= 89)) GOOD @elseif(($subject->total >=
-                                70
-                                && $subject->total<= 79)) VERY GOOD @elseif (($subject->total >= 60 && $subject->total
-                                    <= 69)) AVERAGE @elseif (($subject->total <= 50)) FAIL @endif </td>
+                            @elseif (($subject->total >= 80 && $subject->total <= 89)) 
+                            VERY GOOD 
+                            @elseif(($subject->total >=70 && $subject->total<= 79)) 
+                            GOOD 
+                            @elseif (($subject->total >= 60 && $subject->total<= 69)) 
+                            AVERAGE 
+                            @elseif (($subject->total <= 50)) 
+                            FAIL @endif 
+                        </td>
                                             {{--
                         <td class="text-center">
                             {{ViewHelper::getSubCreditById($subject->subjects_id)}}</td>

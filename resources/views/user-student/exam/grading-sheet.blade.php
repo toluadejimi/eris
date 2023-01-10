@@ -222,7 +222,7 @@
 
 
                     <b><td colspan="5" class="text-right"><strong>AVERAGE MARK : {{$average}}</b></td>
-                    <B><td colspan="8" class="text-right"><strong>TOTAL MARK : {{ $totalmarks }}</b>
+                    <B><td colspan="7" class="text-right"><strong>TOTAL MARK : {{ $totalmarks }}</b>
                     </td>
 
 

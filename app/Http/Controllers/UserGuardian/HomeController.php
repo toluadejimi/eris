@@ -513,6 +513,12 @@ class HomeController extends CollegeBaseController
         $data['subjects'] = ExamSchedule::select('exam_schedules.id','exam_schedules.subjects_id',
             'exam_schedules.date', 'exam_schedules.start_time', 'exam_schedules.end_time',
             'exam_schedules.full_mark_theory', 'exam_schedules.pass_mark_theory',
+            'exam_schedules.full_mark_ca_test1', 'exam_schedules.pass_mark_ca_test1', 
+            'exam_schedules.full_mark_ca_test2', 'exam_schedules.pass_mark_ca_test2', 
+            'exam_schedules.full_mark_assign', 'exam_schedules.pass_mark_assign', 
+            'exam_schedules.full_mark_class_exe', 'exam_schedules.pass_mark_class_exe', 
+            'exam_schedules.full_mark_affective', 'exam_schedules.pass_mark_affective', 
+            'exam_schedules.full_mark_physc', 'exam_schedules.pass_mark_physc', 
             'exam_schedules.full_mark_practical',
             'exam_schedules.pass_mark_practical', 's.code', 's.title')
             ->where([
@@ -614,7 +620,14 @@ class HomeController extends CollegeBaseController
             //filter subject and joint mark from schedules;
             $filteredSubject  = $subject->filter(function ($subject, $key) use($semester){
                 $joinSub = $subject->examSchedule()
-                    ->select('subjects_id','full_mark_theory', 'pass_mark_theory', 'full_mark_practical', 'pass_mark_practical','sorting_order')
+                    ->select('subjects_id','full_mark_theory',
+                    'full_mark_ca_test1', 'pass_mark_ca_test1', 
+                    'full_mark_ca_test2', 'pass_mark_ca_test2', 
+                    'full_mark_assign', 'pass_mark_assign', 
+                    'full_mark_class_exe', 'pass_mark_class_exe', 
+                    'full_mark_affective', 'pass_mark_affective', 
+                    'full_mark_physc', 'pass_mark_physc', 
+                      'pass_mark_theory', 'full_mark_practical', 'pass_mark_practical','sorting_order')
                     ->first();
 
                 if(!$joinSub) return back();
@@ -624,6 +637,11 @@ class HomeController extends CollegeBaseController
                 $subject->sorting_order = $joinSub->sorting_order;
                 $subject->full_mark_theory =$full_mark_theory = $joinSub->full_mark_theory;
                 $subject->pass_mark_theory = $pass_mark_theory = $joinSub->pass_mark_theory;
+
+
+
+
+                
                 $subject->full_mark_practical = $full_mark_practical = $joinSub->full_mark_practical;
                 $subject->pass_mark_practical = $pass_mark_practical = $joinSub->pass_mark_practical;
                 $obtain_mark_theory = $subject->obtain_mark_theory;

@@ -19,23 +19,20 @@
                                     <table width="100%" class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th rowspan="2" class="text-center">SN</th>
-                                            <th rowspan="2" class="text-center">SUBJECT CODE</th>
-                                            <th rowspan="2" class="text-center">SUBJECT TITLE</th>
-                                            <th colspan="2" class="text-center">FULL MARK</th>
-                                            <th colspan="2" class="text-center">PASS MARK</th>
-                                            <th colspan="2" class="text-center">OBTAINED MARK</th>
-                                            <th rowspan="2" class="text-center">TOTAL</th>
-                                            <th rowspan="2" class="text-center">REMARK</th>
+                                            <th>SN</th>
+                                            <th>REG NO</th>
+                                            <th>STUDENT NAME</th>
+                                            <th>1ST CA (15 Marks)</th>
+                                            <th>2ND CA (15 Marks)</th>
+                                            <th>ASSIGNMENT(4 Marks)</th>
+                                            <th>CLASS EXERCISE (6 Marks)</th>
+                                            <th>AFFECTIVE (10 Marks)</th>
+                                            <th>PSYCHOMOTOR (10 Marks)</th>
+                                            <th>EXAM (40 MARKS)</th>
+                                            <th>TOTAL MARK (100 MARKS)</th>
+
                                         </tr>
-                                        <tr>
-                                            <th>TH</th>
-                                            <th>PR</th>
-                                            <th>TH</th>
-                                            <th>PR</th>
-                                            <th>TH</th>
-                                            <th>PR</th>
-                                        </tr>
+                                        
                                         </thead>
                                         <tbody>
                                         @if($examScore && $examScore->count() > 0)
@@ -45,14 +42,17 @@
                                                     <td>{{ $i }}</td>
                                                     <td>{{ViewHelper::getSubjectCodeById($subject->subjects_id)}}</td>
                                                     <td>{{ViewHelper::getSubjectById($subject->subjects_id)}}</td>
-                                                    <td>{{$subject->full_mark_theory?$subject->full_mark_theory:'-'}}</td>
-                                                    <td>{{$subject->full_mark_practical?$subject->full_mark_practical:'-'}}</td>
-                                                    <td>{{$subject->pass_mark_theory?$subject->pass_mark_theory:'-'}}</td>
-                                                    <td>{{$subject->pass_mark_practical?$subject->pass_mark_practical:'-'}}</td>
-                                                    <td>{{$subject->obtain_mark_theory?$subject->obtain_mark_theory.$subject->th_remark:'-'}}</td>
-                                                    <td>{{$subject->obtain_mark_practical?$subject->obtain_mark_practical.$subject->pr_remark:'-'}}</td>
-                                                    <td>{{$subject->total_obtain_mark?$subject->total_obtain_mark:'-'}}</td>
-                                                    <td>{{$subject->remark?$subject->remark:''}}</td>
+                                                    <td>{{$subject->ca_test1}}</td>
+                                                    <td>{{$subject->ca_test2}}</td>
+                                                    <td>{{$subject->assign}}</td>
+                                                    <td>{{$subject->class_exe}}</td>
+                                                    <td>{{$subject->affective}}</td>
+                                                    <td>{{$subject->physc}}</td>
+                                                    <td>{{$subject->obtain_mark_theory}}</td>
+                                                    <td>{{$subject->total}}</td>
+
+                                                    
+
                                                 </tr>
                                                 @php($i++)
                                             @endforeach

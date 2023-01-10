@@ -104,6 +104,18 @@ class ExamPrintController extends CollegeBaseController
         $data['subjects'] = ExamSchedule::select('exam_schedules.subjects_id',
             'exam_schedules.date', 'exam_schedules.start_time', 'exam_schedules.end_time',
             'exam_schedules.full_mark_theory', 'exam_schedules.pass_mark_theory',
+            'exam_schedules.full_mark_ca_test1',
+            'exam_schedules.pass_mark_ca_test1',
+            'exam_schedules.full_mark_ca_test2',
+            'exam_schedules.pass_mark_ca_test2',
+            'exam_schedules.full_mark_assign',
+            'exam_schedules.pass_mark_assign',
+            'exam_schedules.full_mark_class_exe',
+            'exam_schedules.pass_mark_class_exe',
+            'exam_schedules.full_mark_affective',
+            'exam_schedules.pass_mark_affective',
+            'exam_schedules.full_mark_physc',
+            'exam_schedules.pass_mark_physc',
             'exam_schedules.full_mark_practical',
             'exam_schedules.pass_mark_practical', 's.code', 's.title')
             ->where($whereCondition)
@@ -154,13 +166,18 @@ class ExamPrintController extends CollegeBaseController
             /*filter student with schedule subject markledger*/
             $filteredStudent  = $students->filter(function ($value, $key) use ($exam_schedule_id){
                 $subject = $value->markLedger()
-                    ->select( 'exam_schedule_id',  'obtain_mark_theory', 'obtain_mark_practical','absent_theory','absent_practical')
+                    ->select( 'exam_schedule_id',  'obtain_mark_theory',  'ca_test1','ca_test2','assign','class_exe','affective','physc','total', 'obtain_mark_practical','absent_theory','absent_practical')
                     ->whereIn('exam_schedule_id', $exam_schedule_id)
                     ->get();
                 //filter subject and joint mark from schedules;
                 $filteredSubject  = $subject->filter(function ($subject, $key) {
                     $joinSub = $subject->examSchedule()
-                        ->select('subjects_id','full_mark_theory', 'pass_mark_theory', 'full_mark_practical', 'pass_mark_practical','sorting_order')
+                        ->select('subjects_id','full_mark_theory', 'full_mark_ca_test1', 'pass_mark_ca_test1', 
+                        'full_mark_ca_test2', 'pass_mark_ca_test2', 
+                        'full_mark_assign', 'pass_mark_assign', 
+                        'full_mark_class_exe', 'pass_mark_class_exe', 
+                        'full_mark_affective', 'pass_mark_affective', 
+                        'full_mark_physc', 'pass_mark_physc', 'pass_mark_theory', 'full_mark_practical', 'pass_mark_practical','sorting_order')
                         ->first();
 
                     $subject->subjects_id = $joinSub->subjects_id;
@@ -169,6 +186,19 @@ class ExamPrintController extends CollegeBaseController
                     $subject->pass_mark_theory = $joinSub->pass_mark_theory;
                     $subject->full_mark_practical = $joinSub->full_mark_practical;
                     $subject->pass_mark_practical = $joinSub->pass_mark_practical;
+
+                    $subject->$ca_test1 = $joinSub->ca_test1;
+                    $subject->$ca_test2 = $joinSub->ca_test2;
+                    $subject->$assign = $joinSub->assign;
+                    $subject->$class_exe = $joinSub->class_exe;
+                    $subject->$affective = $joinSub->affective;
+                    $subject->$physc = $joinSub->physc;
+           
+
+
+
+
+
                     $th = $subject->obtain_mark_theory;
                     $pr = $subject->obtain_mark_practical;
                     $absent_theory = $subject->absent_theory;

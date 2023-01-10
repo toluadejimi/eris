@@ -3,14 +3,25 @@
         <thead>
         <tr>
             <th>Sort</th>
-            <th width="30%">Subject</th>
-            <th>Date</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>FM (T)</th>
-            <th>PM (T)</th>
-            <th>FM (P)</th>
-            <th>PM (P)</th>
+            <th width="30%">SUBJECT</th>
+            <th>DATE</th>
+            <th>1ST CA FM</th>
+            <th>1ST CA PM</th>
+            <th>2ND CA FM</th>
+            <th>2ND CA PM</th>
+            <th>ASS FM</th>
+            <th>ASS PM</th>
+            <th>CLASS EXE FM</th>
+            <th>CLASS EXE  PM</th>
+            <th>AFFECTIVE FM</th>
+            <th>AFFECTIVE PM</th>
+
+            <th>PSYCHO FM</th>
+            <th>PSYCHO PM</th>
+
+            <th>EXAM FM</th>
+            <th>EXAM PM</th>
+
             <th></th>
         </tr>
         </thead>

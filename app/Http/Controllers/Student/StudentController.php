@@ -423,6 +423,12 @@ class StudentController extends CollegeBaseController
                 $subject->pass_mark_theory = $joinSub->pass_mark_theory;
                 $subject->full_mark_practical = $joinSub->full_mark_practical;
                 $subject->pass_mark_practical = $joinSub->pass_mark_practical;
+                // $subject->$ca_test1 = $joinSub->ca_test1;
+                // $subject->$ca_test2 = $joinSub->ca_test2;
+                // $subject->$assign = $joinSub->assign;
+                // $subject->$class_exe = $joinSub->class_exe;
+                // $subject->$affective = $joinSub->affective;
+                // $subject->$physc = $joinSub->physc;
 
                 /*attach exam detail*/
                 $subject->years_id = $joinSub->years_id;
@@ -431,6 +437,26 @@ class StudentController extends CollegeBaseController
                 $subject->faculty_id = $joinSub->faculty_id;
                 $subject->semesters_id = $joinSub->semesters_id;
                 //more
+
+                $th = $subject->ca_test1;
+                $th = $subject->ca_test2;
+                $th = $subject->assign;
+                $th = $subject->class_exe;
+                $th = $subject->affective;
+                $th = $subject->physc;
+                $th = $subject->total;
+
+
+                $ca_test1 = $subject->ca_test1;
+                $ca_test2 = $subject->ca_test2;
+                $assign = $subject->assign;
+                $class_exe = $subject->class_exe;
+                $affective = $subject->affective;
+                $physc = $subject->physc;
+                $total = $subject->total;
+
+
+
                 $th = $subject->obtain_mark_theory;
                 $pr = $subject->obtain_mark_practical;
                 $absent_theory = $subject->absent_theory;
@@ -450,6 +476,12 @@ class StudentController extends CollegeBaseController
                     $subject->obtain_mark_theory = "-";
                 }
 
+
+
+            
+
+
+
                 /*Practical mark comparision*/
                 if(isset($subject->pass_mark_practical) && $subject->pass_mark_practical != null){
                     if($absent_practical == 1) {
@@ -466,42 +498,52 @@ class StudentController extends CollegeBaseController
 
                 /*verify again the new obtain values are number or not*/
                 $th_new = $subject->obtain_mark_theory;
-                $pr_new = $subject->obtain_mark_practical;
+                $th_new = $subject->ca_test1;
+                $th_new = $subject->ca_test2;
+                $th_new = $subject->assign;
+                $th_new = $subject->class_exe;
+                $th_new = $subject->affective;
+                $th_new = $subject->physc;
+                $th_new = $subject->total;
 
-                $subject->total_obtain_mark = (is_numeric($th_new)?$th_new:0) + (is_numeric($pr_new)?$pr_new:0);
 
-                if($th_new >= $subject->pass_mark_theory && $pr_new >= $subject->pass_mark_practical){
-                    $subject->remark = '';
-                    if($th_new > $subject->full_mark_theory){
-                        $subject->th_remark = '*N';
-                        $subject->remark = '*';
-                    }
 
-                    if($pr_new > $subject->full_mark_practical){
-                        $subject->pr_remark = '*N';
-                        $subject->remark = '*';
-                    }
+                // $pr_new = $subject->obtain_mark_practical;
 
-                }else{
-                    $subject->remark = '*';
+                // $subject->total_obtain_mark = (is_numeric($th_new)?$th_new:0) + (is_numeric($pr_new)?$pr_new:0);
 
-                    if($th_new < $subject->pass_mark_theory){
-                        $subject->th_remark = '*';
-                    }
+                // if($th_new >= $subject->pass_mark_theory && $pr_new >= $subject->pass_mark_practical){
+                //     $subject->remark = '';
+                //     if($th_new > $subject->full_mark_theory){
+                //         $subject->th_remark = '*N';
+                //         $subject->remark = '*';
+                //     }
 
-                    if($pr_new < $subject->pass_mark_practical){
-                        $subject->pr_remark = '*';
-                    }
+                //     if($pr_new > $subject->full_mark_practical){
+                //         $subject->pr_remark = '*N';
+                //         $subject->remark = '*';
+                //     }
 
-                    if($th_new > $subject->full_mark_theory){
-                        $subject->th_remark = '*N';
-                    }
+                // }else{
+                //     $subject->remark = '*';
 
-                    if($pr_new > $subject->full_mark_practical){
-                        $subject->pr_remark = '*N';
-                    }
+                //     if($th_new < $subject->pass_mark_theory){
+                //         $subject->th_remark = '*';
+                //     }
 
-                }
+                //     if($pr_new < $subject->pass_mark_practical){
+                //         $subject->pr_remark = '*';
+                //     }
+
+                //     if($th_new > $subject->full_mark_theory){
+                //         $subject->th_remark = '*N';
+                //     }
+
+                //     if($pr_new > $subject->full_mark_practical){
+                //         $subject->pr_remark = '*N';
+                //     }
+
+                // }
 
                 return $subject;
             }

@@ -31,11 +31,18 @@ class SubjectController extends CollegeBaseController
     public function index()
     {
        $data = [];
-       $data['subject'] = Subject::select('id', 'title', 'code', 'full_mark_theory', 'pass_mark_theory',
-           'full_mark_practical', 'pass_mark_practical', 'credit_hour', 'sub_type', 'class_type', 'staff_id',
-           'description','status')
-            ->orderBy('title')
-            ->get();
+       $data['subject'] = Subject::select('id', 'title', 'code', 'full_mark_theory',
+        'full_mark_ca_test1', 'pass_mark_ca_test1', 
+        'full_mark_ca_test2', 'pass_mark_ca_test2', 
+        'full_mark_assign', 'pass_mark_assign', 
+        'full_mark_class_exe', 'pass_mark_class_exe', 
+        'full_mark_affective', 'pass_mark_affective', 
+        'full_mark_physc', 'pass_mark_physc', 
+        'pass_mark_theory',
+        'full_mark_practical', 'pass_mark_practical', 'credit_hour', 'sub_type', 'class_type', 'staff_id',
+        'description','status')
+        ->orderBy('title')
+        ->get();
 
         $data['staffs'] = [];
         $data['staffs'][] = 'Select Teacher';
@@ -62,7 +69,14 @@ class SubjectController extends CollegeBaseController
         if (!$data['row'] = Subject::find($id))
             return parent::invalidRequest();
 
-        $data['subject'] = Subject::select('id', 'title', 'code', 'full_mark_theory', 'pass_mark_theory',
+        $data['subject'] = Subject::select('id', 'title', 'code',
+            'full_mark_theory', 'pass_mark_theory',
+            'full_mark_ca_test1', 'pass_mark_ca_test1', 
+            'full_mark_ca_test2', 'pass_mark_ca_test2', 
+            'full_mark_assign', 'pass_mark_assign', 
+            'full_mark_class_exe', 'pass_mark_class_exe', 
+            'full_mark_affective', 'pass_mark_affective', 
+            'full_mark_physc', 'pass_mark_physc', 
             'full_mark_practical', 'pass_mark_practical', 'credit_hour', 'sub_type', 'class_type', 'staff_id',
             'description','status')
             ->orderBy('title')

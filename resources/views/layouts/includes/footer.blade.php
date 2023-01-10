@@ -33,6 +33,10 @@
     <!-- basic scripts -->
     <!--[if !IE]> -->
     <script src="{{ asset('assets/js/jquery-2.1.4.min.js') }}"></script>
+
+
+    {{-- <script src="https://unpkg.com/jquery@2.1.3/dist/jquery.js"></script> --}}
+
     {{--<script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>--}}
     <!-- <![endif]-->
 
@@ -141,11 +145,21 @@
 
     {{--PReloader JS--}}
     <script>
-        /*$(document).ready(function () {
+        $(document).ready(function () {
             var skinClass = localStorage.getItem('ace_skin');
             document.body.classList.add(skinClass);
             jQuery('#overlay').fadeOut("fast","linear");
 
-        });*/
+        });
     </script>
+
+
+<div id="editor"></div>
+
+
+
+
+
+
+
 </html>

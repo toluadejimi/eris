@@ -10,12 +10,19 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>S.N.</th>
-                    <th>Reg.Number</th>
-                    <th>Student Name</th>
-                    <th>Obtain Mark (Theory)</th>
+                    <th>Sort</th>
+                    <th>REG NO</th>
+                    <th>STUDENT NAME</th>
+                    <th>1ST CA <br>(15 MKS)</th>
+                    <th>2ND CA <br>(15 MKS)</th>
+                    <th>ASSIGNMENT<br>(4 MKS)</th>
+                    <th>CLASS EXERCISE<br> (6 MKS)</th>
+                    <th>AFFECTIVE <br>(10 MKS)</th>
+                    <th>PSYCHOMOTOR <br>(10 MKS)</th>
+                    <th>EXAM <br>(40 MKS)</th>
+                    {{-- <th>Obtain Mark (Theory)</th>
                     <th>Obtain Mark (Practical)</th>
-                    <th>Absent</th>
+                    <th>Absent</th> --}}
                     <th></th>
                 </tr>
             </thead>
@@ -27,6 +34,14 @@
                             <td>{{ $i }}</td>
                             <td>{{ $student->reg_no }}</td>
                             <td>{{ $student->first_name.' '.$student->middle_name.' '.$student->last_name }}</td>
+                            <td>{{ $student->ca_test1 }}</td>
+                            <td>{{ $student->ca_test2 }}</td>
+                            <td>{{ $student->assign }}</td>
+                            <td>{{ $student->class_exe }}</td>
+                            <td>{{ $student->affective }}</td>
+                            <td>{{ $student->physc }}</td>
+
+
                             <td>
                                 @if($student->absent_theory=='0')
                                     {{ $student->obtain_mark_theory }}
@@ -36,7 +51,10 @@
                                     </span>
                                 @endif
                             </td>
-                            <td>
+
+                            <td>{{ $student->total }}</td>
+
+                            {{-- <td>
                                 @if($student->absent_practical=='0')
                                     {{ $student->obtain_mark_practical }}
                                 @else
@@ -44,8 +62,8 @@
                                         A
                                     </span>
                                 @endif
-                            </td>
-                            <td>
+                            </td> --}}
+                            {{-- <td>
                                 @if($student->absent_theory=='0')
                                     <span class="label label-primary">
                                         TH-Present
@@ -65,7 +83,7 @@
                                         PR-Absent
                                     </span>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                    <a href="{{ route($base_route.'.delete', ['exam_id' => $student->exam_schedule_id,

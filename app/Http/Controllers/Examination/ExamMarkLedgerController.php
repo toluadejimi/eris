@@ -67,7 +67,7 @@ class ExamMarkLedgerController extends CollegeBaseController
             $examScheduleId = array_pluck($examScheduleId, 'id');
 
             $data['ledger_exist'] = ExamMarkLedger::select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.students_id',
-                'exam_mark_ledgers.obtain_mark_theory', 'exam_mark_ledgers.obtain_mark_practical', 'exam_mark_ledgers.absent_theory','exam_mark_ledgers.absent_practical',
+                'exam_mark_ledgers.obtain_mark_theory','exam_mark_ledgers.ca_test1', 'exam_mark_ledgers.ca_test2','exam_mark_ledgers.assign','exam_mark_ledgers.class_exe','exam_mark_ledgers.affective','exam_mark_ledgers.physc', 'exam_mark_ledgers.total','exam_mark_ledgers.obtain_mark_practical', 'exam_mark_ledgers.absent_theory','exam_mark_ledgers.absent_practical',
                 'exam_mark_ledgers.status', 's.id as student_id', 's.reg_no', 's.first_name', 's.middle_name', 's.last_name',
                 's.last_name')
                 ->where('exam_mark_ledgers.exam_schedule_id', $examScheduleId)
@@ -152,8 +152,16 @@ class ExamMarkLedgerController extends CollegeBaseController
                     $ledgerUpdate = [
                         'exam_schedule_id' => $examScheduleId->id,
                         'students_id' => $student,
+                        'ca_test1' => $request->get('ca_test1')[$key]?$request->get('ca_test1')[$key]:0,
+                        'ca_test2' => $request->get('ca_test2')[$key]?$request->get('ca_test2')[$key]:0,
+                        'assign' => $request->get('assign')[$key]?$request->get('assign')[$key]:0,
+                        'class_exe' => $request->get('class_exe')[$key]?$request->get('class_exe')[$key]:0,
+                        'affective' => $request->get('affective')[$key]?$request->get('affective')[$key]:0,
+                        'physc' => $request->get('physc')[$key]?$request->get('physc')[$key]:0,
+                        'total' => $request->get('total')[$key]?$request->get('total')[$key]:0,
+
                         'obtain_mark_theory' => $request->get('obtain_mark_theory')[$key]?$request->get('obtain_mark_theory')[$key]:0,
-                        'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
+                       // 'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
                         'absent_theory' => $trAbsentStudent,
                         'absent_practical' => $prAbsentStudent,
                         'sorting_order' => $key+1,
@@ -167,8 +175,15 @@ class ExamMarkLedgerController extends CollegeBaseController
                     ExamMarkLedger::create([
                         'exam_schedule_id' => $examScheduleId->id,
                         'students_id' => $student,
+                        'ca_test1' => $request->get('ca_test1')[$key]?$request->get('ca_test1')[$key]:0,
+                        'ca_test2' => $request->get('ca_test2')[$key]?$request->get('ca_test2')[$key]:0,
+                        'assign' => $request->get('assign')[$key]?$request->get('assign')[$key]:0,
+                        'class_exe' => $request->get('class_exe')[$key]?$request->get('class_exe')[$key]:0,
+                        'affective' => $request->get('affective')[$key]?$request->get('affective')[$key]:0,
+                        'physc' => $request->get('physc')[$key]?$request->get('physc')[$key]:0,
+                        'total' => $request->get('total')[$key]?$request->get('total')[$key]:0,
                         'obtain_mark_theory' => $request->get('obtain_mark_theory')[$key]?$request->get('obtain_mark_theory')[$key]:0,
-                        'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
+                        //'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
                         'absent_theory' => $trAbsentStudent,
                         'absent_practical' => $prAbsentStudent,
                         'sorting_order' => $key+1,
@@ -310,6 +325,13 @@ class ExamMarkLedgerController extends CollegeBaseController
                 'exam_mark_ledgers.obtain_mark_theory',
                 'exam_mark_ledgers.obtain_mark_practical',
                 'exam_mark_ledgers.absent_theory',
+                'exam_mark_ledgers.ca_test1', 
+                'exam_mark_ledgers.ca_test2',
+                'exam_mark_ledgers.assign',
+                'exam_mark_ledgers.class_exe',
+                'exam_mark_ledgers.affective',
+                'exam_mark_ledgers.physc', 
+                'exam_mark_ledgers.total', 
                 'exam_mark_ledgers.absent_practical',
                 's.id as student_id','s.reg_no','s.first_name','s.middle_name','s.last_name')
                 ->where('exam_mark_ledgers.exam_schedule_id',$examScheduleId)

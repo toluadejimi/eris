@@ -51,19 +51,29 @@
                                         </a>
                                     </li>
 
-                                    <li>
-                                        <a data-toggle="tab" href="#pay-online">
-                                            <i class="blue ace-icon fa fa-calculator bigger-140"></i>
-                                            Online Payment
-                                        </a>
-                                    </li>
 
+
+                                        @if($data['student']->balance > 0)
+                                        <li>
+                                            <a data-toggle="tab" href="#bank">
+                                                <i class="blue ace-icon fa fa-calculator bigger-140"></i>
+                                                Pay with Bank Transfer
+                                            </a>
+                                        </li>
+                                         @else
+                                    
+                                         @endif
+
+
+{{-- 
                                     <li>
                                         <a data-toggle="tab" href="#pay-online">
                                             <i class="blue ace-icon fa fa-calculator bigger-140"></i>
-                                            Bank Transfer
+                                            Online Payments
                                         </a>
-                                    </li>
+                                    </li> --}}
+
+                                   
 
                                 </ul>
 
@@ -82,6 +92,17 @@
                                             </div>
                                          @endif
                                     </div><!-- /#onlinepayment -->
+
+                                    <div id="bank" class="tab-pane">
+                                        @if($data['student']->balance > 0)
+                                           @include($view_path.'.fees.includes.bank')
+                                        @else
+                                           <div class="col-sm-5 pull-right align-right">
+                                               <label class="label label-info label-lg white"></label>
+                                           </div>
+                                        @endif
+                                   </div><!-- /#onlinepayment -->
+
                                 </div>
                             </div>
                         </div>

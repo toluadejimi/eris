@@ -34,12 +34,12 @@
                 <thead class="header">
                 <tr role="row">
                     <th>S.No.</th>
+                    <th>Academic Year</th>
                     <th>Term/Sec</th>
                     <th>Head</th>
                     <th>DueDate</th>
                     <th>Amount </th>
                     <th>Dis. </th>
-                    <th>Fine </th>
                     <th>Paid </th>
                     <th>Due </th>
                     <th>Status</th>
@@ -52,12 +52,12 @@
                         @foreach($data['fee_master'] as $feemaster)
                             <tr>
                                 <td>{{ $i }}</td>
+                                <td>{{ ViewHelper::getYearById($feemaster->semester) }}</td>
                                 <td>{{ ViewHelper::getSemesterById($feemaster->semester) }}</td>
                                 <td>{{ ViewHelper::getFeeHeadById($feemaster->fee_head) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($feemaster->fee_due_date)->format('Y-m-d')}}</td>
                                 <td>{{ $feemaster->fee_amount }}</td>
                                 <td>{{ $feemaster->feeCollect()->sum('discount')?$feemaster->feeCollect()->sum('discount'):'-' }}</td>
-                                <td>{{ $feemaster->feeCollect()->sum('fine')?$feemaster->feeCollect()->sum('fine'):'-' }}</td>
                                 <td>{{ $feemaster->feeCollect()->sum('paid_amount')?$feemaster->feeCollect()->sum('paid_amount'):'-' }}</td>
                                 <td>
                                     @php($net_balance = ($feemaster->fee_amount - ($feemaster->feeCollect()->sum('paid_amount')

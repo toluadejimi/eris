@@ -5,7 +5,7 @@
                 <tr >
                     <td class="label-info white">Year</td>
                     <td>{{ ViewHelper::getYearById($data['assignment']->years_id) }}</td>
-                    <td class="label-info white">Semester/Sec.</td>
+                    <td class="label-info white">Term</td>
                     <td>{!! ViewHelper::getSemesterById($data['assignment']->semesters_id) !!}</td>
                     <td class="label-info white">Subject</td>
                     <td>{{ViewHelper::getSubjectById($data['assignment']->subjects_id)}}</td>
@@ -41,6 +41,14 @@
                     <td colspan="5">{!! $data['assignment']->description !!}</td>
                 </tr>
             </table>
+
+
+
+
+
+
+
+
         </div>
     </div>
 </div><!-- /.row -->

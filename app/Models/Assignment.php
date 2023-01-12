@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends BaseModel
 {
-    protected $fillable = ['created_by', 'last_updated_by', 'years_id','semesters_id','subjects_id','publish_date',
+    protected $fillable = ['created_by', 'last_updated_by', 'years_id','semesters_id','mark_obtained', 'mark_allocated','subjects_id','publish_date',
         'end_date', 'title','description','file', 'status'];
 
     public function subjects()

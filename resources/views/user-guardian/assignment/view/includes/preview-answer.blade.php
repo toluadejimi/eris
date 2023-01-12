@@ -38,9 +38,8 @@
                     </td>
                     <td class="label-info white">UpdatedBy</td>
                     <td>
-                        @if($data['answers']->last_updated_by)
-                        {{ auth()->user()->where('id',$data['answers']->last_updated_by)->first()->name }}
-                            @endif
+                        <td class="label-info white">Assignment Score</td>
+                    <td colspan="4">{!! $data['answers']->mark_obtained !!}  / {{$mark_allocated}} Marks </td>
                     </td>
                 </tr>
                 <tr >

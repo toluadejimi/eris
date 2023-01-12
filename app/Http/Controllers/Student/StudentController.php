@@ -1103,7 +1103,7 @@ class StudentController extends CollegeBaseController
             if ($faculty) {
                 $response['semester'] = $faculty->semester()->select('semesters.id', 'semesters.semester')->get();
                 $response['error'] = false;
-                $response['success'] = 'Semester/Sec. Available For This Class.';
+                $response['success'] = 'Term Available For This Class.';
             } else {
                 $response['error'] = 'No Any Semester Assign on This Class.';
             }

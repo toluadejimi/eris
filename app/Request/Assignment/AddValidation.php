@@ -38,7 +38,7 @@ class AddValidation extends FormRequest
     public function messages()
     {
         return [
-            'semesters_id.required'         => 'Semester/Sec.Required',
+            'semesters_id.required'         => 'TermRequired',
             'subjects_id.required'          => 'Subject Required',
         ];
 

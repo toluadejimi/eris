@@ -12,12 +12,13 @@
 */
 
 use App\Http\Controllers\Student\StudentPublicController;
+use App\Http\Controllers\Assignment\AssignmentController;
 use Illuminate\Support\Facades\Route;
 
 
 
 
-
+Route::post('ass-score', [AssignmentController::class, 'ass_core']);
 
 
 Route::get('public-registration-success', [StudentPublicController::class, 'success' ]);
@@ -137,6 +138,20 @@ Route::group(['prefix' => 'user-staff/',          'as' => 'user-staff',    'midd
     Route::get('notice',                ['as' => '.notice',              'uses' => 'HomeController@notice']);
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Hostel Grouping */
 Route::group(['prefix' => 'front/',                                    'as' => 'front',                                       'namespace' => 'Front\\'], function () {

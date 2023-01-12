@@ -43,12 +43,14 @@ class AssignmentController extends CollegeBaseController
 
     public function index(Request $request)
     {
+
+  
         $data = [];
 
         if($request->all()) {
             if(auth()->user()->hasRole('staff')) {
                 $id = auth()->user()->id;
-                $data['assignment'] = Assignment::select('id', 'created_by', 'last_updated_by', 'years_id', 'semesters_id', 'subjects_id', 'publish_date',
+                $data['assignment'] = Assignment::select('id', 'created_by', 'mark_obtained', 'mark_allocated', 'last_updated_by', 'years_id', 'semesters_id', 'subjects_id', 'publish_date',
                     'end_date', 'title', 'description', 'file', 'status')
                     ->where('created_by',$id)
                     ->where(function ($query) use ($request) {
@@ -79,7 +81,7 @@ class AssignmentController extends CollegeBaseController
                     ->latest()
                     ->get();
             }else{
-                $data['assignment'] = Assignment::select('id', 'created_by', 'last_updated_by', 'years_id', 'semesters_id', 'subjects_id', 'publish_date',
+                $data['assignment'] = Assignment::select('id', 'created_by', 'mark_obtained', 'mark_allocated', 'last_updated_by', 'years_id', 'semesters_id', 'subjects_id', 'publish_date',
                     'end_date', 'title', 'description', 'file', 'status')
                     ->where(function ($query) use ($request) {
                         if ($request->year && $request->year > 0) {
@@ -224,6 +226,7 @@ class AssignmentController extends CollegeBaseController
 
     public function view(Request $request, $id)
     {
+
         $id = decrypt($id);
         $data = [];
         if(auth()->user()->hasRole('staff')) {
@@ -236,8 +239,15 @@ class AssignmentController extends CollegeBaseController
             $data['assignment'] = Assignment::find($id);
         }
 
+
+        // $allocated_mark = Assignment::where('id', $id)
+        // ->first()->allocated_mark;
+
+        // dd($id);
+
         $data['answers'] = $data['assignment']->answers()->select('assignment_answers.id','assignment_answers.answer_text',
                         'assignment_answers.file','assignment_answers.approve_status','assignment_answers.status',
+                        'assignment_answers.mark_obtained',
                         's.reg_no','s.id as students_id','s.first_name',
                         's.middle_name','s.last_name','s.student_image')
                         ->join('students as s','s.id','=','assignment_answers.students_id')
@@ -386,8 +396,13 @@ class AssignmentController extends CollegeBaseController
             }
         }
 
+        $mark_allocated =  Assignment::where('id', $id)
+        ->first()->mark_allocated;
+
+    
+
         $data['answers'] = $data['assignment']->answers()->where('assignment_answers.id',$answer)
-            ->select('assignment_answers.created_by','assignment_answers.last_updated_by','assignment_answers.id','assignment_answers.answer_text',
+            ->select('assignment_answers.created_by','assignment_answers.last_updated_by','assignment_answers.id', 'assignment_answers.mark_obtained','assignment_answers.answer_text',
             'assignment_answers.file','assignment_answers.approve_status','assignment_answers.status','s.id as students_id')
             ->join('students as s','s.id','=','assignment_answers.students_id')
             ->first();
@@ -401,7 +416,7 @@ class AssignmentController extends CollegeBaseController
             ->where('students.id','=',$data['answers']->students_id)
             ->first();
 
-        return view(parent::loadDataToView($this->view_path.'.answer.index'), compact('data'));
+        return view(parent::loadDataToView($this->view_path.'.answer.index'), compact('data', 'mark_allocated'));
     }
 
     public function approveAnswer(request $request, $id)
@@ -415,6 +430,35 @@ class AssignmentController extends CollegeBaseController
         $request->session()->flash($this->message_success,'Assignment Answer Approve Successfully.');
         return back();
     }
+
+
+    public function ass_core(request $request){
+
+
+        $id = $request->id;
+        $mark_obtained = $request->mark_obtained;
+
+        $ass = AssignmentAnswer::where('id', $id)
+        ->update([
+            
+            'mark_obtained' => $mark_obtained,
+            'approve_status' => 1,
+    
+        ]);
+
+        return back();
+
+
+
+
+
+
+    }
+
+
+
+
+
 
     public function rejectAnswer(request $request, $id)
     {

@@ -16,7 +16,7 @@
                 <tr>
                     <th>S.N.</th>
                     <th width="45%">Class</th>
-                    <th width="50%">Semester/Sec.</th>
+                    <th width="50%">Term</th>
                 </tr>
                 </thead>
                 <tbody>

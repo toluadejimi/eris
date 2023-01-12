@@ -1365,9 +1365,12 @@ class HomeController extends CollegeBaseController
 
         $data['assignment'] = Assignment::find($id);
 
+        $mark_allocated =  Assignment::where('id', $id)
+        ->first()->mark_allocated;
+
         $data['answers'] = $data['assignment']->answers()->where('assignment_answers.id', $answer)
             ->select('assignment_answers.created_by', 'assignment_answers.last_updated_by', 'assignment_answers.id', 'assignment_answers.answer_text',
-                'assignment_answers.file', 'assignment_answers.approve_status', 'assignment_answers.status', 's.id as students_id')
+                'assignment_answers.file','assignment_answers.mark_obtained', 'assignment_answers.approve_status', 'assignment_answers.status', 's.id as students_id')
             ->join('students as s', 's.id', '=', 'assignment_answers.students_id')
             ->first();
 
@@ -1383,7 +1386,7 @@ class HomeController extends CollegeBaseController
             ->where('students.id', '=', $data['answers']->students_id)
             ->first();
 
-        return view(parent::loadDataToView('user-student.assignment.view.index'), compact('data'));
+        return view(parent::loadDataToView('user-student.assignment.view.index'), compact('data', 'mark_allocated'));
     }
 
 }

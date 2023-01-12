@@ -60,10 +60,8 @@
                     @if($data['answers']->created_by)
                     <td>{{ auth()->user()->where('id',$data['answers']->created_by)->first()->name }}</td>
                     @endif
-                    <td class="label-info white">UpdatedBy</td>
-                    @if($data['answers']->last_updated_by)
-                    <td>{{ auth()->user()->where('id',$data['answers']->last_updated_by)->first()->name }}</td>
-                        @endif
+                    <td class="label-info white">Assignment Score</td>
+                    <td colspan="4">{!! $data['answers']->mark_obtained !!}  / {{$mark_allocated}} Marks </td>
                 </tr>
                 <tr >
                     <td class="label-info white">CreatedOn</td>
@@ -75,9 +73,35 @@
                     <td class="label-info white">Detail</td>
                     <td colspan="4">{!! $data['answers']->answer_text !!}</td>
                 </tr>
+              
             </table>
-        </div>
+            <form action="/ass-score" method="POST">
+                @csrf
+                <div class="row">
+        
+                    <div class="col-md-3">
+                        <label class="label-info white">Enter Obtained Mark....</label>
+                        <input type="number" class="form-group"  name="mark_obtained" required>
+                    </div>
+
+
+                    <input hidden type="number" class="form-group"  value="{{ $data['answers']->id}}" name="id" required>
+
+
+                   
+        
+                    <div class="col-md-3">
+                        <button class="btn" type="submit">
+                            <i class="fa fa-undo bigger-110"></i>
+                            Update Mark Score
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>       
     </div>
+    
 </div><!-- /.row -->
 
 

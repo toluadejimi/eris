@@ -55,11 +55,22 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="col-md-12 email">
+        <div class="form-group">
+
         {!! Form::label('attach_file', 'Attachment File', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-8">
             {!! Form::file('attach_file', null, ["placeholder" => "", "class" => "form-control border-form"]) !!}
             @include('includes.form_fields_validation_message', ['name' => 'attach_file'])
+        </div>
+
+        </div>
+        <div class="form-group">
+            {!! Form::label('mark_allocated', 'Allocate Mark', ['class' => 'col-sm-2 control-label']) !!}
+            <div class="col-sm-3">
+                {!! Form::number('mark_allocated', null, ["class" => "form-control border-form"]) !!}
+                @include('includes.form_fields_validation_message', ['name' => 'mark_allocated'])
+            </div>
         </div>
     </div>
 

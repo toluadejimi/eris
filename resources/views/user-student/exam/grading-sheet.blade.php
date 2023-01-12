@@ -57,17 +57,21 @@
         }
         window.dataLayer = window.dataLayer || [], gtag("js", new Date), gtag("config", "UA-108415987-1");
     </script>
+    
+    
+    
+     
+
+
 </head>
 
-
-
-
+<body>
 @if($data['student'] && $data['student']->count() > 0)
 
 @foreach($data['student'] as $student)
 <div class="col-sm-12 col-sm-offset-2">
 
-    <body class="mb-5 mr-5 ml-5 mt-0">
+    <div class="mb-5 mr-5 ml-5 mt-0">
         <nav class="navbar navbar-expand-md navbar-light bg-light border mt-5 mb-5 ml-5 mr-5"><a href="#"
                 class="navbar-brand">EMERALD ROYAL INTERNATIONAL SCHOOL&nbsp;</a><button id="button1"
                 aria-label="Toggle navigation" aria-expanded="false" aria-controls="bs-navbar-collapse-1"
@@ -273,7 +277,7 @@
                         \Carbon\Carbon::parse(now())->format('Y-m-d')}}</strong>--}}
                 </td>
                 <img id="avatar" class="nav-user-photo" alt="" src="{{ asset('assets/images/avatars/stamp.png') }}"
-                    width="100px" />
+                    width="200px" />
 
 
                 <td class="text-center"><strong style="border-top:1px black solid;"></strong>
@@ -310,6 +314,7 @@
 
 
 </div>
+</body>
 @endforeach
 @endif
 
@@ -415,7 +420,7 @@
                 });
             }
         });
-</script>
+</script> 
 
 </body>
 

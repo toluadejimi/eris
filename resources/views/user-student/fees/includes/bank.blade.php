@@ -39,7 +39,7 @@
                 <div class="space-4"></div>
 
                 <div class="">
-                    <span class="badge badge-primary"> Account Number:- </span> <h4> 01234567890</h4>
+                    <span class="badge badge-primary"> Account Number:- </span> <strong> <h4> 1014284082</h4></strong>
                 </div>
 
 

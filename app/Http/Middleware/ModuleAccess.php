@@ -20,7 +20,7 @@ class ModuleAccess extends CollegeBaseController
         $moduleStatus = false;
         if(request()->is('front_desk*')){
             if($this->getGeneralSetting()->front_desk !== 1){
-                $moduleStatus = false;
+                $moduleStatus = true;
             }
         }
 

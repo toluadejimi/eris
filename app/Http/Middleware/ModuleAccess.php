@@ -20,7 +20,7 @@ class ModuleAccess extends CollegeBaseController
         $moduleStatus = false;
         if(request()->is('front_desk*')){
             if($this->getGeneralSetting()->front_desk !== 1){
-                $moduleStatus = true;
+                $moduleStatus = false;
             }
         }
 
@@ -56,7 +56,7 @@ class ModuleAccess extends CollegeBaseController
 
         if(request()->is('exam*')){
             if($this->getGeneralSetting()->exam !== 1){
-                $moduleStatus = true;
+                $moduleStatus = false;
             }
         }
 
@@ -115,8 +115,8 @@ class ModuleAccess extends CollegeBaseController
         }
 
         if($moduleStatus){
-            $request->session()->flash($this->message_warning, 'Module Not Activated');
-            abort(403);
+            // $request->session()->flash($this->message_warning, 'Module Not Activated');
+            // abort(403);
         }else{
             return $next($request);
         }

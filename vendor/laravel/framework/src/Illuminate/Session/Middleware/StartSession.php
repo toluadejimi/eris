@@ -57,7 +57,7 @@ class StartSession
 
         $this->storeCurrentUrl($request, $session);
 
-        $this->addCookieToResponse($response, $session);
+       // $this->addCookieToResponse($response, $session);
 
         // Again, if the session has been configured we will need to close out the session
         // so that the attributes may be persisted to some storage medium. We will also
@@ -148,16 +148,16 @@ class StartSession
      * @param  \Illuminate\Contracts\Session\Session  $session
      * @return void
      */
-    protected function addCookieToResponse(Response $response, Session $session)
-    {
-        // if ($this->sessionIsPersistent($config = $this->manager->getSessionConfig())) {
-        //     $response->headers->setCookie(new Cookie(
-        //         $session->getName(), $session->getId(), $this->getCookieExpirationDate(),
-        //         $config['path'], $config['domain'], $config['secure'] ?? false,
-        //         $config['http_only'] ?? true, false, $config['same_site'] ?? null
-        //     ));
-        // }
-    }
+    // protected function addCookieToResponse(Response $response, Session $session)
+    // {
+    //     if ($this->sessionIsPersistent($config = $this->manager->getSessionConfig())) {
+    //         $response->headers->setCookie(new Cookie(
+    //             $session->getName(), $session->getId(), $this->getCookieExpirationDate(),
+    //             $config['path'], $config['domain'], $config['secure'] ?? false,
+    //             $config['http_only'] ?? true, false, $config['same_site'] ?? null
+    //         ));
+    //     }
+    // }
 
     /**
      * Save the session data to storage.

@@ -118,7 +118,7 @@ class ModuleAccess extends CollegeBaseController
             // $request->session()->flash($this->message_warning, 'Module Not Activated');
             // abort(403);
         }else{
-            return $next($request);
+            //return $next($request);
         }
 
 

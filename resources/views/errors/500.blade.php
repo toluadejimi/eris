@@ -27,7 +27,7 @@
                             <hr />
                             <h2>{{ $exception->getMessage() }}</h2>
                             <hr />
-                            <h3 class="lighter smaller">We looked everywhere but we couldn't find it!</h3>
+                            <h3 class="lighter smaller">We couldn't find it!</h3>
 
                             <div>
                                 <form class="form-search" method="get" action="http://www.google.com/search">

@@ -152,6 +152,7 @@ class StudentPublicController extends CollegeBaseController
                 $pick2_image_name = "";
             }
             $student = $request->request->add(['pick2_image' => $pick2_image_name]);
+            
 
             $year = Year::where('active_status', '=', 1)->first()->title;
             //$regNum = $year.$request->faculty.$oldStudent->id;

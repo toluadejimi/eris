@@ -65,6 +65,7 @@ class StudentMemberController extends CollegeBaseController
 
     public function studentView(Request $request, $id)
     {
+        
         $data = [];
         $data['blank_ins'] = new LibraryMember();
         $data['student'] = LibraryMember::select('library_members.id','library_members.user_type', 'library_members.member_id',

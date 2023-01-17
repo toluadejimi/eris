@@ -44,6 +44,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Image, URL;
 use ViewHelper;
+use Illuminate\Support\Str;
+
 
 class StudentController extends CollegeBaseController
 {
@@ -64,6 +66,7 @@ class StudentController extends CollegeBaseController
 
     public function index(Request $request)
     {
+
         $data = [];
         if($request->all()) {
             $data['student'] = Student::select('students.id', 'students.reg_no', 'students.reg_date',
@@ -264,9 +267,10 @@ class StudentController extends CollegeBaseController
 
     public function view($id)
     {
+
         $data = [];
         $data['student'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
-            'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.middle_name',
+            'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.pick_image',   'students.f_image', 'students.m_image', 'students.middle_name',
             'students.last_name', 'students.date_of_birth', 'students.gender', 'students.blood_group',  'students.religion', 'students.caste','students.nationality',
             'students.mother_tongue', 'students.email', 'students.extra_info', 'students.status', 'pd.grandfather_first_name',
             'pd.grandfather_middle_name', 'pd.grandfather_last_name', 'pd.father_first_name', 'pd.father_middle_name',
@@ -576,12 +580,14 @@ class StudentController extends CollegeBaseController
 
     public function edit(Request $request, $id)
     {
+
+
         $data = [];
 
         $data['row'] = Student::select('students.id','students.name_of_school',  'students.health_issues',   'students.other_health_issues',  'students.photo_publicity',   'students.from_date', 'students.to_date', 'students.reg_no', 'students.reg_date', 'students.state_of_origin',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.middle_name',
             'students.last_name', 'students.date_of_birth', 'students.gender', 'students.blood_group', 'students.religion', 'students.caste', 'students.nationality',
-            'students.mother_tongue', 'students.email', 'students.extra_info','students.student_image', 'students.student_signature', 'students.status',
+            'students.mother_tongue', 'students.email', 'students.extra_info','students.student_image', 'students.pick_image',  'students.f_image','students.m_image',   'students.student_signature', 'students.status',
             'pd.grandfather_first_name',
             'pd.grandfather_middle_name', 'pd.grandfather_last_name', 'pd.father_first_name', 'pd.father_middle_name',
             'pd.father_last_name', 'pd.father_eligibility', 'pd.father_occupation', 'pd.father_office', 'pd.father_office_number',
@@ -619,40 +625,219 @@ class StudentController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path.'.registration.edit'), compact('data'));
     }
 
-    public function update(EditValidation $request, $id)
+    public function update(Request $request, $id)
     {
 
 
         if (!$row = Student::find($id))
             return parent::invalidRequest();
 
+        // if ($request->hasFile('student_main_image')) {
+        //     // remove old image from folder
+        //     if (file_exists($this->folder_path.$row->student_image))
+        //         @unlink($this->folder_path.$row->student_image);
+
+        //     /*upload new student image*/
+        //     $student_image = $request->file('student_main_image');
+        //     $student_image_name = $request->reg_no.'.'.$student_image->getClientOriginalExtension();
+        //     $student_image->move($this->folder_path, $student_image_name);
+        // }
+
+        // if ($request->hasFile('student_signature_main_image')) {
+        //     // remove old image from folder
+        //     if (file_exists($this->folder_path.$row->student_signature))
+        //         @unlink($this->folder_path.$row->student_signature);
+
+        //     /*upload new student signature*/
+        //     $student_signature = $request->file('student_signature_main_image');
+        //     $student_signature_name = $request->reg_no.'_signature.'.$student_signature->getClientOriginalExtension();
+        //     $student_signature->move($this->folder_path, $student_signature_name);
+        // }
+
+         $request->request->add(['updated_by' => auth()->user()->id]);
+        // $request->request->add(['student_image' => isset($student_image_name)?$student_image_name:$row->student_image]);
+        // $request->request->add(['student_signature' => isset($student_signature_name)?$student_signature_name:$row->student_signature]);
+        
+        
+        $old_file = Student::where('id', $id)
+        ->first()->student_image;
+
+
+        $pic = Str::random(6);
         if ($request->hasFile('student_main_image')) {
-            // remove old image from folder
-            if (file_exists($this->folder_path.$row->student_image))
-                @unlink($this->folder_path.$row->student_image);
-
-            /*upload new student image*/
             $student_image = $request->file('student_main_image');
-            $student_image_name = $request->reg_no.'.'.$student_image->getClientOriginalExtension();
-            $student_image->move($this->folder_path, $student_image_name);
+            $student_image_name = $pic . '.' . $student_image->getClientOriginalExtension();
+            $student_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'studentProfile' . DIRECTORY_SEPARATOR, $student_image_name);
+        } else {
+            $student_image_name = "";
         }
+        $student = $request->request->add(['student_image' => $student_image_name]);
 
-        if ($request->hasFile('student_signature_main_image')) {
-            // remove old image from folder
-            if (file_exists($this->folder_path.$row->student_signature))
-                @unlink($this->folder_path.$row->student_signature);
 
-            /*upload new student signature*/
-            $student_signature = $request->file('student_signature_main_image');
-            $student_signature_name = $request->reg_no.'_signature.'.$student_signature->getClientOriginalExtension();
-            $student_signature->move($this->folder_path, $student_signature_name);
+    
+        if($old_file == null){
+
+            $update_pics = Student::where('id', $id)
+            ->update([
+
+                'student_image' => $student_image_name,
+
+            ]);
+            
+
+          }
+
+        
+        
+          $old_pick = Student::where('id', $id)
+          ->first()->pick_image;
+
+
+        $pic = Str::random(6);
+        if ($request->hasFile('pick_main_image')) {
+            $pick_image = $request->file('pick_main_image');
+            $pick_image_name = $pic . '.' . $pick_image->getClientOriginalExtension();
+            $pick_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'pickprofile' . DIRECTORY_SEPARATOR, $pick_image_name);
+        } else {
+            $pick_image_name = "";
         }
+        $student = $request->request->add(['pick_image' => $pick_image_name]);
 
-        $request->request->add(['updated_by' => auth()->user()->id]);
-        $request->request->add(['student_image' => isset($student_image_name)?$student_image_name:$row->student_image]);
-        $request->request->add(['student_signature' => isset($student_signature_name)?$student_signature_name:$row->student_signature]);
 
-        $student = $row->update($request->all());
+
+        if($old_pick == null){
+
+            $update_pics = Student::where('id', $id)
+            ->update([
+
+                'pick_image' => $pick_image_name
+
+            ]);
+            
+
+          }
+
+
+          $old_f = Student::where('id', $id)
+          ->first()->f_image;
+
+
+          $pic_f = Str::random(6);
+          if ($request->hasFile('father_main_image')) {
+              $father_image = $request->file('father_main_image');
+              $father_image_name = $pic_f . '.' . $father_image->getClientOriginalExtension();
+              $father_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $father_image_name);
+          } else {
+              $father_image_name = "";
+          }
+          $parentdetail = $request->request->add(['father_image' => $father_image_name]);
+
+
+          
+        if($old_f == null){
+
+            $update_pics = Student::where('id', $id)
+            ->update([
+
+                'f_image' => $father_image_name
+
+            ]);
+            
+
+          }
+
+
+
+
+
+
+
+
+          $old_m = Student::where('id', $id)
+          ->first()->m_image;
+
+
+          $pic_m = Str::random(6);
+          if ($request->hasFile('mother_main_image')) {
+              $mother_image = $request->file('mother_main_image');
+              $mother_image_name = $pic_m . '.' . $mother_image->getClientOriginalExtension();
+              $mother_image->move(public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'parents' . DIRECTORY_SEPARATOR, $mother_image_name);
+          } else {
+              $mother_image_name = "";
+          }
+          $parentdetail = $request->request->add(['mother_image' => $mother_image_name]);
+
+
+
+          if($old_m == null){
+
+            $update_pics = Student::where('id', $id)
+            ->update([
+
+                'm_image' => $mother_image_name
+
+            ]);
+            
+
+          }
+
+
+
+
+
+        
+
+          $update = Student::where('id', $id)
+          ->update ([
+
+
+                        'state_of_origin' => $request->state_of_origin,
+                        'first_name' => $request->first_name,
+                        'middle_name' => $request->middle_name,
+                        'last_name' => $request->last_name,
+                        'date_of_birth' => $request->date_of_birth,
+                        'gender' => $request->gender,
+                        'blood_group' => $request->blood_group,
+                        'religion' => $request->religion,
+                        'caste' => $request->caste,
+                        'nationality' => $request->nationality,
+                        'mother_tongue' => $request->mother_tongue,
+                        'email' => $request->email,
+                        // 'father_first_name' => $request->father_first_name,
+                        // 'father_middle_name' => $request->father_middle_name,
+                        // 'father_last_name' => $request->father_last_name,
+                        // 'father_eligibility' => $request->father_eligibility,
+                        // 'father_occupation' => $request->father_occupation,
+                        // 'father_office' => $request->father_office,
+                        // 'father_residence_number' => $request->father_residence_number,
+                        // 'father_mobile_1' => $request->father_mobile_1,
+                        // 'father_email' => $request->father_email,
+                        // 'mother_first_name' => $request->mother_first_name,
+                        // 'mother_middle_name' => $request->mother_middle_name,
+                        // 'mother_last_name' => $request->mother_last_name,
+                        // 'mother_eligibility' => $request->mother_eligibility,
+                        // 'mother_occupation' => $request->mother_occupation,
+                        // 'mother_office' => $request->mother_office,
+                        // 'mother_residence_number' => $request->mother_residence_number,
+                        // 'mother_mobile_1' => $request->mother_mobile_1,
+                        // 'mother_email' => $request->mother_email,
+                        // 'guardian_is' => $request->guardian_is,
+                        // 'guardian_first_name' => $request->guardian_first_name,
+                        // 'guardian_middle_name' => $request->guardian_middle_name,
+                        // 'guardian_last_name' => $request->guardian_last_name,
+                        // 'guardian_mobile_1' => $request->guardian_mobile_1,
+                        // 'guardian_email' => $request->guardian_email,
+                        // 'guardian_relation' => $request->guardian_relation,
+                        //"updated_by" => $request->updated_by,
+
+          ]);
+
+          //dd($request->all());
+
+       // $student = $row->update($request->all());
+
+
+
 
         /*Update Associate Address Info*/
         $row->address()->update([
@@ -670,45 +855,49 @@ class StudentController extends CollegeBaseController
 
 
 
+     
+
+
+
         /*Update Associate Parents Info with Images*/
         $parent = $row->parents()->first();
         $guardian = $row->guardian()->first();
 
-        $parential_image_path = public_path().DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR;
-        if ($request->hasFile('father_main_image')){
-            // remove old image from folder
-            if (file_exists($parential_image_path.$parent->father_image))
-                @unlink($parential_image_path.$parent->father_image);
+        // $parential_image_path = public_path().DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR;
+        // if ($request->hasFile('father_main_image')){
+        //     // remove old image from folder
+        //     if (file_exists($parential_image_path.$parent->father_image))
+        //         @unlink($parential_image_path.$parent->father_image);
 
-            $father_image = $request->file('father_main_image');
-            $father_image_name = $row->reg_no.'_father.'.$father_image->getClientOriginalExtension();
-            $father_image->move($parential_image_path, $father_image_name);
-        }
+        //     $father_image = $request->file('father_main_image');
+        //     $father_image_name = $row->reg_no.'_father.'.$father_image->getClientOriginalExtension();
+        //     $father_image->move($parential_image_path, $father_image_name);
+        // }
 
-        if ($request->hasFile('mother_main_image')){
-            // remove old image from folder
-            if (file_exists($parential_image_path.$parent->mother_image))
-                @unlink($parential_image_path.$parent->mother_image);
+        // if ($request->hasFile('mother_main_image')){
+        //     // remove old image from folder
+        //     if (file_exists($parential_image_path.$parent->mother_image))
+        //         @unlink($parential_image_path.$parent->mother_image);
 
-            $mother_image = $request->file('mother_main_image');
-            $mother_image_name = $row->reg_no.'_mother.'.$mother_image->getClientOriginalExtension();
-            $mother_image->move($parential_image_path, $mother_image_name);
-        }
+        //     $mother_image = $request->file('mother_main_image');
+        //     $mother_image_name = $row->reg_no.'_mother.'.$mother_image->getClientOriginalExtension();
+        //     $mother_image->move($parential_image_path, $mother_image_name);
+        // }
 
 
-        if ($request->hasFile('guardian_main_image')){
-            // remove old image from folder
-            if (file_exists($parential_image_path.$guardian->guardian_image))
-                @unlink($parential_image_path.$guardian->guardian_image);
+        // if ($request->hasFile('guardian_main_image')){
+        //     // remove old image from folder
+        //     if (file_exists($parential_image_path.$guardian->guardian_image))
+        //         @unlink($parential_image_path.$guardian->guardian_image);
 
-            $guardian_image = $request->file('guardian_main_image');
-            $guardian_image_name = $row->reg_no.'_guardian.'.$guardian_image->getClientOriginalExtension();
-            $guardian_image->move($parential_image_path, $guardian_image_name);
-        }
+        //     $guardian_image = $request->file('guardian_main_image');
+        //     $guardian_image_name = $row->reg_no.'_guardian.'.$guardian_image->getClientOriginalExtension();
+        //     $guardian_image->move($parential_image_path, $guardian_image_name);
+        // }
 
-        $father_image_name = isset($father_image_name)?$father_image_name:$parent->father_image;
-        $mother_image_name = isset($mother_image_name)?$mother_image_name:$parent->mother_image;
-        $guardian_image_name = isset($guardian_image_name)?$guardian_image_name:$guardian->guardian_image;
+        // $father_image_name = isset($father_image_name)?$father_image_name:$parent->father_image;
+        // $mother_image_name = isset($mother_image_name)?$mother_image_name:$parent->mother_image;
+        // $guardian_image_name = isset($guardian_image_name)?$guardian_image_name:$guardian->guardian_image;
 
         $row->parents()->update([
             'grandfather_first_name'    =>  $request->grandfather_first_name,
@@ -736,8 +925,8 @@ class StudentController extends CollegeBaseController
             'mother_mobile_1'           =>  $request->mother_mobile_1,
             'mother_mobile_2'           =>  $request->mother_mobile_2,
             'mother_email'              =>  $request->mother_email,
-            'father_image'              =>  $father_image_name,
-            'mother_image'              =>  $mother_image_name
+            //'father_image'              =>  $father_image_name,
+           // 'mother_image'              =>  $mother_image_name
 
         ]);
 
@@ -758,7 +947,7 @@ class StudentController extends CollegeBaseController
                 'guardian_email'              =>  $request->guardian_email,
                 'guardian_relation'           =>  $request->guardian_relation,
                 'guardian_address'            =>  $request->guardian_address,
-                'guardian_image'              =>  $guardian_image_name
+                //'guardian_image'              =>  $guardian_image_name
             ];
             GuardianDetail::where('id',$sgd->guardians_id)->update($guardiansInfo);
         }else{
@@ -769,44 +958,46 @@ class StudentController extends CollegeBaseController
         }
 
         /*Academic Info Start*/
-        if ($row && $request->has('institution')) {
-            foreach ($request->get('institution') as $key => $institution) {
-                $academicInfoId = isset($request->get('academic_info_id')[$key])?$request->get('academic_info_id')[$key]:$key+1;
-                $academicInfoExist = AcademicInfo::where('id',$academicInfoId)->first();
-                if($academicInfoExist){
-                    $academicInfoUpdate = [
-                        'students_id' => $row->id,
-                        'institution' => $institution,
-                        'board' => $request->get('board')[$key],
-                        'pass_year' => $request->get('pass_year')[$key],
-                        'symbol_no' => $request->get('symbol_no')[$key],
-                        'percentage' => $request->get('percentage')[$key],
-                        'division_grade' => $request->get('division_grade')[$key],
-                        'major_subjects' => $request->get('major_subjects')[$key],
-                        'remark' => $request->get('remark')[$key],
-                        'sorting_order' => $key+1,
-                        'last_updated_by' => auth()->user()->id
-                    ];
-                    $academicInfoExist->update($academicInfoUpdate);
-                }else{
-                    AcademicInfo::create([
-                        'students_id' => $row->id,
-                        'institution' => $institution,
-                        'board' => $request->get('board')[$key],
-                        'pass_year' => $request->get('pass_year')[$key],
-                        'symbol_no' => $request->get('symbol_no')[$key],
-                        'percentage' => $request->get('percentage')[$key],
-                        'division_grade' => $request->get('division_grade')[$key],
-                        'major_subjects' => $request->get('major_subjects')[$key],
-                        'remark' => $request->get('remark')[$key],
-                        'sorting_order' => $key+1,
-                        'created_by' => auth()->user()->id,
-                    ]);
-                }
-            }
-        }
+        // if ($row && $request->has('institution')) {
+        //     foreach ($request->get('institution') as $key => $institution) {
+        //         $academicInfoId = isset($request->get('academic_info_id')[$key])?$request->get('academic_info_id')[$key]:$key+1;
+        //         $academicInfoExist = AcademicInfo::where('id',$academicInfoId)->first();
+        //         if($academicInfoExist){
+        //             $academicInfoUpdate = [
+        //                 'students_id' => $row->id,
+        //                 'institution' => $institution,
+        //                 'board' => $request->get('board')[$key],
+        //                 'pass_year' => $request->get('pass_year')[$key],
+        //                 'symbol_no' => $request->get('symbol_no')[$key],
+        //                 'percentage' => $request->get('percentage')[$key],
+        //                 'division_grade' => $request->get('division_grade')[$key],
+        //                 'major_subjects' => $request->get('major_subjects')[$key],
+        //                 'remark' => $request->get('remark')[$key],
+        //                 'sorting_order' => $key+1,
+        //                 'last_updated_by' => auth()->user()->id
+        //             ];
+        //             $academicInfoExist->update($academicInfoUpdate);
+        //         }else{
+        //             AcademicInfo::create([
+        //                 'students_id' => $row->id,
+        //                 'institution' => $institution,
+        //                 'board' => $request->get('board')[$key],
+        //                 'pass_year' => $request->get('pass_year')[$key],
+        //                 'symbol_no' => $request->get('symbol_no')[$key],
+        //                 'percentage' => $request->get('percentage')[$key],
+        //                 'division_grade' => $request->get('division_grade')[$key],
+        //                 'major_subjects' => $request->get('major_subjects')[$key],
+        //                 'remark' => $request->get('remark')[$key],
+        //                 'sorting_order' => $key+1,
+        //                 'created_by' => auth()->user()->id,
+        //             ]);
+        //         }
+        //     }
+        // }
+
         /*Academic Info End*/
-        $request->session()->flash($this->message_success, $this->panel. ' Info Updated Successfully.');
+        $request->session()->flash($this->message_success, 'Updated Successfully');
+
         //return redirect()->route($this->base_route);
         return back();
 

@@ -159,6 +159,12 @@
                         <span class="editable" id="date_of_birth">{{ \Carbon\Carbon::parse($data['student']->date_of_birth)->format('d/m/Y')}}</span>
                     </div>
                 @endif
+                @if($data['student']->email !="")
+                <div class="profile-info-name"> Shool House : </div>
+                <div class="profile-info-value">
+                    <span class="editable" id="email">{{ $data['student']->caste }}</span>
+                </div>
+                @endif
             </div>
 
             <div class="profile-info-row">
@@ -183,12 +189,7 @@
                         <span class="editable" id="religion">{{ $data['student']->religion }}</span>
                     </div>
                 @endif
-                @if($data['student']->caste !="")
-                    <div class="profile-info-name"> Caste : </div>
-                    <div class="profile-info-value">
-                        <span class="editable" id="caste">{{ $data['student']->caste }}</span>
-                    </div>
-                @endif
+                
             </div>
 
             <div class="profile-info-row">
@@ -213,6 +214,7 @@
                         <span class="editable" id="email">{{ $data['student']->email }}</span>
                     </div>
                 @endif
+              
                 @if($data['student']->mobile_1 !="")
                     <div class="profile-info-name"> Mobile No : </div>
                     <div class="profile-info-value">
@@ -228,7 +230,6 @@
     <div class="space-6"></div>
     <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Permanent Address</div>
     <div class="space-6"></div>
-      <div class="profile-info-name"> Residence : </div>
       <div class="profile-info-name"> Residence : </div>
       <div class="profile-info-value">
           <span class="editable" id="father_residence_number">{{ $data['student']->father_residence_number }}</span>
@@ -251,34 +252,7 @@
     </div>
 
     <div class="space-6"></div>
-    {{--  {{-- <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Temporary Address</div> --}} --}}
-    <div class="space-6"></div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->temp_address !="")
-                <div class="profile-info-name"> Address : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_place">{{ $data['student']->temp_address }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            @if($data['student']->temp_state !="")
-                <div class="profile-info-name"> State :</div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_district">{{ $data['student']->temp_state }}</span>
-                </div>
-            @endif
-            @if($data['student']->temp_country !="")
-                <div class="profile-info-name"> Country : </div>
-                <div class="profile-info-value">
-                    <span class="editable" id="permanent_zone">{{ $data['student']->temp_country }}</span>
-                </div>
-            @endif
-        </div>
-    </div>
+    
 
     <div class="space-6"></div>
     <div class="label label-info label-xlg arrowed-in arrowed-right arrowed">Parential Info</div>
@@ -561,8 +535,8 @@
             <div class="space-4"></div>
 
             <span class="profile-picture">
-                    @if($data['student']->guardian_image != '')
-                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR.$data['student']->guardian_image) }}" width="300px" />
+                    @if($data['student']->pick_image != '')
+                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'pickprofile'.DIRECTORY_SEPARATOR.$data['student']->pick_image) }}" width="300px" />
                 @else
                     <img id="avatar" class="editable img-responsive" alt="" src="{{ asset('assets/images/avatars/profile-pic.jpg') }}" />
                 @endif
@@ -570,6 +544,8 @@
         </div>
     </div>
 
+
+    
 
     <div class="col-xs-12 col-sm-3 center">
         <div>
@@ -583,8 +559,8 @@
             <div class="space-4"></div>
 
             <span class="profile-picture">
-               @if($data['student']->father_image != '')
-                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR.$data['student']->father_image) }}" width="300px" />
+               @if($data['student']->f_image != '')
+                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR.$data['student']->f_image) }}" width="300px" />
                 @else
                     <img id="avatar" class="editable img-responsive" alt="" src="{{ asset('assets/images/avatars/profile-pic.jpg') }}" />
                 @endif
@@ -605,8 +581,8 @@
             <div class="space-4"></div>
 
             <span class="profile-picture">
-                @if($data['student']->mother_image != '')
-                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR.$data['student']->mother_image) }}" width="300px" />
+                @if($data['student']->m_image != '')
+                    <img id="avatar" class="editable img-responsive" alt="Guardian" src="{{ asset('images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR.$data['student']->m_image) }}" width="300px" />
                 @else
                     <img id="avatar" class="editable img-responsive" alt="" src="{{ asset('assets/images/avatars/profile-pic.jpg') }}" />
                 @endif

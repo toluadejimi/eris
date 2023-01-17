@@ -274,7 +274,7 @@
 
         {!! Form::label('guardian_address', 'Guardian Address', ['class' => 'col-sm-2 control-label']) !!}
         <div class="col-sm-4">
-            {!! Form::text('guardian_address', null, ["class" => "form-control border-form upper", "required"]) !!}
+            {!! Form::text('guardian_address', null, ["class" => "form-control border-form upper"]) !!}
             @include('includes.form_fields_validation_message', ['name' => 'guardian_address'])
         </div>
     </div>

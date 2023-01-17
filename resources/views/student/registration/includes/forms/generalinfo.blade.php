@@ -124,7 +124,7 @@
         @include('includes.form_fields_validation_message', ['name' => 'religion'])
     </div>
 
-    {!! Form::label('caste', 'Caste', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('caste', 'SCHOOL HOUSE', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-5">
         {!! Form::text('caste', null, ["class" => "form-control border-form upper"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'caste'])

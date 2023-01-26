@@ -15,9 +15,9 @@
                     </th>
                     <th>Code</th>
                     <th>Category</th>
-                    <th>Image</th>
+                    {{-- <th>Image</th> --}}
                     <th>Name</th>
-                    <th >Price</th>
+                    {{-- <th >Price</th> --}}
                     <th >Stock</th>
                     <th>Status</th>
                     <th></th>
@@ -41,18 +41,18 @@
                                 {{  ViewHelper::getProductSubCategory( $product->sub_category_id ) }}
 
                             </td>
-                            <td>
+                            {{-- <td>
                                 @if($product->product_image)
                                     <a href="{{ route($base_route.'.view', ['id' => encrypt($product->id)]) }}">
                                         <img src="{{ asset('images/product/'.$product->product_image) }}"
                                              class="img-responsive" width="50px">
                                     </a>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td><a href="{{ route($base_route.'.view', ['id' => encrypt($product->id)]) }}"> {{ $product->name }}</a></td>
-                            <td>
+                            {{-- <td>
                                 {{ $product->getProductSellPrice() }}
-                            </td>
+                            </td> --}}
                             <td>
                                 {{$product->getProductStock()}}
                             </td>

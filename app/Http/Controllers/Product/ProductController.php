@@ -7,6 +7,7 @@ use App\Http\Requests\Product\AddValidation;
 use App\Http\Requests\Product\EditValidation;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Faculty;
 use App\Models\ProductPrice;
 use App\Models\ProductStatus;
 use App\Models\Stock;
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Image, URL;
 use ViewHelper;
+use Redirect;
+use Session;
+use Auth;
 
 class ProductController extends CollegeBaseController
 {
@@ -117,6 +121,228 @@ class ProductController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path.'.registration.register'), compact('data'));
     }
 
+
+
+    public function issueout(){
+
+
+        $data = [];
+        $data['blank_ins'] = new Product();
+
+        $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
+        $data['category'] = array_prepend($category,'Select Category',0);
+
+        $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
+        $data['product'] = array_prepend($product,'Select Product',0);
+
+        $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
+        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+
+
+        $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
+
+        return view(parent::loadDataToView($this->view_path.'.registration.issueout'), compact('data'));
+
+
+
+    }
+
+
+    public function issue(REQUEST $request){
+
+        $data = [];
+        $data['blank_ins'] = new Product();
+
+        $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
+        $data['category'] = array_prepend($category,'Select Category',0);
+
+        $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
+        $data['product'] = array_prepend($product,'Select Product',0);
+
+        $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
+        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+
+
+        $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
+
+
+
+
+
+        $product_id = $request->product_id;
+        $qty_out = $request->qty_out;
+        $issued_to = $request->issued_to;
+        $faculty_id = $request->faculty_id;
+        $description = $request->description;
+
+       
+
+        $check_qty_in = Stock::where('products_id', $product_id)
+        ->sum('qty_in');
+
+        $check_qty_out = Stock::where('products_id', $product_id)
+        ->sum('qty_out');
+
+
+        $stock_balance = $check_qty_in - $check_qty_out;
+
+
+        if($qty_out > $stock_balance ) {
+
+            $message="Product is Insuffucient in Stock";
+            return view(parent::loadDataToView($this->view_path.'.registration.issueout'), compact('message', 'data'));
+        }
+
+      
+
+
+        $faculty = Faculty::where('id', $faculty_id)
+        ->first()->faculty;
+
+
+        $date = date_create('2000-01-01');
+       
+
+
+        $stock = new Stock();
+        $stock->products_id = $product_id;
+        $stock->qty_out = $qty_out;
+        $stock->issued_to = $issued_to;
+        $stock->faculty_id = $faculty;
+        $stock->created_by = auth()->user()->id;
+        $stock->transaction_type = 'Issued Out';
+        $stock->status = 1;
+        $stock->date =  date_format($date, 'Y-m-d H:i:s');
+        $stock->description = $description;
+        $stock->save();
+
+        $message="Product issued Successfully";
+        return view(parent::loadDataToView($this->view_path.'.registration.issueout'), compact('message', 'data'));
+
+
+
+
+        
+
+
+
+
+
+
+        //dd($stock_balance,$qty_out );
+
+
+      
+
+
+
+
+
+
+    }
+
+
+
+    public function issuein(){
+
+
+        $data = [];
+        $data['blank_ins'] = new Product();
+
+        $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
+        $data['category'] = array_prepend($category,'Select Category',0);
+
+        $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
+        $data['product'] = array_prepend($product,'Select Product',0);
+
+        $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
+        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+
+
+        $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
+
+        return view(parent::loadDataToView($this->view_path.'.registration.issuein'), compact('data'));
+
+
+
+    }
+
+
+    public function issue_in(REQUEST $request){
+
+        $data = [];
+        $data['blank_ins'] = new Product();
+
+        $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
+        $data['category'] = array_prepend($category,'Select Category',0);
+
+        $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
+        $data['product'] = array_prepend($product,'Select Product',0);
+
+        $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
+        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+
+
+        $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
+
+
+
+
+
+        $product_id = $request->product_id;
+        $qty_in = $request->qty_in;
+        $description = $request->description;
+
+
+    
+        $date = date_create('2000-01-01');
+       
+
+
+        $stock = new Stock();
+        $stock->products_id = $product_id;
+        $stock->qty_in = $qty_in;
+        $stock->created_by = auth()->user()->id;
+        $stock->transaction_type = 'Product IN';
+        $stock->status = 1;
+        $stock->date =  date_format($date, 'Y-m-d H:i:s');
+        $stock->description = $description;
+        $stock->save();
+
+        $message="Product Added Successfully";
+        return view(parent::loadDataToView($this->view_path.'.registration.issuein'), compact('message', 'data'));
+
+
+
+
+        
+
+
+
+
+
+
+        //dd($stock_balance,$qty_out );
+
+
+      
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
     public function register(AddValidation $request)
     {
 
@@ -164,6 +390,9 @@ class ProductController extends CollegeBaseController
         $data = [];
         $data['product'] = Product::find($id);
 
+
+
+
         if (!$data['product']){
             request()->session()->flash($this->message_warning, "Not a Valid Product");
             return redirect()->route($this->base_route);
@@ -171,6 +400,10 @@ class ProductController extends CollegeBaseController
 
         $data['url'] = URL::current();
         return view(parent::loadDataToView($this->view_path.'.detail.index'), compact('data'));
+
+
+
+
     }
 
     public function edit(Request $request, $id)

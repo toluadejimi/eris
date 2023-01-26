@@ -1484,6 +1484,11 @@ Route::group(['prefix' => 'product/',                                   'as' => 
 
     Route::get('',                          ['as' => '',                         'middleware' => ['ability:super-admin,product-index'],                  'uses' => 'ProductController@index']);
     Route::get('registration',              ['as' => '.registration',            'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@registration']);
+    Route::get('issueout',                  ['as' => '.issueout',                'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@issueout']);
+    Route::post('issue',                    ['as' => '.issue',                   'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@issue']);
+    Route::get('issuein',                  ['as' => '.issuein',                'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@issuein']);
+    Route::post('issue-in',                    ['as' => '.issue-in',                   'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@issue_in']);
+   
     Route::post('register',                 ['as' => '.register',                'middleware' => ['ability:super-admin,product-add'],                    'uses' => 'ProductController@register']);
     Route::get('{id}/view',                 ['as' => '.view',                    'middleware' => ['ability:super-admin,product-view'],                   'uses' => 'ProductController@view']);
     Route::get('{id}/edit',                 ['as' => '.edit',                    'middleware' => ['ability:super-admin,product-edit'],                   'uses' => 'ProductController@edit']);

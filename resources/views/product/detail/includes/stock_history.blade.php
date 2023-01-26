@@ -17,7 +17,9 @@
                         <th>Type</th>
                         <th>QTY_IN</th>
                         <th>QTY_OUT</th>
-                        <th>User</th>
+                        <th>Issued To</th>
+                        <th>Class</th>
+                        <th>Issued By</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +32,8 @@
                             <td>{{ $history->transaction_type }} </td>
                             <td>{{ $history->qty_in }} </td>
                             <td>{{ $history->qty_out }} </td>
+                            <td>{{ $history->issued_to}} </td>
+                            <td>{{ $history->faculty_id }} </td>
                             <td>{{ $history->created_by_name }} </td>
                         </tr>
                         @php($i++)

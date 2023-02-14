@@ -146,9 +146,9 @@
 
                 <tfoot style="text-align:center">
                     <tr>
-                        <b><td colspan="1" class="text-left"><strong>TOTAL STUDENT PRESENT : {{$student_count ?? 0}}</b></td>
+                        <b><td><strong>TOTAL STUDENT PRESENT : {{$student_count ?? 0}}</b></td>
 
-                        <b><td colspan="2" class="text-left"><strong>TOTAL FULL DAY PRESENT : {{$sumtotal ?? 0}}</b></td>
+                        <b><td><strong>TOTAL FULL DAY PRESENT : {{$sumtotal ?? 0}}</b></td>
 
                       </tr>
                     <tr>

@@ -147,14 +147,9 @@
                 <tfoot style="text-align:center">
                     <tr>
                         <b><td><strong>TOTAL STUDENT PRESENT : {{$student_count ?? 0}}</b></td>
-
                         <b><td><strong>TOTAL FULL DAY PRESENT : {{$sumtotal ?? 0}}</b></td>
-
-                      </tr>
-                    <tr>
-                      
                     </tr>
-                  </tfoot>
+                </tfoot>
             </table>
             {!! Form::close() !!}
         </div>

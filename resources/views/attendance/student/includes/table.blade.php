@@ -152,10 +152,7 @@
 
                       </tr>
                     <tr>
-                      <td>WK1 </td>
-                      <td>WK2</td>
-                      <td>WK3 </td>
-                      <td>WK4</td>
+                      
                     </tr>
                   </tfoot>
             </table>

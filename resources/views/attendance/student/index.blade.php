@@ -19,6 +19,40 @@
                     </h1>
                 </div><!-- /.page-header -->
 
+
+            {{-- <form action="get-weekper" method="POST">
+                @csrf
+
+                <div class="col">
+                    <div class="col-sm-2">
+                        <label>Choose From Date</label>
+                        <input type="text"  name="from_date" class="input-sm form-control border-form input-mask-date date-picker" placeholder="YYYY-MM-DD" required>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label>Choose To Date</label>
+                        <input type="text"  name="to_date" class="input-sm form-control border-form input-mask-date date-picker" placeholder="YYYY-MM-DD" required>
+                    </div>
+
+
+                    <div class="col-sm-2 mt-3">
+                    <button class="btn btn-success" type="submit" id="">
+                        Get Weekly Percentage
+                    </button>
+                </div> --}}
+
+
+
+
+                </div>
+
+
+            
+            </form>
+
+
+
+
                 <div class="row">
                     @include('attendance.includes.buttons')
                     <div class="col-xs-12 ">

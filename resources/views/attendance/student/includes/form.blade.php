@@ -24,11 +24,11 @@
     </div>
 
     <div class="form-group">
-        <label class="col-sm-1 control-label">Batch</label>
+        {{-- <label class="col-sm-1 control-label">Batch</label>
         <div class="col-sm-11">
             {!! Form::select('batch', $data['batch'], null, ['class' => 'form-control' , 'onChange' => 'loadStudent(this);']) !!}
             <em>Select Only if you want to filter batch-wise</em>
-        </div>
+        </div> --}}
 
     </div>
     <div class="hr hr-18 dotted hr-double"></div>

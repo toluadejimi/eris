@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Student\StudentPublicController;
 use App\Http\Controllers\Assignment\AssignmentController;
+use App\Http\Controllers\Attendance\StudentAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('ass-score', [AssignmentController::class, 'ass_core']);
+
+
+Route::post('attendance/get-weekper', [StudentAttendanceController::class, 'get_weekly']);
+
 
 
 Route::get('public-registration-success', [StudentPublicController::class, 'success' ]);

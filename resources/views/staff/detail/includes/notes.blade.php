@@ -13,8 +13,11 @@
                 <thead>
                 <tr>
                     <th width="5%">S.N.</th>
+                    <th> Date </th>
                     <th>Subject</th>
                     <th>Note Description</th>
+                    <th>Status</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -23,8 +26,19 @@
                     @foreach($data['note'] as $note)
                         <tr>
                             <td>{{ $i }}</td>
+                            <td> {{  \Carbon\Carbon::parse($note->created_at)->format('Y-m-d') }} </td>
                             <td>{{ $note->subject }}</td>
                             <td>{{ $note->note }}</td>
+                            <td class="hidden-480 ">
+                                <div class="btn-group">
+                                    <button data-toggle="" class="btn btn-primary {{ $note->status == 'active'?"btn-success":"btn-warning" }}" >
+                                        {{ $note->status == 'active'?"Approved":"Disaproved" }}
+                                    </button>
+
+                                    
+                                </div>
+
+                            </td>
                         </tr>
                         @php($i++)
                     @endforeach

@@ -49,7 +49,6 @@
                     <th>29</th>
                     <th>30</th>
                     <th>31</th>
-                    <th>32</th>
                     @foreach($data['attendanceStatus'] as $attenStatus)
                         <th>{{ $attenStatus->title }}</th>
                     @endforeach
@@ -103,12 +102,12 @@
                             <td class="{{ ViewHelper::getAttendanceDisplayClass($student->day_29)}}">{{ ViewHelper::getAttendanceStatus($student->day_29)}}</td>
                             <td class="{{ ViewHelper::getAttendanceDisplayClass($student->day_30)}}">{{ ViewHelper::getAttendanceStatus($student->day_30)}}</td>
                             <td class="{{ ViewHelper::getAttendanceDisplayClass($student->day_31)}}">{{ ViewHelper::getAttendanceStatus($student->day_31)}}</td>
-                            <td class="{{ ViewHelper::getAttendanceDisplayClass($student->day_32)}}">{{ ViewHelper::getAttendanceStatus($student->day_32)}}</td>
                             <td>{{ $student->PRESENT?$student->PRESENT:0 }} </td>
                             <td>{{ $student->ABSENT?$student->ABSENT:0 }} </td>
-                            <td>{{ $student->LATE?$student->LATE:0 }} </td>
-                            <td>{{ $student->LEAVE?$student->LEAVE:0 }} </td>
+                            <td>{{ $student->HALFDAY?$student->HALFDAY:0 }} </td>
                             <td>{{ $student->HOLIDAY?$student->HOLIDAY:0 }} </td>
+                            <td>{{ $student->HOLIDAY?$student->HOLIDAY:0 }} </td>
+
                             <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a href="{{ route($base_route.'.delete', ['id' => $student->id]) }}" class="red bootbox-confirm">
@@ -141,6 +140,24 @@
                     </tr>
                 @endif
                 </tbody>
+
+                
+
+
+                <tfoot style="text-align:center">
+                    <tr>
+                        <b><td colspan="1" class="text-right"><strong>TOTAL STUDENT PRESENT : {{$student_count ?? 0}}</b></td>
+
+                        <b><td colspan="1" class="text-right"><strong>TOTAL FULL DAY PRESENT : {{$sumtotal ?? 0}}</b></td>
+
+                      </tr>
+                    <tr>
+                      <td>WK1 </td>
+                      <td>WK2</td>
+                      <td>WK3 </td>
+                      <td>WK4</td>
+                    </tr>
+                  </tfoot>
             </table>
             {!! Form::close() !!}
         </div>

@@ -15,10 +15,11 @@
                                 </label>
                             </th>
                             <th>S.N.</th>
+                            <th>Date</th>
                             <th>Reg.No.</th>
                             <th>{{ $panel }}</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,12 +34,13 @@
                                         </label>
                                     </td>
                                     <td>{{ $i }}</td>
+                                    <td> {{  \Carbon\Carbon::parse($note->created_at)->format('Y-m-d') }} </td>
                                     <td><a href="{{ route('staff.view', ['id' => $note->member_id]) }}"> {{  ViewHelper::getStaffById( $note->member_id ) }}</a></td>
                                     <td>{{ $note->subject }}</td>
                                     <td class="hidden-480 ">
                                         <div class="btn-group">
-                                            <button data-toggle="dropdown" class="btn btn-primary btn-minier dropdown-toggle {{ $note->status == 'active'?"btn-info":"btn-warning" }}" >
-                                                {{ $note->status == 'active'?"Active":"In Active" }}
+                                            <button data-toggle="dropdown" class="btn btn-primary btn-minier dropdown-toggle {{ $note->status == 'active'?"btn-success":"btn-warning" }}" >
+                                                {{ $note->status == 'active'?"Approved":"Disaproved" }}
                                                 <span class="ace-icon fa fa-caret-down icon-on-right"></span>
                                             </button>
 

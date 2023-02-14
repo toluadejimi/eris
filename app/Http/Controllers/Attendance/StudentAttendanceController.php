@@ -101,7 +101,7 @@ class StudentAttendanceController extends CollegeBaseController
                     'attendances.day_14', 'attendances.day_15', 'attendances.day_16', 'attendances.day_17', 'attendances.day_18',
                     'attendances.day_19', 'attendances.day_20', 'attendances.day_21', 'attendances.day_22', 'attendances.day_23',
                     'attendances.day_24', 'attendances.day_25', 'attendances.day_26', 'attendances.day_27', 'attendances.day_28',
-                    'attendances.day_29', 'attendances.day_30', 'attendances.day_31','attendances.day_32',
+                    'attendances.day_29', 'attendances.day_30', 'attendances.day_31','attendances.day_32','attendances.created_at',
                     'students.id as students_id', 'students.reg_no',
                     'students.first_name', 'students.middle_name', 'students.last_name', 'students.faculty', 'students.semester')
                     ->where('attendances.attendees_type', 1)
@@ -130,22 +130,71 @@ class StudentAttendanceController extends CollegeBaseController
         $attendanceStatus = AttendanceStatus::get();
         if(isset($students)){
             $filteredStudent = $students->filter(function ($student, $key) use($attendanceStatus) {
-            for ($day = 1; $day <= 32; $day++) {
-                $dayCode = "day_".$day;
-                foreach ($attendanceStatus as $attenStatus){
-                    if($student->$dayCode == $attenStatus->id){
-                        $attenTitle = $attenStatus->title;
-                        $student->$attenTitle = $student->$attenTitle + 1;
+                for ($day = 1; $day <= 32; $day++) {
+                    $dayCode = "day_".$day;
+                    foreach ($attendanceStatus as $attenStatus){
+                        if($student->$dayCode == $attenStatus->id){
+                            $attenTitle = $attenStatus->title;
+                            $student->$attenTitle = $student->$attenTitle + 1;
+                        }
                     }
                 }
-            }
 
-                return $student;
-            });
+                    return $student;
+                });
 
-            $data['student'] = $filteredStudent;
+
+                //dd($filteredStudent);
+
+        $newArray = array();
+        foreach ($filteredStudent as $entry) {
+        $newArray[$entry['id']] = $entry['PRESENT'];
         }
 
+        $result = array_filter($newArray); 
+        
+        $newArray2 = array();
+        foreach ($filteredStudent as $entry) {
+        $newArray[$entry['id']] = $entry['HALFDAY'];
+        }
+
+        $result2 = array_filter($newArray); 
+
+
+        $total = array_sum($result) ?? 0;
+        $count = count($result) ?? 0;
+
+        $total2 = array_sum($result2) ?? 0;
+
+
+
+        
+
+
+            $data['student'] = $filteredStudent;
+
+         
+        }
+
+        $summy = $total ?? 0;
+         
+         $sumtotal =  $summy *  2;
+
+         $student_count = $count ?? 0;
+
+         $halfday = $total2 ?? 0 / 2 ?? 0;
+
+
+
+         $wk1 = 31 * $student_count / 5 ;
+
+
+
+         //dd($wk1);
+
+         
+
+   
 
         $data['attendanceStatus'] = $attendanceStatus;
         $data['years'] = $this->activeYears();
@@ -157,8 +206,42 @@ class StudentAttendanceController extends CollegeBaseController
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
 
-        return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
+
+
+
+
+
+        return view(parent::loadDataToView($this->view_path.'.index'), compact('data','sumtotal','student_count','halfday'));
     }
+
+
+
+
+    public function get_weekly(REQUEST $request){
+
+        $from_date = $request ->from_date;
+        $to_date = $request ->to_date;
+
+
+
+
+        dd($request->all());
+
+
+
+    }
+
+    
+    
+
+
+
+
+
+
+
+
+
 
     public function add(Request $request)
     {

@@ -15,7 +15,7 @@
                     </th>
                     <th>Code</th>
                     <th>Category</th>
-                    {{-- <th>Image</th> --}}
+                   --}}
                     <th>Name</th>
                     {{-- <th >Price</th> --}}
                     <th >Stock</th>

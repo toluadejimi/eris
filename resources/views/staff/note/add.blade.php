@@ -4,7 +4,9 @@
 'id' => 'validation-form', "enctype" => "multipart/form-data"]) !!}
 @include($view_path.'.includes.form')
 <div class="clearfix form-actions">
-    <div class="col-md-12 align-right">
+    <div class="col-md-12 align-right mt-3">
+        <div class="hr hr-24"></div>
+
         <button class="btn btn-info" type="submit">
             <i class="fa fa-save bigger-110"></i>
             Create

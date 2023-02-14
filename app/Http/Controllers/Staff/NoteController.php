@@ -18,6 +18,7 @@ use App\Models\Staff;
 use Illuminate\Http\Request;
 use ViewHelper;
 use view;
+use Auth;
 
 class NoteController extends CollegeBaseController
 {
@@ -50,11 +51,35 @@ class NoteController extends CollegeBaseController
             return redirect()->route('staff.note')->with('message_warning', 'Please Check Registration Number. 
             This Registration Number is Not a valid Staff Registration No.');
 
-        $request->request->add(['created_by' => auth()->user()->id]);
-        $request->request->add(['member_id' => $staff->id]);
-        $request->request->add(['member_type' => 'staff']);
+        // $request->request->add(['created_by' => auth()->user()->id]);
+        // $request->request->add(['member_id' => $staff->id]);
+        // $request->request->add(['member_id' => $staff->id]);
+        // $request->request->add(['in_time' => $staff->id]);
+        // $request->request->add(['member_id' => $staff->id]);
 
-        Note::create($request->all());
+        // $request->request->add(['member_type' => 'staff']);
+
+        // Note::create($request->all());
+
+
+        $note = new Note();
+        $note->created_by = auth()->user()->id;
+        $note->member_id = $staff->id;
+        $note->in_time = $request->in_time;
+        $note->out_time = $request->out_time;
+        $note->subject = $request->subject;
+
+        $note->member_type = 'staff';
+
+        $note->save();
+
+
+
+
+
+
+
+
 
         $request->session()->flash($this->message_success, $this->panel. ' Create Successfully.');
         return redirect()->route($this->base_route);
@@ -78,19 +103,40 @@ class NoteController extends CollegeBaseController
 
     public function update(EditValidation $request, $id)
     {
-        if (!$row = Note::find($id)) return parent::invalidRequest();
+
+
+                if (!$row = Note::find($id)) return parent::invalidRequest();
 
         $reg_no = $request->get('reg_no');
+        $in_time = $request->in_time;
+        $out_time = $request->out_time;
+        $id = $request->id;
+
+
+
         $staff = Staff::select('id')->where('reg_no','=',$reg_no)->first();
         if (!$staff)
             return redirect()->route('staff.note')->with('message_warning', 'Please Check Registration Number. 
             This Registration Number is Not a valid Staff Registration No.');
 
-        $request->request->add(['last_updated_by' => auth()->user()->id]);
-        $request->request->add(['member_id' => $staff->id]);
-        $request->request->add(['member_type' => 'staff']);
+        // $request->request->add(['last_updated_by' => auth()->user()->id]);
+        // $request->request->add(['member_id' => $staff->id]);
+        // $request->request->add(['member_type' => 'staff']);
+        // $request->request->add(['in_time' => $in_time]);
+        // $request->request->add(['out_time' => $out_time]);
 
-        $row->update($request->all());
+        // $row->update($request->all());
+
+        $update = Note::where('id', $id)
+        ->update([
+            'out_time' => $out_time,
+            'in_time' => $in_time,
+            'last_updated_by' => Auth::id(),
+        ]);
+
+
+
+
 
         $request->session()->flash($this->message_success, $this->panel.' Updated Successfully.');
         return redirect()->route($this->base_route);

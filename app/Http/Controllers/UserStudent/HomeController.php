@@ -1143,11 +1143,11 @@ class HomeController extends CollegeBaseController
                 return is_numeric($value);
             });
 
-            $gradePoint = array_sum($filtered_gp_collection) ?? 1; // / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection); // / $subject->count();
             $value->gpa_point = number_format((float) $gradePoint, 2);
 
 
-            $gradePoint = array_sum($filtered_gp_collection) ?? 1 / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
             $value->average_point = number_format((float) $gradePoint, 2);
 
 
@@ -1172,7 +1172,7 @@ class HomeController extends CollegeBaseController
             $value->total_mark_practical = $obtainedMarkPr;
             $value->total_obtain = $obtainedMark;
             /*Calculate percentage*/
-            $value->percentage = $percentage = ($obtainedMark * 100) ?? 1 / $totalMark;
+            $value->percentage = $percentage = ($obtainedMark * 100) / $totalMark;
 
             $value->gpa_average = $this->getGrade($semester, $percentage);
             $value->remark = $this->getRemark($semester, $percentage);
@@ -1203,7 +1203,7 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
-        $average = number_format($totalmarks ?? 1 / $total_count, 2);
+        $average = number_format($totalmarks / $total_count, 2);
 
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
@@ -1230,9 +1230,7 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
-        if($totalmarks == 0){
-            return back();
-        }
+    
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image'));
     }
 

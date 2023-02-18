@@ -1147,6 +1147,11 @@ class HomeController extends CollegeBaseController
             $value->gpa_point = number_format((float) $gradePoint, 2);
 
 
+            if($gradePoint == 0){
+
+                return back();
+            }
+
             $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
             $value->average_point = number_format((float) $gradePoint, 2);
 
@@ -1202,6 +1207,12 @@ class HomeController extends CollegeBaseController
         $total_count = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
+
+
+            if($total_count == 0){
+
+                return back();
+            }
 
         $average = number_format($totalmarks / $total_count, 2);
 

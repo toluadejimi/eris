@@ -14,6 +14,7 @@
 use App\Http\Controllers\Student\StudentPublicController;
 use App\Http\Controllers\Assignment\AssignmentController;
 use App\Http\Controllers\Attendance\StudentAttendanceController;
+use App\Http\Controllers\UserStudent\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('ass-score', [AssignmentController::class, 'ass_core']);
+
+Route::get('user-student/current-result', [HomeController::class, 'current_exam']);
 
 
 Route::post('attendance/get-weekper', [StudentAttendanceController::class, 'get_weekly']);
@@ -78,6 +81,7 @@ Route::group(['prefix' => 'user-student/',          'as' => 'user-student',     
     Route::get('attendance',                        ['as' => '.attendance',                         'middleware' => ['permission:student-attendance'],  'uses' => 'HomeController@attendance']);
 
     Route::get('exams',                                                            ['as' => '.exams',               'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@exams']);
+    Route::get('current_exams',                                                    ['as' => '.current_exam',               'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@current_exam']);
     Route::get('exam-schedule/{year}/{month}/{exam}/{faculty}/{semester}',         ['as' => '.exam-schedule',       'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@examSchedule']);
     Route::get('exam-admit-card/{year}/{month}/{exam}/{faculty}/{semester}',       ['as' => '.exam-admit-card',     'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@admitCard']);
     Route::get('exam-score/{year}/{month}/{exam}/{faculty}/{semester}',            ['as' => '.exam-score',          'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@examScore']);

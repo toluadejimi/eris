@@ -847,6 +847,8 @@ class HomeController extends CollegeBaseController
     public function exams()
     {
 
+
+
         $get_fee_owe = FeeMaster::where('students_id', Auth::id())
         ->sum('fee_amount');
 
@@ -868,6 +870,7 @@ class HomeController extends CollegeBaseController
         $data = [];
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
+
         //$year = Year::where('active_status', 1)->first();
         // if (!$year) {
         //     return back();
@@ -884,8 +887,54 @@ class HomeController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
     }
 
+
+    public function current_exam()
+    {
+
+
+
+        $get_fee_owe = FeeMaster::where('students_id', Auth::id())
+        ->sum('fee_amount');
+
+        $get_fee_paid = FeeCollection::where('students_id', Auth::id())
+        ->sum('paid_amount');
+
+
+        if($get_fee_owe > $get_fee_paid){
+            $owing = true;
+            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
+        } else{
+            $owing = false;
+        }
+
+
+
+        $this->panel = "Current_Exam";
+        $id = auth()->user()->hook_id;
+        $data = [];
+        $data['student'] = Student::find($id);
+        $semester = Semester::find($data['student']->semester);
+        //$year = Year::where('active_status', 1)->first();
+        // if (!$year) {
+        //     return back();
+        //}
+
+        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+        //->where([['semesters_id',$semester->id],['years_id',$year->id]])
+            ->where('semesters_id', $semester->id)
+            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+            ->orderBy('years_id', 'desc')
+            ->orderBy('months_id', 'asc')
+            ->get();
+
+            //return view('user-student.exam.current-exam', compact('data', 'owing'));
+        return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data', 'owing'));
+    }
+
+
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
+
         $this->panel = "Exam Schedule";
         $id = auth()->user()->hook_id;
         $student_id = $id;
@@ -966,6 +1015,7 @@ class HomeController extends CollegeBaseController
 
     public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
+
         $id = auth()->user()->hook_id;
         $student_id = $id;
         $data = [];
@@ -1093,11 +1143,13 @@ class HomeController extends CollegeBaseController
                 return is_numeric($value);
             });
 
-            $gradePoint = array_sum($filtered_gp_collection); // / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection) ?? 1; // / $subject->count();
             $value->gpa_point = number_format((float) $gradePoint, 2);
 
-            $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
+
+            $gradePoint = array_sum($filtered_gp_collection) ?? 1 / $subject->count();
             $value->average_point = number_format((float) $gradePoint, 2);
+
 
             /*calculate total mark & percentage*/
             $otm = array_pluck($value->subjects, 'obtain_mark_theory');
@@ -1120,7 +1172,7 @@ class HomeController extends CollegeBaseController
             $value->total_mark_practical = $obtainedMarkPr;
             $value->total_obtain = $obtainedMark;
             /*Calculate percentage*/
-            $value->percentage = $percentage = ($obtainedMark * 100) / $totalMark;
+            $value->percentage = $percentage = ($obtainedMark * 100) ?? 1 / $totalMark;
 
             $value->gpa_average = $this->getGrade($semester, $percentage);
             $value->remark = $this->getRemark($semester, $percentage);
@@ -1137,6 +1189,8 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
 
+
+
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
         $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
@@ -1149,7 +1203,7 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
-        $average = number_format($totalmarks / $total_count, 2);
+        $average = number_format($totalmarks ?? 1 / $total_count, 2);
 
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
@@ -1176,6 +1230,9 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
+        if($totalmarks == 0){
+            return back();
+        }
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image'));
     }
 

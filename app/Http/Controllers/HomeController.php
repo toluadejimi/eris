@@ -32,6 +32,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use ViewHelper;
+use Auth;
 
 class HomeController extends CollegeBaseController
 {
@@ -81,7 +82,9 @@ class HomeController extends CollegeBaseController
             $data['staff_birthday'] = Staff::select('id','reg_no','first_name','middle_name','last_name','designation','date_of_birth')->whereRaw("DAYOFYEAR(date_of_birth) BETWEEN $start AND $end")->orderBy('date_of_birth','asc')->get();
             //$birthdayStudent = Student::where('date_of_birth',)
 
-        $userRoleId = auth()->user()->roles()->first()->id;
+            $userRoleId = User::where('id', Auth::user()->id)->first()->role_id;
+
+            //$userRoleId = auth()->user()->roles()->first()->id;
         /*Notice*/
         $now = date('Y-m-d');
         $data['notice_display'] = Notice::select('last_updated_by', 'title', 'message',  'publish_date', 'end_date',

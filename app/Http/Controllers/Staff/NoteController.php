@@ -14,6 +14,7 @@ use App\Http\Controllers\CollegeBaseController;
 use App\Http\Requests\Staff\Notes\AddValidation;
 use App\Http\Requests\Staff\Notes\EditValidation;
 use App\Models\Note;
+use App\Models\User;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use ViewHelper;
@@ -35,7 +36,7 @@ class NoteController extends CollegeBaseController
     public function index(Request $request)
     {
         $data = [];
-        $data['note'] = Note::select('created_at', 'id', 'member_type','member_id','subject', 'note', 'status')
+        $data['note'] = Note::select('created_at', 'id', 'member_type', 'last_updated_by', 'in_time', 'out_time','member_id','subject', 'note', 'status')
             ->where('member_type','=','staff')
             ->get();
 
@@ -58,27 +59,24 @@ class NoteController extends CollegeBaseController
         // $request->request->add(['member_id' => $staff->id]);
 
         // $request->request->add(['member_type' => 'staff']);
-
         // Note::create($request->all());
 
 
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first()->name;
+
+
         $note = new Note();
-        $note->created_by = auth()->user()->id;
+        $note->created_by = $user;
         $note->member_id = $staff->id;
         $note->in_time = $request->in_time;
+        $note->note = $request->note;
         $note->out_time = $request->out_time;
         $note->subject = $request->subject;
 
         $note->member_type = 'staff';
 
         $note->save();
-
-
-
-
-
-
-
 
 
         $request->session()->flash($this->message_success, $this->panel. ' Create Successfully.');
@@ -105,7 +103,7 @@ class NoteController extends CollegeBaseController
     {
 
 
-                if (!$row = Note::find($id)) return parent::invalidRequest();
+        if (!$row = Note::find($id)) return parent::invalidRequest();
 
         $reg_no = $request->get('reg_no');
         $in_time = $request->in_time;
@@ -127,11 +125,14 @@ class NoteController extends CollegeBaseController
 
         // $row->update($request->all());
 
+        $user_id = auth()->user()->id;
+        $user = User::where('id', $user_id)->first()->name;
+
         $update = Note::where('id', $id)
         ->update([
             'out_time' => $out_time,
             'in_time' => $in_time,
-            'last_updated_by' => Auth::id(),
+            'last_updated_by' => $user,
         ]);
 
 

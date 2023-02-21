@@ -103,7 +103,12 @@ class HomeController extends CollegeBaseController
         }
 
         /*Notice*/
+       
         $userRoleId = auth()->user()->roles()->first()->id;
+
+
+
+
         $now = date('Y-m-d');
         $data['notice_display'] = Notice::select('last_updated_by', 'title', 'message', 'publish_date', 'end_date',
             'display_group', 'status')
@@ -852,11 +857,17 @@ class HomeController extends CollegeBaseController
         $get_fee_owe = FeeMaster::where('students_id', Auth::id())
         ->sum('fee_amount');
 
+        $get_fee_dis = FeeCollection::where('students_id', Auth::id())
+        ->sum('discount');
+
         $get_fee_paid = FeeCollection::where('students_id', Auth::id())
         ->sum('paid_amount');
+          
+
+        $total_paid = $get_fee_paid + $get_fee_dis;
 
 
-        if($get_fee_owe > $get_fee_paid){
+        if($get_fee_owe > $total_paid){
             $owing = true;
             //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
         } else{

@@ -19,6 +19,9 @@
                             <th>Reg.No.</th>
                             <th>{{ $panel }}</th>
                             <th>Status</th>
+                            <th>Time IN</th>
+                            <th>Time Out</th>
+                            <th>Approved By</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -56,6 +59,13 @@
                                         </div>
 
                                     </td>
+                                    <td>{{ $note->in_time }}</td>
+                                    <td>{{ $note->out_time }}</td>
+                                    <td>{{ $note->last_updated_by }}</td>
+
+                                    
+
+
                                     <td>
                                         <div class="hidden-sm hidden-xs action-buttons">
                                             <a class="green" href="{{ route($base_route.'.edit', ['id' => $note->id]) }}">

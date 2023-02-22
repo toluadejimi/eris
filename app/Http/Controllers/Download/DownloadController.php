@@ -37,7 +37,7 @@ class DownloadController extends CollegeBaseController
     public function index(Request $request)
     {
         $data = [];
-        $data['download'] = Download::get();
+        //$data['download'] = Download::get();
 
         if($request->all()) {
             if(auth()->user()->hasRole('staff')) {
@@ -123,15 +123,15 @@ class DownloadController extends CollegeBaseController
             }
         }else{
             if(auth()->user()->hasRole('staff')) {
-                $id = auth()->user()->id;
-                $data['download'] = Download::where('created_by',$id)
-                    ->latest()
-                    ->get();
+                // $id = auth()->user()->id;
+                // $data['download'] = Download::where('created_by',$id)
+                //     ->latest()
+                //     ->get();
 
 
             }else {
-                $data['download'] = Download::latest()
-                    ->get();
+                // $data['download'] = Download::latest()
+                //     ->get();
             }
         }
 

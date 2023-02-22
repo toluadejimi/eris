@@ -66,22 +66,13 @@ class TransactionController extends CollegeBaseController
         }
 
 
-        //dd($data);
-
-        foreach($data['transaction'] as $transaction){
-            $amount[] = $transaction->dr_amount;
-        }
-       
-        $total = array_sum($amount);
-
-
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
         $data['th'] =  array_prepend($head,'Select Ledger','0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
 
-        return view(parent::loadDataToView($this->view_path.'.index'), compact('data',  'total'));
+        return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
     }
 
 

@@ -52,7 +52,7 @@
                         @endforeach
                         <tr class="blue" style="font-size: 16px; font-weight: 600;">
                             <td class="align-right" colspan="4">Total </td>
-                            <td>{{ number_format($total, 2) }} </td>
+                            <td>{{ number_format($data['transaction']->sum('dr_amount'), 2) }} </td>
                             <td>{{ $expenses = $data['transaction']->sum('cr_amount') }} </td>
                             <td></td>
                             <td></td>

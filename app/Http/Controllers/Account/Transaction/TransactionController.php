@@ -32,6 +32,7 @@ class TransactionController extends CollegeBaseController
 
     public function index(Request $request)
     {
+
         $data = [];
         if($request->all()) {
             $data['transaction'] = Transaction::select('id', 'date', 'tr_head_id', 'dr_amount', 'cr_amount', 'description', 'status')
@@ -64,14 +65,27 @@ class TransactionController extends CollegeBaseController
                 ->get();
         }
 
+
+        //dd($data);
+
+        foreach($data['transaction'] as $transaction){
+            $amount[] = $transaction->dr_amount;
+        }
+       
+        $total = array_sum($amount);
+
+
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
         $data['th'] =  array_prepend($head,'Select Ledger','0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
 
-        return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
+        return view(parent::loadDataToView($this->view_path.'.index'), compact('data',  'total'));
     }
+
+
+
 
     public function add(Request $request)
     {

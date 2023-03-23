@@ -51,10 +51,10 @@
                                 <td><a href="{{ route('student.view', ['id' => $student->id]) }}">{{ $student->reg_no }}</a></td>
                                 <td><a href="{{ route('student.view', ['id' => $student->id]) }}"> {{ $student->first_name.' '.$student->middle_name.' '. $student->last_name }}</a></td>
                                 <td>
-                                    {{ $student->fee_amount }}
+                                    {{ number_format($student->fee_amount,2) }}
                                 </td>
                                 <td>
-                                    {{ $student->balance }}
+                                    {{ number_format($student->balance, 2) }}
                                 </td>
                                 <td>
                                     <div class="btn btn-primary btn-minier action-buttons ">
@@ -75,8 +75,8 @@
                 <tfoot>
                     <tr style="font-size: 14px; background: orangered;color: white;">
                         <td colspan="6" class="text-right">Total</td>
-                        <td  class="text-right">{{ $data['student']->sum('fee_amount') }}</td>
-                        <td  class="text-right"> {{ $data['student']->sum('balance') }} </td>
+                        <td  class="text-right">{{ number_format($data['student']->sum('fee_amount'), 2) }}</td>
+                        <td  class="text-right"> {{ number_format($data['student']->sum('balance'), 2) }} </td>
                         <td class="hdidden-print"> </td>
                     </tr>
                 </tfoot>

@@ -79,10 +79,10 @@
                     <tfoot>
                     <tr style="font-size: 14px; background: orangered;color: white;">
                         <td colspan="4">Total</td>
-                        <td>{{ $feeAmount = $data['fee_master']->sum('fee_amount') }}</td>
-                        <td>{{ $data['fee_master']->sum('discount') }}</td>
-                        <td>{{ $data['fee_master']->sum('fine') }}</td>
-                        <td>{{ $data['fee_master']->sum('paid_amount') }}</td>
+                        <td>{{ number_format($feeAmount = $data['fee_master']->sum('fee_amount'), 2) }}</td>
+                        <td>{{ number_format($data['fee_master']->sum('discount'), 2) }}</td>
+                        <td>{{ number_format($data['fee_master']->sum('fine'), 2) }}</td>
+                        <td>{{ number_format($data['fee_master']->sum('paid_amount'), 2) }}</td>
                         <td>
                             {{ $balance = $data['fee_master']->sum('balance') }}
                             <input type="hidden" name="total_balance" value="{{ $balance }}" id="total_balance" class="ace" />

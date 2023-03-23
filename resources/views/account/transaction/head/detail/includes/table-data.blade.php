@@ -47,12 +47,12 @@
                 <td>{{ $i }}</td>
                 <td>{{ \Carbon\Carbon::parse($transaction->date)->format('Y-m-d') }}</td>
                 <td>{{ $transaction->description }}</td>
-                <td align="right">{{ $transaction->dr_amount > 0?$transaction->dr_amount:'' }}</td>
-                <td align="right">{{ $transaction->cr_amount > 0?$transaction->cr_amount:'' }}</td>
+                <td align="right">{{ number_format($transaction->dr_amount > 0?$transaction->dr_amount:'', 2) }}</td>
+                <td align="right">{{ number_format($transaction->cr_amount > 0?$transaction->cr_amount:'', 2) }}</td>
                 @if(is_numeric($transaction->balance) && $transaction->balance >= 0)
-                    <td align="right">{{ $transaction->balance }}</td>
+                    <td align="right">{{ number_format($transaction->balance, 2) }}</td>
                 @else
-                    <td class="red" align="right">{{ $transaction->balance }}</td>
+                    <td class="red" align="right">{{ number_format($transaction->balance, 2) }}</td>
                 @endif
             </tr>
             @php($i++)

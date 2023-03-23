@@ -66,27 +66,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script>
 
-    $('input').keyup(function() { // run anytime the value changes
-        var ca_test1 = Number($('#ca_test1').val()); // get value of field
-        var ca_test2 = Number($('#ca_test2').val()); // get value of field
-        var assign = Number($('#assign').val()); // get value of field
-        var class_exe = Number($('#class_exe').val()); // get value of field 
-        var affective = Number($('#affective').val()); // get value of field
-        var physc = Number($('#physc').val()); // get value of field 
-        var obtain_mark_theory = Number($('#obtain_mark_theory').val()); // get value of field 
-
-
-        document.getElementById('total').value = ca_test1 + ca_test2 + assign + class_exe +  affective + physc + obtain_mark_theory;
-        // add them and output it
-
-
-        console.log('total');
-    });
-
-
-</script>
 
 
 

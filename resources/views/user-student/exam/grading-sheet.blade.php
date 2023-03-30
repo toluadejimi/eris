@@ -247,20 +247,15 @@
         <div class="smaller-100">
 
             @if ($average >= 90)
-            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, Keep
-            It Up.
+            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, keep it up
             @elseif (($average >= 80 && $subject->total <= 89)) 
-            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, Keep
-            It Up.
+            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, keep it up
             @elseif(($average >=76 && $subject->total<= 79)) 
-            PRINCIPAL'S COMMENT: |  Excellent Academic Performance. ERIS is proud of you, Keep
-            It Up.
+            PRINCIPAL'S COMMENT: |  Excellent Academic Performance. ERIS is proud of you, keep it up
             @elseif (($average >= 70 && $subject->total<= 75)) 
-            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement Keep
-            It Up.
+            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement keep it up
             @elseif (($average >= 60 && $subject->total<= 69)) 
-            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement Keep
-            It Up.
+            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement keep it up
             @elseif (($average >= 50 && $subject->total<= 59))
             PRINCIPAL'S COMMENT: |  Average Academic Performance. There is more room for improvement.
             @elseif (($average <= 50)) 

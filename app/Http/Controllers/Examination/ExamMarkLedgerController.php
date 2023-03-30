@@ -149,6 +149,11 @@ class ExamMarkLedgerController extends CollegeBaseController
 
                 if ($ledgerExist) {
                     /*Update Already Register Mark Ledger*/
+
+                   
+                    
+                    //dd($total , $request->all());
+
                     $ledgerUpdate = [
                         'exam_schedule_id' => $examScheduleId->id,
                         'students_id' => $student,
@@ -159,9 +164,9 @@ class ExamMarkLedgerController extends CollegeBaseController
                         'affective' => $request->get('affective')[$key]?$request->get('affective')[$key]:0,
                         'physc' => $request->get('physc')[$key]?$request->get('physc')[$key]:0,
                         'total' => $request->get('total')[$key]?$request->get('total')[$key]:0,
-
                         'obtain_mark_theory' => $request->get('obtain_mark_theory')[$key]?$request->get('obtain_mark_theory')[$key]:0,
                        // 'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
+                        
                         'absent_theory' => $trAbsentStudent,
                         'absent_practical' => $prAbsentStudent,
                         'sorting_order' => $key+1,
@@ -170,8 +175,13 @@ class ExamMarkLedgerController extends CollegeBaseController
 
                     $ledgerExist->update($ledgerUpdate);
 
+                    $request->session()->flash($this->message_success, $this->panel. ' Update Successfully.');
+
                 }else{
                     /*Schedule When Not Scheduled Yet*/
+
+
+
                     ExamMarkLedger::create([
                         'exam_schedule_id' => $examScheduleId->id,
                         'students_id' => $student,
@@ -182,7 +192,7 @@ class ExamMarkLedgerController extends CollegeBaseController
                         'affective' => $request->get('affective')[$key]?$request->get('affective')[$key]:0,
                         'physc' => $request->get('physc')[$key]?$request->get('physc')[$key]:0,
                         'total' => $request->get('total')[$key]?$request->get('total')[$key]:0,
-                        'obtain_mark_theory' => $request->get('obtain_mark_theory')[$key]?$request->get('obtain_mark_theory')[$key]:0,
+                         'obtain_mark_theory' => $request->get('obtain_mark_theory')[$key]?$request->get('obtain_mark_theory')[$key]:0,
                         //'obtain_mark_practical' => $request->get('obtain_mark_practical')[$key]?$request->get('obtain_mark_practical')[$key]:0,
                         'absent_theory' => $trAbsentStudent,
                         'absent_practical' => $prAbsentStudent,

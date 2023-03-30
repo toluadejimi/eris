@@ -205,6 +205,8 @@
                             GOOD 
                             @elseif (($subject->total >= 60 && $subject->total<= 69)) 
                             AVERAGE 
+                            @elseif (($subject->total >= 50 && $subject->total<= 59)) 
+                            FAIR
                             @elseif (($subject->total <= 50)) 
                             FAIL @endif 
                         </td>

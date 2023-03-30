@@ -263,7 +263,6 @@
             It Up.
             @elseif (($average >= 50 && $subject->total<= 59))
             PRINCIPAL'S COMMENT: |  Average Academic Performance. There is more room for improvement.
-            @endif
             @elseif (($average <= 50)) 
             PRINCIPAL'S COMMENT: |  Poor Academic Performance. You need to sit up.
             @endif

@@ -27,7 +27,7 @@
                     <div class="clearfix hidden-print ">
                         <div class="easy-link-menu align-left">
                             <a class="{!! request()->is('user-student/exams')?'btn-success':'btn-primary' !!} btn-sm" href="exams"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;All Result</a>
-                            <a class="{!! request()->is('user-student/current-result')?'btn-success':'btn-primary' !!} btn-sm" href="current-result"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Current Result</a>
+                            <a class="{!! request()->is('user-student/current-result')?'btn-success':'btn-primary' !!} btn-sm" href="current-result"><i class="fa fa-list" aria-hidden="true"></i>&nbsp; Current Result</a>
                         </div>
                     </div>
 

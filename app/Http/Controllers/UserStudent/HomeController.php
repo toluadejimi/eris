@@ -24,6 +24,7 @@ use App\Models\Document;
 use App\Models\Download;
 use App\Models\ExamMarkLedger;
 use App\Models\ExamSchedule;
+use App\Models\Faculty;
 use App\Models\FeeCollection;
 use App\Models\FeeMaster;
 use App\Models\GuardianDetail;
@@ -49,11 +50,9 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use URL;
 use Redirect;
 use Session;
-
-
+use URL;
 
 class HomeController extends CollegeBaseController
 {
@@ -103,11 +102,8 @@ class HomeController extends CollegeBaseController
         }
 
         /*Notice*/
-       
+
         $userRoleId = auth()->user()->roles()->first()->id;
-
-
-
 
         $now = date('Y-m-d');
         $data['notice_display'] = Notice::select('last_updated_by', 'title', 'message', 'publish_date', 'end_date',
@@ -852,35 +848,30 @@ class HomeController extends CollegeBaseController
     public function exams()
     {
 
-
-
         $get_fee_owe = FeeMaster::where('students_id', Auth::id())
-        ->sum('fee_amount');
+            ->sum('fee_amount');
 
         $get_fee_dis = FeeCollection::where('students_id', Auth::id())
-        ->sum('discount');
+            ->sum('discount');
 
         $get_fee_paid = FeeCollection::where('students_id', Auth::id())
-        ->sum('paid_amount');
-          
+            ->sum('paid_amount');
 
         $total_paid = $get_fee_paid + $get_fee_dis;
 
-
-        if($get_fee_owe > $total_paid){
+        if ($get_fee_owe > $total_paid) {
             $owing = true;
             //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
-        } else{
+        } else {
             $owing = false;
         }
-
-
 
         $this->panel = "Exams";
         $id = auth()->user()->hook_id;
         $data = [];
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
+        $falculty = Faculty::find($data['student']->faculty);
 
         //$year = Year::where('active_status', 1)->first();
         // if (!$year) {
@@ -888,48 +879,42 @@ class HomeController extends CollegeBaseController
         //}
 
         $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-        //->where([['semesters_id',$semester->id],['years_id',$year->id]])
-            //->where('semesters_id', $semester->id)
+            ->where('faculty_id', $falculty->id)
             ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
             ->orderBy('years_id', 'desc')
             ->orderBy('months_id', 'asc')
             ->get();
 
-        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
+        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing', 'falculty'));
     }
-
 
     public function current_exam()
     {
 
-
-
         $get_fee_owe = FeeMaster::where('students_id', Auth::id())
-        ->sum('fee_amount');
+            ->sum('fee_amount');
 
         $get_fee_dis = FeeCollection::where('students_id', Auth::id())
-        ->sum('discount');
+            ->sum('discount');
 
         $get_fee_paid = FeeCollection::where('students_id', Auth::id())
-        ->sum('paid_amount');
-          
+            ->sum('paid_amount');
 
         $total_paid = $get_fee_paid + $get_fee_dis;
 
-
-        if($get_fee_owe > $total_paid){
+        if ($get_fee_owe > $total_paid) {
             //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
-        } else{
+        } else {
             $owing = false;
         }
-
-
 
         $this->panel = "Current_Exam";
         $id = auth()->user()->hook_id;
         $data = [];
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
+        $falculty = Faculty::find($data['student']->faculty);
+
         //$year = Year::where('active_status', 1)->first();
         // if (!$year) {
         //     return back();
@@ -943,10 +928,9 @@ class HomeController extends CollegeBaseController
             ->orderBy('months_id', 'asc')
             ->get();
 
-            //return view('user-student.exam.current-exam', compact('data', 'owing'));
-        return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data', 'owing'));
+        //return view('user-student.exam.current-exam', compact('data', 'owing'));
+        return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data', 'owing', 'falculty'));
     }
-
 
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
@@ -1162,15 +1146,13 @@ class HomeController extends CollegeBaseController
             $gradePoint = array_sum($filtered_gp_collection); // / $subject->count();
             $value->gpa_point = number_format((float) $gradePoint, 2);
 
-
-            if($gradePoint == 0){
+            if ($gradePoint == 0) {
 
                 return back();
             }
 
             $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
             $value->average_point = number_format((float) $gradePoint, 2);
-
 
             /*calculate total mark & percentage*/
             $otm = array_pluck($value->subjects, 'obtain_mark_theory');
@@ -1202,14 +1184,11 @@ class HomeController extends CollegeBaseController
 
         });
 
-      
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
         $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
-
-
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
@@ -1223,30 +1202,25 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
+        if ($total_count == 0) {
 
-            if($total_count == 0){
-
-                return back();
-            }
+            return back();
+        }
 
         $average = number_format($totalmarks / $total_count, 2);
-
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $student_image = Student::where('reg_no', $get_student_reg_id)->first()->student_image;
         //$student_image  = ExamMarkLedger::where('students_id', $get_student_id)
 
-       // dd($student_image);
+        // dd($student_image);
 
+        $year = Year::where([
+            'status' => 1,
+            'active_status' => 1,
 
-       $year = Year::where([
-        'status' => 1,
-        'active_status' => 1
-       
-       ])
-       ->first()->title;
-
-
+        ])
+            ->first()->title;
 
         $data['student'] = $filteredStudent;
 
@@ -1256,7 +1230,6 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
-    
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image'));
     }
 
@@ -1446,12 +1419,12 @@ class HomeController extends CollegeBaseController
 
         $data['assignment'] = Assignment::find($id);
 
-        $mark_allocated =  Assignment::where('id', $id)
-        ->first()->mark_allocated;
+        $mark_allocated = Assignment::where('id', $id)
+            ->first()->mark_allocated;
 
         $data['answers'] = $data['assignment']->answers()->where('assignment_answers.id', $answer)
             ->select('assignment_answers.created_by', 'assignment_answers.last_updated_by', 'assignment_answers.id', 'assignment_answers.answer_text',
-                'assignment_answers.file','assignment_answers.mark_obtained', 'assignment_answers.approve_status', 'assignment_answers.status', 's.id as students_id')
+                'assignment_answers.file', 'assignment_answers.mark_obtained', 'assignment_answers.approve_status', 'assignment_answers.status', 's.id as students_id')
             ->join('students as s', 's.id', '=', 'assignment_answers.students_id')
             ->first();
 

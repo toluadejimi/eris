@@ -255,7 +255,7 @@
             PRINCIPAL'S COMMENT: |  Good. A good result, more room for improvement.
             @elseif (($average >= 61 && $average <= 70)) 
             PRINCIPAL'S COMMENT: |  Average. An average academic performance, work harder.
-            @elseif (($average >= 51 && $average <= 60)) 
+            @elseif (($average >= 51 && $average <= 60.9)) 
             PRINCIPAL'S COMMENT: |  Fair. A fairly good performance. Work harder.
             @elseif (($average >= 41 && $average <= 50)) 
             PRINCIPAL'S COMMENT: |  Pass. Fair academic performance. There is need for academic re-awakening.

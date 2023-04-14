@@ -249,17 +249,17 @@
             @if ($average >= 90)
             PRINCIPAL'S COMMENT: | Excellent. Excellent result, ERIS is proud of you. Keep
             It Up.
-            @elseif (($average >= 81 && $subject->total <= 90)) 
+            @elseif (($average >= 81 && $subject->total <= 90.9)) 
             PRINCIPAL'S COMMENT: | Very Good. A very good academic performance.
-            @elseif(($average >= 71 && $subject->total<= 80)) 
+            @elseif(($average >= 71 && $subject->total<= 80.9)) 
             PRINCIPAL'S COMMENT: |  Good. A good result, more room for improvement.
-            @elseif (($average >= 61 && $subject->total<= 70)) 
+            @elseif (($average >= 61 && $subject->total<= 70.9)) 
             PRINCIPAL'S COMMENT: |  Average. An average academic performance, work harder.
-            @elseif (($average >= 51 && $subject->total<= 60)) 
+            @elseif (($average >= 51 && $subject->total<= 60.9)) 
             PRINCIPAL'S COMMENT: |  Fair. A fairly good performance. Work harder.
-            @elseif (($average >= 41 && $subject->total<= 50)) 
+            @elseif (($average >= 41 && $subject->total<= 50.9)) 
             PRINCIPAL'S COMMENT: |  Pass. Fair academic performance. There is need for academic re-awakening.
-            @elseif (($average <= 40)) 
+            @elseif (($average <= 40.9)) 
             PRINCIPAL'S COMMENT: |  Fail. A poor academic performance. There is need for extra attention.
             @endif
 

@@ -1202,8 +1202,7 @@ class HomeController extends CollegeBaseController
 
         });
 
-        //dd(Auth::id());
-
+      
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
         $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)

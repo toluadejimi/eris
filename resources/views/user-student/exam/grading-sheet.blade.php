@@ -247,19 +247,20 @@
         <div class="smaller-100">
 
             @if ($average >= 90)
-            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, keep it up
-            @elseif (($average >= 80 && $subject->total <= 89)) 
-            PRINCIPAL'S COMMENT: | Excellent Academic Performance. ERIS is proud of you, keep it up
-            @elseif(($average >=76 && $subject->total<= 79)) 
-            PRINCIPAL'S COMMENT: |  Excellent Academic Performance. ERIS is proud of you, keep it up
-            @elseif (($average >= 70 && $subject->total<= 75)) 
-            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement keep it up
-            @elseif (($average >= 60 && $subject->total<= 69)) 
-            PRINCIPAL'S COMMENT: |  Good Academic Performance. There is more room for improvement keep it up
-            @elseif (($average >= 50 && $subject->total<= 59))
-            PRINCIPAL'S COMMENT: |  Average Academic Performance. There is more room for improvement.
-            @elseif (($average <= 50)) 
-            PRINCIPAL'S COMMENT: |  Poor Academic Performance. You need to sit up.
+            PRINCIPAL'S COMMENT: | Excellent. Excellent result, ERIS is proud of you. Keep
+            It Up.
+            @elseif (($average >= 81 && $subject->total <= 90)) 
+            PRINCIPAL'S COMMENT: | Very Good. A very good academic performance.
+            @elseif(($average >= 71 && $subject->total<= 80)) 
+            PRINCIPAL'S COMMENT: |  Good. A good result, more room for improvement.
+            @elseif (($average >= 61 && $subject->total<= 70)) 
+            PRINCIPAL'S COMMENT: |  Average. An average academic performance, work harder.
+            @elseif (($average >= 51 && $subject->total<= 60)) 
+            PRINCIPAL'S COMMENT: |  Fair. A fairly good performance. Work harder.
+            @elseif (($average >= 41 && $subject->total<= 50)) 
+            PRINCIPAL'S COMMENT: |  Pass. Fair academic performance. There is need for academic re-awakening.
+            @elseif (($average <= 40)) 
+            PRINCIPAL'S COMMENT: |  Fail. A poor academic performance. There is need for extra attention.
             @endif
 
         </div>
@@ -294,11 +295,11 @@
                 </td>
                 <td class="text-center"><strong style="border-top:1px black solid;"></strong>
                 </td>
-                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">Date of
-                        Result
-                        Publication : {{
-                        \Carbon\Carbon::parse(now())->format('Y-m-d')}}</strong>
+                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">RESUMPTION DATE : {{"May 1st, 2023"}}</strong>
                 </td>
+
+                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">VACATION DATE : {{"March 31st, 2023"}}</strong>
+            </td>
 
 
             </tr>
@@ -317,6 +318,11 @@
             <h4 class="mt-6 text-uppercase" style="font-family: 'Bowlby+One+SC'; font-size: 30px; font-weight: 600">
                 <strong>NOTE ALL FEES SHOULD BE PAID ON OR BEFORE RESUMPTION</strong>
             </h4>
+
+
+
+            
+
 
         </div>
 

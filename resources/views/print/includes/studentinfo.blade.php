@@ -6,12 +6,12 @@
         <td class="text-right">Name : </td>
         <td>{{ $student->first_name.' '.$student->middle_name.' '.$student->last_name }}</td>
         <td class="text-right">Term : </td>
-        <td>{{ ViewHelper::getSemesterTitle($student->semester) }}</td>
+        <td>{{ ViewHelper::getSemesterTitle($term) }}</td>
     </tr>
 
     <tr>
         <td class="text-right">Class : </td>
-        <td>{{ ViewHelper::getFacultyTitle($student->faculty) }}</td>
+        <td>{{ $class }}</td>
         <td class="text-right">Academic Session : </td>
         <td>{{ $year }}</td>
       

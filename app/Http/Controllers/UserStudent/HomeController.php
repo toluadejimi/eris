@@ -1054,6 +1054,18 @@ class HomeController extends CollegeBaseController
         }
 
 
+        $class = Faculty::where('id', $faculty )
+        ->first()->faculty;
+
+        $term = Semester::where('id', $semester )
+        ->first()->semester;
+
+
+
+
+        //dd($class, $term);
+
+
 
 
         $exam_schedule_id = array_pluck($examSchedule, 'id');
@@ -1251,7 +1263,7 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
-        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image'));
+        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }
 
     /*assignment group*/

@@ -1,5 +1,7 @@
 {{--<h4 class="header large lighter blue"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;{{ $panel }} List</h4>--}}
-@if($owing == true )
+
+
+ @if($owing == true ?? null )
 
 <main role="main" class="container">
     <div class="jumbotron">
@@ -12,6 +14,10 @@
 
 
 @else
+
+
+
+
 <div class="clearfix">
     <span class="pull-right tableTools-container"></span>
 </div>

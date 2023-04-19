@@ -848,23 +848,9 @@ class HomeController extends CollegeBaseController
     public function exams()
     {
 
-        $get_fee_owe = FeeMaster::where('students_id', Auth::id())
-            ->sum('fee_amount');
+        
 
-        $get_fee_dis = FeeCollection::where('students_id', Auth::id())
-            ->sum('discount');
-
-        $get_fee_paid = FeeCollection::where('students_id', Auth::id())
-            ->sum('paid_amount');
-
-        $total_paid = $get_fee_paid + $get_fee_dis;
-
-        if ($get_fee_owe > $total_paid) {
-            $owing = true;
-            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
-        } else {
-            $owing = false;
-        }
+        $owing = null;
 
         $this->panel = "Exams";
         $id = auth()->user()->hook_id;
@@ -872,11 +858,17 @@ class HomeController extends CollegeBaseController
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
         $falculty = Faculty::find($data['student']->faculty);
+        $semester_id = $semester->id;
+
+
+       // dd($semester->id, Auth::id());
 
         //$year = Year::where('active_status', 1)->first();
         // if (!$year) {
         //     return back();
         //}
+
+
 
         $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
             ->where('faculty_id', $falculty->id)
@@ -885,28 +877,13 @@ class HomeController extends CollegeBaseController
             ->orderBy('months_id', 'asc')
             ->get();
 
-        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing', 'falculty'));
+        return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
     }
 
     public function current_exam()
     {
 
-        $get_fee_owe = FeeMaster::where('students_id', Auth::id())
-            ->sum('fee_amount');
-
-        $get_fee_dis = FeeCollection::where('students_id', Auth::id())
-            ->sum('discount');
-
-        $get_fee_paid = FeeCollection::where('students_id', Auth::id())
-            ->sum('paid_amount');
-
-        $total_paid = $get_fee_paid + $get_fee_dis;
-
-        if ($get_fee_owe > $total_paid) {
-            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
-        } else {
-            $owing = false;
-        }
+        
 
         $this->panel = "Current_Exam";
         $id = auth()->user()->hook_id;
@@ -929,7 +906,7 @@ class HomeController extends CollegeBaseController
             ->get();
 
         //return view('user-student.exam.current-exam', compact('data', 'owing'));
-        return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data', 'owing', 'falculty'));
+        return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data'));
     }
 
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
@@ -1017,6 +994,42 @@ class HomeController extends CollegeBaseController
     {
 
         $id = auth()->user()->hook_id;
+        $data = [];
+        $data['student'] = Student::find($id);
+        $reg_id = Auth::user()->reg_id;
+
+        $semester_id =  $semester;
+
+        $student_id = Student::where('reg_no', $reg_id)
+        ->first()->id;
+
+
+        $get_fee_owe = FeeMaster::where('students_id', $student_id)
+        ->where('semester', $semester)
+        ->sum('fee_amount');
+
+
+        $get_fee_dis = FeeCollection::where('students_id', $student_id)
+        ->sum('discount');
+
+
+        $get_fee_paid = FeeCollection::where('students_id', $student_id)
+        ->sum('paid_amount');
+
+
+        $total_paid = $get_fee_paid + $get_fee_dis;
+
+        if ($get_fee_owe > $total_paid) {
+            $owing = true;
+            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
+        } else {
+            $owing = false;
+        }
+
+
+
+
+        $id = auth()->user()->hook_id;
         $student_id = $id;
         $data = [];
         $whereCondition = [
@@ -1034,6 +1047,14 @@ class HomeController extends CollegeBaseController
         if ($examSchedule->count() == 0) {
             return back()->with($this->message_warning, 'Result not published Yet. Please be patient.');
         }
+
+
+        if ($owing == true) {
+            return view('owing');
+        }
+
+
+
 
         $exam_schedule_id = array_pluck($examSchedule, 'id');
         $semester = Semester::find($semester);

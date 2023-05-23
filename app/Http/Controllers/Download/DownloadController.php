@@ -149,15 +149,17 @@ class DownloadController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path.'.add'), compact('data'));
     }
 
-    public function store(AddValidation $request)
+    public function store(request $request)
     {
-        if(auth()->user()->hasRole('staff')) {
-            if($request->subjects_id > 0){
-            }else{
-                $request->session()->flash($this->message_warning, 'Please Upload with related Subject.');
-                return redirect()->route($this->base_route);
-            }
-        }
+
+
+        // if(auth()->user()->hasRole('staff')) {
+        //     if($request->subjects_id > 0){
+        //     }else{
+        //         $request->session()->flash($this->message_warning, 'Please Upload with related Subject.');
+        //         return redirect()->route($this->base_route);
+        //     }
+        // }
 
         if($request->hasFile('download_file')){
         }else{
@@ -166,6 +168,9 @@ class DownloadController extends CollegeBaseController
         }
 
         $name = str_slug($request->get('title'));
+
+
+
 
         if ($request->hasFile('download_file')){
             $file = $request->file('download_file');
@@ -178,8 +183,12 @@ class DownloadController extends CollegeBaseController
 
             Download::create($request->all());
 
+          
             $request->session()->flash($this->message_success, $this->panel. ' Uploaded Successfully.');
+            
             return redirect()->route($this->base_route);
+
+
         }else{
             $request->session()->flash($this->message_warning, 'File Not Uploaded Yet or File Not Selected');
             return back();

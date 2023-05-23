@@ -55,11 +55,11 @@
 
 @endif
 
-<div class="form-group">
+{{-- <div class="form-group">
     {!! Form::label('description', 'Description', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::textarea('description', null, ["placeholder" => "", "class" => "form-control border-form", "rows"=>"1"]) !!}
         @include('includes.form_fields_validation_message', ['name' => 'description'])
     </div>
-</div>
+</div> --}}
 

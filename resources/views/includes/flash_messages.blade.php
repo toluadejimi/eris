@@ -1,3 +1,24 @@
+
+
+
+@if (session('success'))
+<script>
+    "use strict";
+      toastr.success("{{ session('success') }}");
+</script>
+@endif
+
+@if (session('alert'))
+<script>
+    "use strict";
+      toastr.warning("{{ session('alert') }}");
+</script>
+@endif
+
+
+
+
+
 @if (session()->has('message_warning'))
 
     <div class="alert alert-warning alert-dismissible" role="alert">

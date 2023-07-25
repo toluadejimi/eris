@@ -27,6 +27,9 @@ Route::post('ass-score', [AssignmentController::class, 'ass_core']);
 
 Route::get('user-student/current-result', [HomeController::class, 'current_exam']);
 
+Route::get('view-result', [HomeController::class, 'current_exam']);
+
+
 
 Route::post('attendance/get-weekper', [StudentAttendanceController::class, 'get_weekly']);
 

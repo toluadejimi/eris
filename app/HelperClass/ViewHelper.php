@@ -69,6 +69,8 @@ class ViewHelper
             'quindecillion', 'sexdecillion', 'septendecillion', 'octodecillion', 'novemdecillion', 'vigintillion'
         );
         $num_length = strlen($num);
+
+
         $levels = (int) (($num_length + 2) / 3);
         $max_length = $levels * 3;
         $num = substr('00' . $num, -$max_length);

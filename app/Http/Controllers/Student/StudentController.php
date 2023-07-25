@@ -410,11 +410,19 @@ class StudentController extends CollegeBaseController
 
         $data['academicInfos'] = $data['student']->academicInfo()->orderBy('sorting_order','asc')->get();
 
+
+
+
+
+
+
         /*Exam Score*/
         /*filter student with schedule subject markledger*/
         $subject = $data['student']->markLedger()
-            //->select( 'exam_schedule_id',  'obtain_mark_theory', 'obtain_mark_practical','absent')
+            ->select( 'exam_schedule_id',  'obtain_mark_theory', 'ca_test1', 'ca_test2', 'assign', 'class_exe','affective','physc','total')
             ->get();
+
+
 
         //filter subject and joint mark from schedules;
         $filteredSubject  = $subject->filter(function ($subject, $key) {

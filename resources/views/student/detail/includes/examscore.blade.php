@@ -35,7 +35,9 @@
                                         
                                         </thead>
                                         <tbody>
+                                            
                                         @if($examScore && $examScore->count() > 0)
+                                            @php($sum = 0);
                                             @php($i=1)
                                             @foreach($examScore as $subject)
                                                 <tr>
@@ -50,6 +52,7 @@
                                                     <td>{{$subject->physc}}</td>
                                                     <td>{{$subject->obtain_mark_theory}}</td>
                                                     <td>{{$subject->total}}</td>
+                                                    @php($sum += $subject->total);
 
                                                     
 
@@ -59,9 +62,18 @@
                                         @endif
                                         </tbody>
                                         <tfoot style="font-weight: 600">
-                                            <td colspan="9" class="text-right">TOTAL</td>
-                                            <td>{{$examScore->sum('total_obtain_mark')?$examScore->sum('total_obtain_mark'):'-'}}</td>
+
+
+                                         
+                                            <td colspan="10" class="text-right">TOTAL</td>
                                             <td>
+
+                                                {{ number_format($sum)}}
+                                              
+                                            </td>
+
+
+                                            {{-- <td>
                                                 @php($fullMark = $examScore->sum('full_mark_theory')+$examScore->sum('full_mark_practical'))
                                                 @php($totalMark = $examScore->sum('total_obtain_mark'))
                                                 @php($percent = ($totalMark * 100)/$fullMark)
@@ -78,7 +90,7 @@
                                                 @endif
                                                 <br>
                                                 Position : {{ ViewHelper::getStudentPositionInExam($examScore[0]->years_id, $examScore[0]->months_id, $examScore[0]->exams_id,$examScore[0]->faculty_id, $examScore[0]->semesters_id, $data['student']->id) }}
-                                            </td>
+                                            </td> --}}
                                         </tfoot>
                                     </table>
 

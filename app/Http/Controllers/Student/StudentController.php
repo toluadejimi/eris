@@ -22,6 +22,7 @@ use App\Models\Attendance;
 use App\Models\AttendanceStatus;
 use App\Models\BookIssue;
 use App\Models\Document;
+use App\Models\ExamMarkLedger;
 use App\Models\Faculty;
 use App\Models\GuardianDetail;
 use App\Models\LibraryMember;
@@ -557,6 +558,11 @@ class StudentController extends CollegeBaseController
 
                 // }
 
+
+              
+
+
+
                 return $subject;
             }
         });
@@ -564,6 +570,9 @@ class StudentController extends CollegeBaseController
         $data['student']->markLedger->subjects = $filteredSubject;
 
         $data['examScore'] = $data['student']->markLedger->subjects->groupBY('months_id');
+
+
+
 
         /*Certificate History*/
         $data['certificate_history'] = $data['student']->certificateHistory()->get();

@@ -6,7 +6,8 @@
         <td class="text-right">Name : </td>
         <td>{{ $student->first_name.' '.$student->middle_name.' '.$student->last_name }}</td>
         <td class="text-right">Term : </td>
-        <td>{{ ViewHelper::getSemesterTitle($term) }}</td>
+        <td>{{ $term }}</td>
+
     </tr>
 
     <tr>

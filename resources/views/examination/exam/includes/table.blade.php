@@ -21,6 +21,7 @@
                 @if (isset($data['exams']) && $data['exams']->count() > 0)
                     @php($i=1)
                     @foreach($data['exams'] as $exam)
+
                         <tr>
                             <td class="center first-child">
                                 <label>

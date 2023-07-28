@@ -912,6 +912,11 @@ class HomeController extends CollegeBaseController
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
 
+       
+
+
+
+
         $this->panel = "Exam Schedule";
         $id = auth()->user()->hook_id;
         $student_id = $id;
@@ -992,6 +997,8 @@ class HomeController extends CollegeBaseController
 
     public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
+
+     
 
         $id = auth()->user()->hook_id;
         $data = [];
@@ -1263,7 +1270,16 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
-        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+        $term = Semester::where('id', $semester->id)->first()->semester ?? null;
+
+    
+
+
+
+      
+       
+
+        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }
 
     /*assignment group*/

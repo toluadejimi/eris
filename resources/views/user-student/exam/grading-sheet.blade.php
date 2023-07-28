@@ -295,10 +295,10 @@
                 </td>
                 <td class="text-center"><strong style="border-top:1px black solid;"></strong>
                 </td>
-                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">RESUMPTION DATE : {{"May 1st, 2023"}}</strong>
+                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">RESUMPTION DATE : {{"September 11th, 2023"}}</strong>
                 </td>
 
-                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">VACATION DATE : {{"March 31st, 2023"}}</strong>
+                <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;">VACATION DATE : {{"July 28th, 2023"}}</strong>
             </td>
 
 

@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('adjust-result', [HomeController::class, 'adjust_result']);
+
+Route::post('delete-exam', [HomeController::class, 'delete_exam']);
+
+
 
 
 

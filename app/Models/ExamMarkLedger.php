@@ -14,6 +14,11 @@ class ExamMarkLedger extends BaseModel
         return $this->belongsTo(Student::class, 'id','students_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id','students_id');
+    }
+
     public function examSchedule()
     {
         return $this->belongsTo(ExamSchedule::class, 'exam_schedule_id','id');

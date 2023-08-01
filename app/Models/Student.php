@@ -65,6 +65,12 @@ class Student extends BaseModel
 
     }
 
+
+    public function mledger()
+    {
+        return $this->hasMany('App\Models\ExamMarkLedger');
+    }
+
     //Library Member
     public function libraryMember()
     {

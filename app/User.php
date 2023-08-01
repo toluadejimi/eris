@@ -44,6 +44,12 @@ class User extends Authenticatable implements AuditableContract
 
 
 
+    public function markLedger()
+    {
+        return $this->hasMany(ExamMarkLedger::class, 'id','students_id');
+    }
+
+
     public function getStatusAttribute($value)
     {
         return $value == 1?'active':'in-active';

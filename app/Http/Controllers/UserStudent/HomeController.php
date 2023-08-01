@@ -1492,4 +1492,40 @@ class HomeController extends CollegeBaseController
         return view(parent::loadDataToView('user-student.assignment.view.index'), compact('data', 'mark_allocated'));
     }
 
+
+
+
+
+    public function adjust_result(){
+
+
+        $exam = ExamMarkLedger::where('total', 0)->get();
+
+
+      
+
+        return view('adjust-result', compact('exam'));
+
+
+
+    }
+
+
+    public function delete_exam(request $request){
+
+
+        $exam = ExamMarkLedger::where('id', $request->id)->delete();
+
+        return back()->with('message', 'Exam has been successfully delected');
+
+
+
+
+
+    }
+  
+
+
+
+
 }

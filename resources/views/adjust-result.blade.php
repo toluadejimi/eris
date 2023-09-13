@@ -87,6 +87,7 @@
                 @php
                 $f_name = \App\Models\Student::where('id',$user->students_id)->first()->first_name;
                 $l_name = \App\Models\Student::where('id',$user->students_id)->first()->last_name;
+                $l_name = \App\Models\Student::where('id',$user->students_id)->first()->middle_name;
                 $faculty = \App\Models\Student::where('id',$user->students_id)->first()->faculty;
                 $class = \App\Models\Faculty::where('id', $faculty )->first()->faculty;
       
@@ -95,7 +96,7 @@
                 <tr>
 
                     <td>{{ $user->id }}</td>
-                    <td>{{ $f_name }} {{ $l_name }}</td>
+                    <td>{{ $f_name }} {{ $m_name }} {{ $l_name  }} </td>
                     <td>{{ $class }}</td>
                     <td>{{ $user->obtain_mark_theory }}</td>
                     <td>{{ $user->ca_test1 }}</td>

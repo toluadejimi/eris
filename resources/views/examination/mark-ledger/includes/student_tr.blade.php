@@ -1,5 +1,5 @@
 @foreach($students as $student)
-    <tr class="option_value">
+    <tr class="option_value hours-table">
         <td>
             <div class="btn-group">
                 <label class="btn btn-xs btn-primary">
@@ -15,39 +15,42 @@
             {{ $student->first_name.' '.$student->middle_name.' '.$student->last_name }}
         </td>
         <td>
-            {!! Form::number('ca_test1[]', $student->ca_test1, ["id"=> "ca_test1", "class" => "form-control border-form
-            totalCal","min"=>"0","max"=>"15",'step'=>'any']) !!}
+            {!! Form::number('ca_test1[]', $student->ca_test1, ["id"=> "ca_test1{{ $student->id }}", "class" => "form-control border-form
+            totalCal expenses","min"=>"0","max"=>"15",'step'=>'any']) !!}
         </td>
         <td>
-            {!! Form::number('ca_test2[]', $student->ca_test2, ["id"=> "ca_test2", "class" => "form-control border-form
-            totalCal","min"=>"0","max"=>"15",'step'=>'any']) !!}
+
+            {!! Form::number('ca_test2[]', $student->ca_test2, ["id"=> "ca_test2{{ $student->id }}", "class" => "form-control border-form
+            totalCal expenses","min"=>"0","max"=>"15",'step'=>'any']) !!}
         </td>
         <td>
-            {!! Form::number('assign[]', $student->assign, ["id"=> "assign", "class" => "form-control border-form
-            totalCal","min"=>"0","max"=>"4",'step'=>'any']) !!}
+            {!! Form::number('assign[]', $student->assign, ["id"=> "assign{{ $student->id }}", "class" => "form-control border-form
+            totalCal expenses","min"=>"0","max"=>"4",'step'=>'any']) !!}
         </td>
         <td>
-            {!! Form::number('class_exe[]', $student->class_exe, ["id"=> "class_exe","class" => "form-control border-form totalCal","min"=>"0",
+            {!! Form::number('class_exe[]', $student->class_exe, ["id"=> "class_exe{{ $student->id }}","class" => "form-control border-form totalCal expenses","min"=>"0",
             "max"=>"6",'step'=>'any']) !!}
         </td>
         <td>
-            {!! Form::number('affective[]', $student->affective, ["id"=> "affective", "class" => "form-control border-form totalCal","min"=>"0",
+            {!! Form::number('affective[]', $student->affective, ["id"=> "affective{{ $student->id }}", "class" => "form-control border-form totalCal expenses","min"=>"0",
             "max"=>"10",'step'=>'any']) !!}
         </td>
         <td>
-            {!! Form::number('physc[]', $student->physc, ["id"=> "physc", "class" => "form-control border-form totalCal","min"=>"0",
+            {!! Form::number('physc[]', $student->physc, ["id"=> "physc{{ $student->id }}", "class" => "form-control border-form totalCal expenses","min"=>"0",
             "max"=>"10",'step'=>'any']) !!}
         </td>
         <td>
             {!! Form::number('obtain_mark_theory[]', $student->obtain_mark_theory, ["id"=> "obtain_mark_theory", "class" => "form-control border-form
-            totalCal","min"=>"0", "max"=>"40",'step'=>'any']) !!}
+            totalCal expenses","min"=>"0", "max"=>"40",'step'=>'any']) !!}
         </td>
     
     
         <td>
-            {!! Form::number('total[]', $student->total, ["id"=> "total",  "value"=> "total", "class" => "form-control border-form"]) !!}
+            {!! Form::number('total[]', $student->total, ["id"=> "expenses_sum",  "value"=> "total", "class" => "form-control border-form expenses_sum"]) !!}
         </td>
     
+
+
 
         <td>
             <div class="btn-group">
@@ -57,6 +60,8 @@
             </div>
         </td>
     </tr>
+
+
 
 {{-- 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -82,6 +87,49 @@
 
 
 </script> --}}
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+
+    $(document).ready(function() {
+        $(".expenses").on('keyup change', calculateSum);
+      });
+      
+      function calculateSum() {
+        var $input = $(this);
+        var $row = $input.closest('tr');
+        var sum = 0;
+      
+        $row.find(".expenses").each(function() {
+          sum += parseFloat(this.value) || 0;
+        });
+      
+        $row.find(".expenses_sum").val(sum);
+      }
+
+
+    {{-- $('input').keyup(function() { // run anytime the value changes
+
+        var num1 = document.getElementById('ca_test1{{ $student->id }}').value; // convert it to a float
+        var rate = document.getElementById('ca_test2{{ $student->id }}').value; // convert it to a float
+
+        var result =  document.getElementById('total{{ $student->id }}').value = Number(num1) + Number(rate);
+
+        console.log(num1);
+
+    }); --}}
+
+
+
+ 
+
+
+</script>
 
 
  @endforeach

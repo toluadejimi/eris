@@ -215,6 +215,7 @@ class HomeController extends CollegeBaseController
 
     public function fees(Request $request, $id)
     {
+
         $data = [];
         $this->panel = 'Fees';
         $id = Crypt::decryptString($id);
@@ -232,6 +233,7 @@ class HomeController extends CollegeBaseController
 
         $data['fee_master'] = $data['student']->feeMaster()->orderBy('fee_due_date','desc')->get();
         $data['fee_collection'] = $data['student']->feeCollect()->get();
+
 
         $data['student']->payment_today = $data['student']->feeCollect()->where('date','=',$today)->sum('paid_amount');
 

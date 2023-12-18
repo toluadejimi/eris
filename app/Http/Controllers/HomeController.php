@@ -2,37 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Charts\FeeCompareChart;
-use App\Charts\FeesChart;
-use App\Charts\TransactionChart;
-use App\Mail\EmailAlerts;
-use App\Models\AttendanceMaster;
-use App\Models\Attendence;
-use App\Models\AttendenceMaster;
+use Auth;
+use App\Role;
+use App\User;
+use ViewHelper;
+use Carbon\Carbon;
 use App\Models\Bed;
 use App\Models\Book;
+use App\Models\Year;
+use App\Models\Staff;
+use App\Models\Notice;
+use App\Models\Student;
+use App\Models\Vehicle;
+use App\Charts\FeesChart;
+use App\Mail\EmailAlerts;
 use App\Models\BookIssue;
+use App\Models\FeeMaster;
+use App\Models\SalaryPay;
+use App\Models\Attendence;
+use App\Models\Transaction;
+use Illuminate\Support\Arr;
 use App\Models\ExamSchedule;
 use App\Models\FeeCollection;
-use App\Models\FeeMaster;
-use App\Models\Notice;
-use App\Models\SalaryPay;
-use App\Models\Staff;
-use App\Models\Student;
-use App\Models\Transaction;
-use App\Models\Vehicle;
-use App\Models\Year;
-use App\Role;
-use App\Traits\PurchaseVerification;
 use App\Traits\StudentScopes;
-use App\User;
-use Carbon\Carbon;
-use Illuminate\Contracts\Mail\Mailer;
-use Illuminate\Support\Arr;
+use App\Models\ExamMarkLedger;
+use App\Charts\FeeCompareChart;
+use App\Charts\TransactionChart;
+use App\Models\AttendanceMaster;
+use App\Models\AttendenceMaster;
 use Illuminate\Support\Facades\DB;
+use App\Traits\PurchaseVerification;
 use Illuminate\Support\Facades\Mail;
-use ViewHelper;
-use Auth;
+use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Http\Request;
+
 
 class HomeController extends CollegeBaseController
 {
@@ -265,6 +268,7 @@ class HomeController extends CollegeBaseController
     }
 
 
-
+ 
+   
 
 }

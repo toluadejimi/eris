@@ -11,26 +11,31 @@
 |
 */
 
-use App\Http\Controllers\Student\StudentPublicController;
-use App\Http\Controllers\Assignment\AssignmentController;
-use App\Http\Controllers\Attendance\StudentAttendanceController;
-use App\Http\Controllers\UserStudent\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdjustResultController;
+use App\Http\Controllers\UserStudent\HomeController;
+use App\Http\Controllers\Assignment\AssignmentController;
+use App\Http\Controllers\Student\StudentPublicController;
+use App\Http\Controllers\Attendance\StudentAttendanceController;
+
+Route::get('print-recepit', [HomeController::class, 'print_recepit']);
+
+Route::get('fee-resolve', [HomeController::class, 'fee_resolve']);
 
 
-
-Route::get('adjust-result', [HomeController::class, 'adjust_result']);
-
-Route::post('delete-exam', [HomeController::class, 'delete_exam']);
+Route::get('adjust-result', [AdjustResultController::class, 'adjust_result']);
+Route::post('delete-exam', [AdjustResultController::class, 'delete_exam']);
 
 
-
-
+Route::get('verify-payment', [HomeController::class, 'verify_payment']);
 
 
 Route::post('ass-score', [AssignmentController::class, 'ass_core']);
 
 Route::get('user-student/current-result', [HomeController::class, 'current_exam']);
+
+Route::get('user-student/pay-fees', [HomeController::class, 'pay_fees']);
+
 
 Route::get('view-result', [HomeController::class, 'current_exam']);
 
@@ -81,6 +86,9 @@ Route::group(['prefix' => 'user-student/',          'as' => 'user-student',     
     Route::post('{id}/password',                    ['as' => '.password',               'middleware' => ['permission:student-profile-edit'],         'uses' => 'HomeController@password']);
 
     Route::get('fees',                              ['as' => '.fees',                   'middleware' => ['permission:student-fees'],         'uses' => 'HomeController@fees']);
+
+    Route::get('fee-resolve',                       ['as' => '.fee-resolve',                   'middleware' => ['permission:student-fees'],         'uses' => 'HomeController@fee_resolve']);
+
 
     Route::get('library',                           ['as' => '.library',                        'middleware' => ['permission:student-library'],     'uses' => 'HomeController@library']);
     Route::get('library/book-list',                 ['as' => '.library.book-list',              'middleware' => ['permission:student-library'],     'uses' => 'HomeController@bookList']);

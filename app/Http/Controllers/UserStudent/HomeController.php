@@ -47,10 +47,10 @@ use App\Traits\LibraryScope;
 use App\Traits\PaymentGatewayScope;
 use App\Traits\StudentScopes;
 use App\User;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Session;
 use URL;
 
@@ -86,6 +86,8 @@ class HomeController extends CollegeBaseController
      */
     public function index()
     {
+
+
         $this->panel = "Dashboard";
         $id = auth()->user()->hook_id;
         $data = [];
@@ -454,6 +456,9 @@ class HomeController extends CollegeBaseController
 
     public function fees()
     {
+
+
+
         $this->panel = "Fees";
         $id = auth()->user()->hook_id;
         $data = [];
@@ -469,8 +474,9 @@ class HomeController extends CollegeBaseController
 
         $data['fee_master'] = $data['student']->feeMaster()->orderBy('fee_due_date', 'desc')->get();
         $data['fee_collection'] = $data['student']->feeCollect()->get();
-
         $data['student']->payment_today = $data['student']->feeCollect()->where('date', '=', $today)->sum('paid_amount');
+
+
 
         /*total Calculation on Table Foot*/
         $data['student']->fee_amount = $data['student']->feeMaster()->sum('fee_amount');
@@ -479,6 +485,8 @@ class HomeController extends CollegeBaseController
         $data['student']->paid_amount = $data['student']->feeCollect()->sum('paid_amount');
         $data['student']->balance =
         ($data['student']->fee_amount - ($data['student']->paid_amount + $data['student']->discount)) + $data['student']->fine;
+
+
 
         $data['student']->currentURL = URL::current();
 
@@ -1496,30 +1504,165 @@ class HomeController extends CollegeBaseController
 
 
 
-    public function adjust_result(){
+  
 
 
-        $exam = ExamMarkLedger::where('total', 0)->get();
 
+
+   
+
+
+    public function pay_fees(request $request){
+
+        $id = $request->ref;
+        $key = env('WEBKEY');
+        $email = Auth::user()->email;
+        $amount = FeeMaster::where('id', $id)->first()->fee_amount;
+
+        FeeMaster::where('id', $id)->update(['paid' => 2]);
+
+        $url = "https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$id&email=$email";
+        return Redirect::to($url);
+
+
+    
+    }
+
+
+
+    public function verify_payment(request $request)
+    {
 
       
+    
+            $trx_id = $request->trans_id;
+            $ip = $request->ip();
+            $status = $request->status;
+    
+    
+            if ($status == 'failed') {
+    
+                FeeMaster::where('id', $trx_id)->where('paid', 2)->update(['paid' => 3]);
+    
+                return redirect('user-student/fees')->with('error', 'Transaction Declined');
+            }
+    
+          
+            if ($status == 'success') {
 
-        return view('adjust-result', compact('exam'));
+                $curl = curl_init();
+    
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://web.enkpay.com/api/verify',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array('trans_id' => "$trx_id"),
+                ));
+        
+                $var = curl_exec($curl);
+                curl_close($curl);
+                $var = json_decode($var);
+        
+                $status1 = $var->detail ?? null;
+                $amount = $var->price ?? null;
+        
+        
+        
+        
+                if ($status1 == 'success') {
+        
+                    FeeMaster::where('id', $trx_id)->update(['paid' => 1]);
 
+                    $trx = new FeeCollection();
+                    $trx->students_id = Auth::id();
+                    $trx->created_by = Auth::id();
+                    $trx->date = date('Y/M/D');
+                    $trx->fee_masters_id = $trx_id;
+                    $trx->paid_amount = $amount;
+                    $trx->payment_mode = "Enkpay";
+                    $trx->paid = 1;
+                    $trx->save();
+        
+                    return redirect('user-student/fees')->with('message', "Fess successfuly Paid");
+                }
+        
+    
+           
+
+            }
+    
+           
+            // $message =  Auth::user()->name . "| is trying to fund  with | $request->trx_id  | " . number_format($request->amount, 2) . "\n\n IP ====> " . $request->ip();
+            // send_notification($message);
+    
+            return redirect('user/deposit/history')->with('error', 'Transaction already confirmed or not found');
+      
+
+
+    }
+
+    public function print_recepit(request $request){
+
+
+        $id = $request->ref;
+        $name = $request->name;
+
+
+        $amount = FeeCollection::where('fee_masters_id', $id)->first()->paid_amount ?? null;
+
+        if($amount == null){
+
+            return back()->with('error', 'No payment found');
+
+        }
+
+        $ref = $id;
+        return view('fee-recepit', compact('amount', 'ref', 'name'));
 
 
     }
 
 
-    public function delete_exam(request $request){
+
+    public function fee_resolve(request $request){
 
 
-        $exam = ExamMarkLedger::where('id', $request->id)->delete();
+        $id = $request->ref;
+        $key = env('WEBKEY');
+        $email = Auth::user()->email;
 
-        return back()->with('message', 'Exam has been successfully delected');
+        $status = FeeMaster::where('id', $id)->first()->paid;
+        $amount = FeeMaster::where('id', $id)->first()->fee_amount;
 
 
+        if($status == 2){
 
+
+        }
+
+        if($status == 0){
+
+            $url = "https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$id&email=$email";
+            return Redirect::to($url);
+
+        }
+
+
+        $amount = FeeCollection::where('fee_masters_id', $id)->first()->paid_amount ?? null;
+
+        if($amount == null){
+
+            return back()->with('error', 'No payment found');
+
+        }
+
+        $ref = $id;
+        return view('fee-recepit', compact('amount', 'ref', 'name'));
 
 
     }

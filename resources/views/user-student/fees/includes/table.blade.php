@@ -34,7 +34,6 @@
                 <thead class="header">
                 <tr role="row">
                     <th>S.No.</th>
-                    <th>Academic Year</th>
                     <th>Term/Sec</th>
                     <th>Head</th>
                     <th>DueDate</th>
@@ -43,6 +42,11 @@
                     <th>Paid </th>
                     <th>Due </th>
                     <th>Status</th>
+                    <th>Payment Status</th>
+                    <th>Recepit</th>
+                  
+
+
                     {{--<th>PayOnline</th>--}}
                 </tr>
                 </thead>
@@ -52,7 +56,6 @@
                         @foreach($data['fee_master'] as $feemaster)
                             <tr>
                                 <td>{{ $i }}</td>
-                                <td>{{ ViewHelper::getYearById($feemaster->semester) }}</td>
                                 <td>{{ ViewHelper::getSemesterById($feemaster->semester) }}</td>
                                 <td>{{ ViewHelper::getFeeHeadById($feemaster->fee_head) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($feemaster->fee_due_date)->format('Y-m-d')}}</td>
@@ -75,6 +78,37 @@
                                         <span class="label label-danger">Due</span>
                                     @endif
                                 </td>
+
+
+
+                                <td align="left" class="text text-left">
+                                    @if($feemaster->paid == 0)
+                                    <a class="label label-primary" href="/fee-resolve?ref={{ $feemaster->id }}" >Resolve Payment</span> </a>
+                                    @elseif($feemaster->paid == 2)
+                                    <a class="label label-warning" href="/fee-resolve?ref={{ $feemaster->id }}" >Payment Processing</span> </a>
+                                    @elseif($feemaster->paid == 3)
+                                    <a class="label label-danger" href="#" >Declined</span> </a>
+                                    @else
+                                    <a class="label label-success" href="#" >Payment Completed</span> </a>
+                                    @endif
+                                </td>
+
+
+                                <td align="left" class="text text-left">
+                                    @if($net_balance == 0)
+                                    <a class="label label-warning" href="/print-recepit?ref={{ $feemaster->id }}&name={{ ViewHelper::getFeeHeadById($feemaster->fee_head) }}" >Print Recepit</span> </a>
+                                    @elseif($net_balance < 0 )
+                                    <a class="label label-info" href="pay-fees?ref={{ $feemaster->id }}" >Pay Now</span> </a>
+                                    @elseif($net_balance < $feemaster->fee_amount)
+                                    <a class="label label-info" href="pay-fees?ref={{ $feemaster->id }}" >Pay Now</span> </a>
+                                    @else
+                                    <a class="label label-info" href="pay-fees?ref={{ $feemaster->id }}" >Pay Now</span> </a>
+                                    @endif
+                                </td>
+
+
+                              
+
                                 {{--<td>
                                     <a class="btn btn-xs btn-primary" href="{{ route('print-out.fees.master-receipt', ['id' => $feemaster->id]) }}" target="_blank">
                                         <i class="fa fa-print"></i> Print

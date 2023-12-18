@@ -8,7 +8,7 @@ class FeeCollection extends BaseModel
 {
     //
     protected $table = 'fee_collections';
-    protected $fillable = ['created_by', 'last_updated_by', 'students_id', 'fee_masters_id', 'date', 'discount', 'fine', 'paid_amount','payment_mode','note','response','status'];
+    protected $fillable = ['created_by', 'last_updated_by', 'students_id', 'paid', 'fee_masters_id', 'date', 'discount', 'fine', 'paid_amount','payment_mode','note','response','status'];
 
     public function feeMasters()
     {

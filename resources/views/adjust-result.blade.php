@@ -23,6 +23,15 @@
       
 
 
+    <div class="col-6">
+        <input id="myInput" class="form-control my-2" type="text" placeholder="Search..">
+    </div>
+
+
+    <div class="mt-4">
+
+
+
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -45,13 +54,16 @@
     @endif
 
 
-    <div class="col-6">
-        <input id="myInput" class="form-control my-2" type="text" placeholder="Search..">
+    @if ($message != null)
+    <div class="alert alert-danger">
+        {{ $message }}
     </div>
+    @endif
 
 
-    <div class="mt-4">
         <table class="table responsive">
+
+
 
             <thead>
 
@@ -96,7 +108,7 @@
                 <tr>
 
                     <td>{{ $user->id }}</td>
-                    <td>{{ $f_name }} {{ $m_name }} {{ $l_name  }} </td>
+                    <td>{{ $f_name }} {{ $m_name ?? " " }} {{ $l_name  }} </td>
                     <td>{{ $class }}</td>
                     <td>{{ $user->obtain_mark_theory }}</td>
                     <td>{{ $user->ca_test1 }}</td>
@@ -117,7 +129,7 @@
 
                     <td>
                         <div class="col-lg-12">
-                            <form method="POST" action="/public/delete-exam?id={{ $user->id }}">
+                            <form method="POST" action="/delete-exam?id={{ $user->id }}">
                                 @csrf
                                 @method('POST')
 

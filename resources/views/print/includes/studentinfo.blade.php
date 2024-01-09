@@ -14,7 +14,7 @@
         <td class="text-right">Class : </td>
         <td>{{ $class }}</td>
         <td class="text-right">Academic Session : </td>
-        <td>{{ $year }}</td>
+        <td>{{ $get_year }}</td>
       
     </tr>
 

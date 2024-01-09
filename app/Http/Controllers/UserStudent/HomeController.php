@@ -1018,6 +1018,8 @@ class HomeController extends CollegeBaseController
         ->first()->id;
 
 
+        
+
         // $get_fee_owe = FeeMaster::where('students_id', $student_id)
         // ->where('semester', $semester)
         // ->sum('fee_amount');
@@ -1070,6 +1072,11 @@ class HomeController extends CollegeBaseController
 
         $term = Semester::where('id', $semester )
         ->first()->semester;
+
+
+        $get_year = Year::where('id', $year )
+        ->first()->title;
+
 
 
 
@@ -1284,14 +1291,7 @@ class HomeController extends CollegeBaseController
 
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
 
-    
-
-
-
-      
-       
-
-        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }
 
     /*assignment group*/

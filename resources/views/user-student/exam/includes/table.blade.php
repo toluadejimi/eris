@@ -17,8 +17,7 @@
                     <th>S.N.</th>
                     <th>Year</th>
                     <th>Month</th>
-                    <th>Term</th>
-                    <th>Class</th>
+                    <th>Term/Class</th>
                     <th>Exam</th>
                     <th></th>
                 </tr>
@@ -32,7 +31,6 @@
                             <td>{{ ViewHelper::getYearById($exam->years_id) }}</td>
                             <td>{{ ViewHelper::getMonthById($exam->months_id) }}</td>
                             <td>{{ ViewHelper::getSemesterById($exam->semesters_id) }}</td>
-                            <td>{{ $falculty->faculty ?? null}}</td>
                             <td>{{ ViewHelper::getExamById($exam->exams_id) }}</td>
 
                             <td>

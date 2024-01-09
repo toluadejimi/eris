@@ -475,19 +475,19 @@ class StudentController extends CollegeBaseController
                 $absent_theory = $subject->absent_theory;
                 $absent_practical = $subject->absent_practical;
 
-                /*theory mark comparision*/
-                if(isset($subject->pass_mark_theory) && $subject->pass_mark_theory != null){
-                    if($absent_theory == 1) {
-                        $subject->obtain_mark_theory = "AB";
-                    }else{
-                        //dd($th);//35
-                        if(!is_numeric($th)){
-                            $subject->obtain_mark_theory = "*";
-                        }
-                    }
-                }else{
-                    $subject->obtain_mark_theory = "-";
-                }
+                // /*theory mark comparision*/
+                // if(isset($subject->pass_mark_theory) && $subject->pass_mark_theory != null){
+                //     if($absent_theory == 1) {
+                //         $subject->obtain_mark_theory = "AB";
+                //     }else{
+                //         //dd($th);//35
+                //         if(!is_numeric($th)){
+                //             $subject->obtain_mark_theory = "*";
+                //         }
+                //     }
+                // }else{
+                //     $subject->obtain_mark_theory = "-";
+                // }
 
 
 
@@ -496,17 +496,17 @@ class StudentController extends CollegeBaseController
 
 
                 /*Practical mark comparision*/
-                if(isset($subject->pass_mark_practical) && $subject->pass_mark_practical != null){
-                    if($absent_practical == 1) {
-                        $subject->obtain_mark_practical = "AB";
-                    }else{
-                        if(!is_numeric($pr)){
-                            $subject->obtain_mark_practical = "*";
-                        }
-                    }
-                }else{
-                    $subject->obtain_mark_practical= "-";
-                }
+                // if(isset($subject->pass_mark_practical) && $subject->pass_mark_practical != null){
+                //     if($absent_practical == 1) {
+                //         $subject->obtain_mark_practical = "AB";
+                //     }else{
+                //         if(!is_numeric($pr)){
+                //             $subject->obtain_mark_practical = "*";
+                //         }
+                //     }
+                // }else{
+                //     $subject->obtain_mark_practical= "-";
+                // }
 
 
                 /*verify again the new obtain values are number or not*/

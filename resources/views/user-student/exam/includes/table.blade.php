@@ -1,21 +1,6 @@
 {{--<h4 class="header large lighter blue"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;{{ $panel }} List</h4>--}}
 
 
- @if($owing == true ?? null )
-
-<main role="main" class="container">
-    <div class="jumbotron">
-        <a class="btn btn-lg btn-danger"  role="button">Result Error</a><br><br>
-      <p>You cannot view scholar's result at the moment, <br>Please pay your oustanding fee to have access to result.</p>
-
-      <a class="btn btn-lg btn-primary" href="/public/user-student/fees#bank" role="button">Click here to pay &raquo;</a>
-    </div>
-  </main>
-
-
-@else
-
-
 
 
 <div class="clearfix">
@@ -86,4 +71,3 @@
     
 </div>
 </div>
-@endif

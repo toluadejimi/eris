@@ -853,10 +853,9 @@ class HomeController extends CollegeBaseController
     }
 
     /*Exam group*/
-    public function exams()
+    public function exams(request $request)
     {
 
-        
 
         $owing = null;
 
@@ -890,6 +889,7 @@ class HomeController extends CollegeBaseController
 
     public function current_exam()
     {
+
 
         
 
@@ -1006,7 +1006,6 @@ class HomeController extends CollegeBaseController
     public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
 
-     
 
         $id = auth()->user()->hook_id;
         $data = [];
@@ -1019,9 +1018,9 @@ class HomeController extends CollegeBaseController
         ->first()->id;
 
 
-        $get_fee_owe = FeeMaster::where('students_id', $student_id)
-        ->where('semester', $semester)
-        ->sum('fee_amount');
+        // $get_fee_owe = FeeMaster::where('students_id', $student_id)
+        // ->where('semester', $semester)
+        // ->sum('fee_amount');
 
 
         $get_fee_dis = FeeCollection::where('students_id', $student_id)
@@ -1032,16 +1031,14 @@ class HomeController extends CollegeBaseController
         ->sum('paid_amount');
 
 
-        $total_paid = $get_fee_paid + $get_fee_dis;
+        // $total_paid = $get_fee_paid + $get_fee_dis;
 
-        if ($get_fee_owe > $total_paid) {
-            $owing = true;
-            //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
-        } else {
-            $owing = false;
-        }
-
-
+        // if ($get_fee_owe > $total_paid) {
+        //     $owing = true;
+        //     //request()->session()->flash($this->message_danger, 'Please pay your outstanding. Click fee to view due amount');
+        // } else {
+        //     $owing = false;
+        // }
 
 
         $id = auth()->user()->hook_id;
@@ -1049,10 +1046,10 @@ class HomeController extends CollegeBaseController
         $data = [];
         $whereCondition = [
             ['years_id', '=', $year],
-            ['months_id', '=', $month],
+            //['months_id', '=', $month],
             ['exams_id', '=', $exam],
             ['faculty_id', '=', $faculty],
-            ['semesters_id', '=', $semester],
+            //['semesters_id', '=', $semester],
         ];
 
         $examSchedule = ExamSchedule::where($whereCondition)
@@ -1064,9 +1061,8 @@ class HomeController extends CollegeBaseController
         }
 
 
-        if ($owing == true) {
-            return view('owing');
-        }
+
+
 
 
         $class = Faculty::where('id', $faculty )
@@ -1078,14 +1074,12 @@ class HomeController extends CollegeBaseController
 
 
 
-        //dd($class, $term);
 
 
 
 
         $exam_schedule_id = array_pluck($examSchedule, 'id');
         $semester = Semester::find($semester);
-
         $students = Student::select('id', 'reg_no', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
             'faculty', 'semester')
             ->where('id', $student_id)
@@ -1240,11 +1234,11 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
 
-        $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
-        $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
-        $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
-            ->whereIn('exam_schedule_id', $exam_schedule_id)
-            ->sum('total');
+        // $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
+        // $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
+        // $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
+        //     ->whereIn('exam_schedule_id', $exam_schedule_id)
+        //     ->sum('total');
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
@@ -1252,10 +1246,18 @@ class HomeController extends CollegeBaseController
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
+
+           // dd($totalmarks, $total_count);
+
+
         if ($total_count == 0) {
 
-            return back();
+            $totalmarks = 0;
+            $total_count = 0;
         }
+
+        //dd($class, $term);
+
 
         $average = number_format($totalmarks / $total_count, 2);
 

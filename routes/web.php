@@ -43,8 +43,6 @@ Route::get('view-result', [HomeController::class, 'current_exam']);
 
 Route::post('attendance/get-weekper', [StudentAttendanceController::class, 'get_weekly']);
 
-
-
 Route::get('public-registration-success', [StudentPublicController::class, 'success' ]);
 
 /*Auth Routes*/

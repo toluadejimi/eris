@@ -68,6 +68,8 @@ class StudentController extends CollegeBaseController
     public function index(Request $request)
     {
 
+      
+
         $data = [];
         if($request->all()) {
             $data['student'] = Student::select('students.id', 'students.reg_no', 'students.reg_date',
@@ -117,6 +119,8 @@ class StudentController extends CollegeBaseController
 
     public function register(AddValidation $request)
     {
+
+       
     
         if(!isset($request->reg_no)){
             //RegNo Generator Start
@@ -234,11 +238,11 @@ class StudentController extends CollegeBaseController
         if(!$alert){
 
         }else{
-            //Dear {{first_name}}, you are successfully registered in our institution with RegNo.{{reg_no}}. Thank You.
+            //Dear {{ first_name }}, you are successfully registered in our institution with RegNo.{{ reg_no }}. Thank You.
             $subject = $alert->subject;
             $message = $alert->template;
-            $message = str_replace('{{first_name}}', $student->first_name, $message );
-            $message = str_replace('{{reg_no}}', $student->reg_no, $message );
+            $message = str_replace('{{ first_name }}', $student->first_name, $message );
+            $message = str_replace('{{ reg_no }}', $student->reg_no, $message );
             $emailIds[] = $student->email;
             $contactNumbers[] = $addressinfo->mobile_1;
 
@@ -269,6 +273,9 @@ class StudentController extends CollegeBaseController
     public function view($id)
     {
 
+
+     
+        
         $data = [];
         $data['student'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.pick_image',   'students.f_image', 'students.m_image', 'students.middle_name',
@@ -1203,20 +1210,20 @@ class StudentController extends CollegeBaseController
         }else{
             //remove images
             if (file_exists($this->folder_path.$row->student_image))
-                @unlink($this->folder_path.$row->student_image);
+@unlink($this->folder_path.$row->student_image);
 
             if (file_exists($this->folder_path.$row->student_signature))
-                @unlink($this->folder_path.$row->student_signature);
+@unlink($this->folder_path.$row->student_signature);
 
             /*$this->parent_folder_path = public_path().DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'parents'.DIRECTORY_SEPARATOR;
             if (file_exists($this->parent_folder_path.$row->reg_no.'_father'.'.*'))
-                @unlink($this->parent_folder_path.$row->reg_no.'_father'.'.*');
+@unlink($this->parent_folder_path.$row->reg_no.'_father'.'.*');
 
             if (file_exists($this->parent_folder_path.$row->reg_no.'_mother'.'.*'))
-                @unlink($this->parent_folder_path.$row->reg_no.'_mother'.'.*');
+@unlink($this->parent_folder_path.$row->reg_no.'_mother'.'.*');
 
             if (file_exists($this->parent_folder_path.$row->reg_no.'_guardian'.'.*'))
-                @unlink($this->parent_folder_path.$row->reg_no.'_guardian'.'.*');*/
+@unlink($this->parent_folder_path.$row->reg_no.'_guardian'.'.*');*/
 
             $row->delete();
             $request->session()->flash($this->message_success, $this->panel.' Deleted Successfully.');
@@ -1368,11 +1375,11 @@ class StudentController extends CollegeBaseController
 
                     }else{
                         //send alert
-                        //Dear {{first_name}}, We would like to inform you are successfully transferred to {{semester}}. Thank You.
+                        //Dear {{ first_name }}, We would like to inform you are successfully transferred to {{ semester }}. Thank You.
                         $subject = $alert->subject;
                         $message = $alert->template;
-                        $message = str_replace('{{first_name}}', $student->first_name, $message );
-                        $message = str_replace('{{semester}}', $semesterName, $message );
+                        $message = str_replace('{{ first_name }}', $student->first_name, $message );
+                        $message = str_replace('{{ semester }}', $semesterName, $message );
                         $emailIds[] = $student->email;
                         $contactNumbers[] = $this->getStudentMobileNumber($student->id);
 

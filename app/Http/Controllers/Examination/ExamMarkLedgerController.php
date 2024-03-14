@@ -43,6 +43,10 @@ class ExamMarkLedgerController extends CollegeBaseController
     {
         $data = [];
 
+        \Artisan::call('view:clear');
+        \Artisan::call('cache:clear');
+
+
         $year = $request->get('year');
         $month = $request->get('month');
         $exam = $request->get('exam');

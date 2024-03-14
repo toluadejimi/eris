@@ -301,6 +301,8 @@ class ExamMarkLedgerController extends CollegeBaseController
 
     public function studentHtmlRow(Request $request)
     {
+
+       
         $response = [];
         $response['error'] = true;
         $year = $request->get('years_id');
@@ -407,6 +409,7 @@ class ExamMarkLedgerController extends CollegeBaseController
         }else{
             $response['error'] = 'Exam Not Scheduled. Please Schedule First';
         }
+
 
         return response()->json(json_encode($response));
     }

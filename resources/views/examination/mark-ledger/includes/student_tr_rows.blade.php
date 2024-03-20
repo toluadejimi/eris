@@ -17,7 +17,6 @@
 
     <td>
         {!! Form::number('ca_test1[]', $student->ca_test1, ["id"=> "ca_test1", "class" => "form-control border-form
-<<<<<<< HEAD
         totalCal expenses", "input", "min"=>"0","max"=>"15",'step'=>'any']) !!}
     </td>
     <td>
@@ -44,33 +43,11 @@
         {!! Form::number('ca_test2[]', $student->ca_test2, ["id"=> "ca_test2", "class" => "form-control border-form
         totalCal","min"=>"0","max"=>"15",'step'=>'any']) !!}
     </td>
-    <td>
-        {!! Form::number('assign[]', $student->assign, ["id"=> "assign", "class" => "form-control border-form
-        totalCal","min"=>"0","max"=>"4",'step'=>'any']) !!}
-    </td>
-    <td>
-        {!! Form::number('class_exe[]', $student->class_exe, ["id"=> "class_exe","class" => "form-control border-form totalCal","min"=>"0",
-        "max"=>"6",'step'=>'any']) !!}
-    </td>
-    <td>
-        {!! Form::number('affective[]', $student->affective, ["id"=> "affective", "class" => "form-control border-form totalCal","min"=>"0",
-        "max"=>"10",'step'=>'any']) !!}
-    </td>
-    <td>
-        {!! Form::number('physc[]', $student->physc, ["id"=> "physc", "class" => "form-control border-form totalCal","min"=>"0",
-        "max"=>"10",'step'=>'any']) !!}
-    </td>
-    <td>
-        {!! Form::number('obtain_mark_theory[]', $student->obtain_mark_theory, ["id"=> "obtain_mark_theory", "class" => "form-control border-form
-        totalCal expenses", "input", "min"=>"0", "max"=>"40",'step'=>'any',"totalCal","min"=>"0", "max"=>"40",'step'=>'any']) !!}
-    </td>
-
+   
 
     <td>
         {!! Form::number('total[]', $student->total, ["id"=> "result",  "value"=> "total", "class" => "form-control border-form expenses_sum","min"=>"0",
         "max"=>"100", "result", 'step'=>'any']) !!}
-        {!! Form::number('total[]', $student->total, ["id"=> "total",  "value"=> "total", "class" => "form-control border-form","min"=>"0",
-        "max"=>"100",'step'=>'any']) !!}
     </td>
 
 
@@ -87,7 +64,6 @@
 </tr>
 
 
-<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
@@ -113,7 +89,6 @@
 
 
 </script>
-=======
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
@@ -135,7 +110,6 @@
         console.log('total');
     });
 
->>>>>>> 9b052df5 (pushhh)
 
 </script>
 

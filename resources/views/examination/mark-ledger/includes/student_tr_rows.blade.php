@@ -43,6 +43,11 @@
         {!! Form::number('ca_test2[]', $student->ca_test2, ["id"=> "ca_test2", "class" => "form-control border-form
         totalCal","min"=>"0","max"=>"15",'step'=>'any']) !!}
     </td>
+
+    <td>
+        {!! Form::number('obtain_mark_theory[]', $student->obtain_mark_theory, ["id"=> "obtain_mark_theory", "class" => "form-control border-form
+        totalCal expenses","min"=>"0", "max"=>"40",'step'=>'any']) !!}
+    </td>
    
 
     <td>

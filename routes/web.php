@@ -12,11 +12,23 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AdjustResultController;
 use App\Http\Controllers\UserStudent\HomeController;
 use App\Http\Controllers\Assignment\AssignmentController;
 use App\Http\Controllers\Student\StudentPublicController;
 use App\Http\Controllers\Attendance\StudentAttendanceController;
+
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+
+
+    return "creared";
+    // return what you want
+});
+
 
 Route::get('print-recepit', [HomeController::class, 'print_recepit']);
 

@@ -39,6 +39,9 @@ Route::get('user-student/pay-fees', [HomeController::class, 'pay_fees']);
 
 Route::get('view-result', [HomeController::class, 'current_exam']);
 
+Route::get('admin-score/{year}/{month}/{exam}/{faculty}/{semester}/{userid}', [HomeController::class, 'examScore'])->name('admin-score'); 
+
+
 
 
 Route::post('attendance/get-weekper', [StudentAttendanceController::class, 'get_weekly']);

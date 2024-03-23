@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //Commands\SendSMSEmail::class,
-        Commands\BackupDatabaseCommand::class,
         Commands\BirthdayWish::class,
         Commands\BalanceFeesReminder::class,
         Commands\LibraryClearance::class

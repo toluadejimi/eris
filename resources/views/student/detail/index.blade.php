@@ -261,3 +261,9 @@
     @include('includes.scripts.bulkaction_confirm')
     {{--@include('includes.scripts.paymentgateway.khalti')--}}
 @endsection
+
+
+@section('js')
+    <!-- page specific plugin scripts -->
+    @include('includes.scripts.dataTable_scripts')
+@endsection

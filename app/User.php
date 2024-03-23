@@ -3,14 +3,13 @@
 namespace App;
 
 use App\Models\Roles;
-use App\Models\ExamMarkLedger;
-use OwenIt\Auditing\Auditable;
 use Illuminate\Notifications\Notifiable;
-
-use OwenIt\Auditing\Contracts\UserResolver;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
+
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use OwenIt\Auditing\Contracts\UserResolver;
 
 class User extends Authenticatable implements AuditableContract
 {

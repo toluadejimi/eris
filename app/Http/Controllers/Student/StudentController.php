@@ -11,43 +11,41 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\User;
-use Image, URL;
-use ViewHelper;
-use Carbon\Carbon;
-use App\Models\Note;
-use App\Models\Year;
-use App\Jobs\AllEmail;
-use App\Models\Faculty;
-use App\Models\Student;
-use App\Models\Document;
-use App\Models\Semester;
-use App\Models\BookIssue;
-use App\Traits\UserScope;
-use App\Models\Attendance;
-use App\Models\Addressinfo;
-use Illuminate\Support\Str;
-use App\Models\AcademicInfo;
-use App\Models\AlertSetting;
-use App\Models\ExamSchedule;
-use App\Models\ParentDetail;
-use Illuminate\Http\Request;
-use App\Models\LibraryMember;
-use App\Models\StudentParent;
-use App\Traits\SmsEmailScope;
-use App\Models\ExamMarkLedger;
-use App\Models\GuardianDetail;
-use App\Models\ResidentHistory;
-use App\Models\StudentGuardian;
-use App\Models\AttendanceStatus;
-use App\Models\TransportHistory;
-use App\Models\SubjectAttendance;
-use App\Models\StudentAddressinfo;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\CollegeBaseController;
 use App\Http\Requests\Student\Registration\AddValidation;
 use App\Http\Requests\Student\Registration\EditValidation;
+use App\Jobs\AllEmail;
+use App\Models\AcademicInfo;
+use App\Models\Addressinfo;
+use App\Models\AlertSetting;
+use App\Models\Attendance;
+use App\Models\AttendanceStatus;
+use App\Models\BookIssue;
+use App\Models\Document;
+use App\Models\ExamMarkLedger;
+use App\Models\Faculty;
+use App\Models\GuardianDetail;
+use App\Models\LibraryMember;
+use App\Models\Note;
+use App\Models\ParentDetail;
+use App\Models\ResidentHistory;
+use App\Models\Student;
+use App\Models\StudentAddressinfo;
+use App\Models\StudentGuardian;
+use App\Models\StudentParent;
+use App\Models\SubjectAttendance;
+use App\Models\TransportHistory;
+use App\Models\Year;
+use App\Traits\SmsEmailScope;
+use App\Traits\UserScope;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Image, URL;
+use ViewHelper;
+use Illuminate\Support\Str;
 
 
 class StudentController extends CollegeBaseController
@@ -273,12 +271,11 @@ class StudentController extends CollegeBaseController
     }
 
     public function view($id)
-    {     
+    {
+
+
+     
         
-
-
-
-
         $data = [];
         $data['student'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.pick_image',   'students.f_image', 'students.m_image', 'students.middle_name',
@@ -434,11 +431,11 @@ class StudentController extends CollegeBaseController
             ->get();
 
 
-            
+
         //filter subject and joint mark from schedules;
         $filteredSubject  = $subject->filter(function ($subject, $key) {
             $joinSub = $subject->examSchedule()
-            ->first();
+                ->first();
 
             if($joinSub){
                 $subject->subjects_id = $joinSub->subjects_id;
@@ -446,7 +443,13 @@ class StudentController extends CollegeBaseController
                 $subject->pass_mark_theory = $joinSub->pass_mark_theory;
                 $subject->full_mark_practical = $joinSub->full_mark_practical;
                 $subject->pass_mark_practical = $joinSub->pass_mark_practical;
-            
+                // $subject->$ca_test1 = $joinSub->ca_test1;
+                // $subject->$ca_test2 = $joinSub->ca_test2;
+                // $subject->$assign = $joinSub->assign;
+                // $subject->$class_exe = $joinSub->class_exe;
+                // $subject->$affective = $joinSub->affective;
+                // $subject->$physc = $joinSub->physc;
+
                 /*attach exam detail*/
                 $subject->years_id = $joinSub->years_id;
                 $subject->months_id = $joinSub->months_id;
@@ -479,7 +482,39 @@ class StudentController extends CollegeBaseController
                 $absent_theory = $subject->absent_theory;
                 $absent_practical = $subject->absent_practical;
 
+                // /*theory mark comparision*/
+                // if(isset($subject->pass_mark_theory) && $subject->pass_mark_theory != null){
+                //     if($absent_theory == 1) {
+                //         $subject->obtain_mark_theory = "AB";
+                //     }else{
+                //         //dd($th);//35
+                //         if(!is_numeric($th)){
+                //             $subject->obtain_mark_theory = "*";
+                //         }
+                //     }
+                // }else{
+                //     $subject->obtain_mark_theory = "-";
+                // }
+
+
+
             
+
+
+
+                /*Practical mark comparision*/
+                // if(isset($subject->pass_mark_practical) && $subject->pass_mark_practical != null){
+                //     if($absent_practical == 1) {
+                //         $subject->obtain_mark_practical = "AB";
+                //     }else{
+                //         if(!is_numeric($pr)){
+                //             $subject->obtain_mark_practical = "*";
+                //         }
+                //     }
+                // }else{
+                //     $subject->obtain_mark_practical= "-";
+                // }
+
 
                 /*verify again the new obtain values are number or not*/
                 $th_new = $subject->obtain_mark_theory;
@@ -491,6 +526,50 @@ class StudentController extends CollegeBaseController
                 $th_new = $subject->physc;
                 $th_new = $subject->total;
 
+
+
+                // $pr_new = $subject->obtain_mark_practical;
+
+                // $subject->total_obtain_mark = (is_numeric($th_new)?$th_new:0) + (is_numeric($pr_new)?$pr_new:0);
+
+                // if($th_new >= $subject->pass_mark_theory && $pr_new >= $subject->pass_mark_practical){
+                //     $subject->remark = '';
+                //     if($th_new > $subject->full_mark_theory){
+                //         $subject->th_remark = '*N';
+                //         $subject->remark = '*';
+                //     }
+
+                //     if($pr_new > $subject->full_mark_practical){
+                //         $subject->pr_remark = '*N';
+                //         $subject->remark = '*';
+                //     }
+
+                // }else{
+                //     $subject->remark = '*';
+
+                //     if($th_new < $subject->pass_mark_theory){
+                //         $subject->th_remark = '*';
+                //     }
+
+                //     if($pr_new < $subject->pass_mark_practical){
+                //         $subject->pr_remark = '*';
+                //     }
+
+                //     if($th_new > $subject->full_mark_theory){
+                //         $subject->th_remark = '*N';
+                //     }
+
+                //     if($pr_new > $subject->full_mark_practical){
+                //         $subject->pr_remark = '*N';
+                //     }
+
+                // }
+
+
+              
+
+
+
                 return $subject;
             }
         });
@@ -498,25 +577,6 @@ class StudentController extends CollegeBaseController
         $data['student']->markLedger->subjects = $filteredSubject;
 
         $data['examScore'] = $data['student']->markLedger->subjects->groupBY('months_id');
-
-        $data['student'] = Student::find($id);
-        $semester = Semester::find($data['student']->semester);
-        $falculty = Faculty::find($data['student']->faculty);
-        $semester_id = $semester->id;
-        
-        $user_id = $data['student']->id;
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status',DB::raw("$user_id as user_id"))
-            ->where('faculty_id', $falculty->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
-            ->get();
-
-
-
-
-
-
 
 
 
@@ -539,13 +599,6 @@ class StudentController extends CollegeBaseController
         $data['guardian_login'] = User::where([['role_id',7],['hook_id',$data['student']->guardian_id]])->first();
 
         $data['url'] = URL::current();
-
-        $data['userid'] =  $data['student']->id;
-
-      
-      
-
-
         return view(parent::loadDataToView($this->view_path.'.detail.index'), compact('data'));
     }
 
@@ -1071,9 +1124,6 @@ class StudentController extends CollegeBaseController
 
         //exam mark ledger
             $examMarkLedger = $row->markLedger()->get();
-
-
-            
             if($examMarkLedger->count() > 0){
                 $errCount = $errCount+1;
                 $errors[] = "Mark Ledger Found, Please Delete.";

@@ -890,6 +890,9 @@ class HomeController extends CollegeBaseController
     public function current_exam()
     {
 
+
+        
+
         $this->panel = "Current_Exam";
         $id = auth()->user()->hook_id;
         $data = [];
@@ -1000,31 +1003,22 @@ class HomeController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path . '.exam.admit-card'), compact('data'));
     }
 
-    public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null, $userid = null)
+    public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
 
 
-        if($userid == null){
-            $id = auth()->user()->hook_id;
-        }else{
-            $id = $userid;
-        }
-
+        $id = auth()->user()->hook_id;
         $data = [];
         $data['student'] = Student::find($id);
-
-
-        if($userid == null){
-            $reg_id = Auth::user()->reg_no;
-        }else{
-            $reg_id = $data['student']->reg_no;
-        }
-
+        $reg_id = Auth::user()->reg_id;
 
         $semester_id =  $semester;
+
         $student_id = Student::where('reg_no', $reg_id)
         ->first()->id;
 
+
+        
 
         // $get_fee_owe = FeeMaster::where('students_id', $student_id)
         // ->where('semester', $semester)
@@ -1049,7 +1043,8 @@ class HomeController extends CollegeBaseController
         // }
 
 
-        $student_id = $userid;
+        $id = auth()->user()->hook_id;
+        $student_id = $id;
         $data = [];
         $whereCondition = [
             ['years_id', '=', $year],
@@ -1081,6 +1076,11 @@ class HomeController extends CollegeBaseController
 
         $get_year = Year::where('id', $year )
         ->first()->title;
+
+
+
+
+
 
 
 
@@ -1235,11 +1235,8 @@ class HomeController extends CollegeBaseController
 
         });
 
-        $get_student_reg_id = $reg_id;
-
-        $get_student_id = $userid;
-
-
+        $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
+        $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
         $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
@@ -1250,8 +1247,8 @@ class HomeController extends CollegeBaseController
         //     ->whereIn('exam_schedule_id', $exam_schedule_id)
         //     ->sum('total');
 
-        $get_student_reg_id = $reg_id;
-        $get_student_id = $userid;
+        $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
+        $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
         $total_count = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
@@ -1272,7 +1269,7 @@ class HomeController extends CollegeBaseController
         $average = number_format($totalmarks / $total_count, 2);
 
         $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
-        $student_image = Student::where('reg_no', $reg_id)->first()->student_image;
+        $student_image = Student::where('reg_no', $get_student_reg_id)->first()->student_image;
         //$student_image  = ExamMarkLedger::where('students_id', $get_student_id)
 
         // dd($student_image);
@@ -1293,11 +1290,6 @@ class HomeController extends CollegeBaseController
         $data['semester'] = $semester->id;
 
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
-
-        if(Auth::user()->role_id != 6){
-
-            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
-        }
 
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }

@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Spatie\DbDumper\Databases\MySql;
 
-class BackupDatabaseCommand extends Command
+class OneBackupDatabaseCommand extends Command
 {
     /**
      * The name and signature of the console command.

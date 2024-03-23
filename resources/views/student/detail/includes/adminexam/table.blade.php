@@ -37,7 +37,7 @@
                                             <i class="fa fa-user" aria-hidden="true"></i> Admit Card
                                         </a> --}}
                                     &nbsp;&nbsp;&nbsp;
-                                    <a href="/eris/public/admin-score/{{$exam->years_id}}/{{$exam->months_id}}/{{$exam->exams_id}}/{{$exam->faculty_id}}/{{$exam->semesters_id}}/{{$exam->user_id}}"
+                                    <a href="/public/admin-score/{{$exam->years_id}}/{{$exam->months_id}}/{{$exam->exams_id}}/{{$exam->faculty_id}}/{{$exam->semesters_id}}/{{$exam->user_id}}"
                                         title="AdmitCard" class="btn-primary btn-sm">
                                         <i class="fa fa-line-chart" aria-hidden="true"></i> Click here to view result
                                     </a>

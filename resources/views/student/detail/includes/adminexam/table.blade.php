@@ -1,15 +1,4 @@
-{{-- <h4 class="header large lighter blue"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;{{ $panel }} List</h4> --}}
 
-
-
-
-<div class="clearfix">
-    <span class="pull-right tableTools-container"></span>
-</div>
-{{-- <div class="table-header">
-    {{ $panel }}  Record list on table. Filter {{ $panel }} using the filter.
-</div> --}}
-<!-- div.table-responsive -->
 <div class="table-responsive">
     <table id="dynamic-table" class="table table-striped table-bordered table-hover">
         <thead>

@@ -1015,7 +1015,7 @@ class HomeController extends CollegeBaseController
 
 
         if($userid == null){
-            $reg_id = Auth::user()->reg_no;
+            $reg_id = Auth::user()->reg_id;
         }else{
             $reg_id = $data['student']->reg_no;
         }
@@ -1024,6 +1024,7 @@ class HomeController extends CollegeBaseController
         $semester_id =  $semester;
         $student_id = Student::where('reg_no', $reg_id)
         ->first()->id;
+
 
 
         // $get_fee_owe = FeeMaster::where('students_id', $student_id)
@@ -1049,7 +1050,7 @@ class HomeController extends CollegeBaseController
         // }
 
 
-        $student_id = $userid;
+        $student_id = $id;
         $data = [];
         $whereCondition = [
             ['years_id', '=', $year],
@@ -1089,7 +1090,7 @@ class HomeController extends CollegeBaseController
         $semester = Semester::find($semester);
         $students = Student::select('id', 'reg_no', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
             'faculty', 'semester')
-            ->where('id', $student_id)
+            ->where('id', $id)
             ->get();
 
         /*filter student with schedule subject mark ledger*/
@@ -1237,8 +1238,7 @@ class HomeController extends CollegeBaseController
 
         $get_student_reg_id = $reg_id;
 
-        $get_student_id = $userid;
-
+        $get_student_id = $id;
 
         $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
@@ -1251,17 +1251,16 @@ class HomeController extends CollegeBaseController
         //     ->sum('total');
 
         $get_student_reg_id = $reg_id;
-        $get_student_id = $userid;
+        $get_student_id = $id;
         $total_count = ExamMarkLedger::where('students_id', $get_student_id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
 
-           // dd($totalmarks, $total_count);
+           //dd($totalmarks, $total_count);
 
 
         if ($total_count == 0) {
-
             $totalmarks = 0;
             $total_count = 0;
         }
@@ -1269,9 +1268,9 @@ class HomeController extends CollegeBaseController
         //dd($class, $term);
 
 
-        $average = number_format($totalmarks / $total_count, 2);
 
-        $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
+        $average = number_format($totalmarks / $total_count, 2);
+        $get_student_reg_id = $reg_id;
         $student_image = Student::where('reg_no', $reg_id)->first()->student_image;
         //$student_image  = ExamMarkLedger::where('students_id', $get_student_id)
 
@@ -1284,6 +1283,7 @@ class HomeController extends CollegeBaseController
         ])
             ->first()->title;
 
+
         $data['student'] = $filteredStudent;
 
         $data['year'] = $year;
@@ -1293,6 +1293,8 @@ class HomeController extends CollegeBaseController
         $data['semester'] = $semester->id;
 
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
+
+        
 
         if(Auth::user()->role_id != 6){
 

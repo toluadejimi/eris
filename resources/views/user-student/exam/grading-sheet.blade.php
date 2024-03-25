@@ -194,7 +194,7 @@
                         <td class="text-center">{{$subject->class_exe ?? 0}}</td>
                         <td class="text-center">{{$subject->affective ?? 0}}</td>
                         <td class="text-center">{{$subject->physc ?? 0}}</td>
-                        <td class="text-center">{{$subject->obtain_score_theory ?? 0}}
+                        <td class="text-center">{{$subject->obtain_mark_theory ?? $subject->obtain_score_theory ?? 0}}
                         </td>
                         <td class="text-center">{{$subject->total ?? 0}}</td>
                         <td> @if ($subject->total >= 90)

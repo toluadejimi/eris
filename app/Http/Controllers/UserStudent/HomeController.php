@@ -1131,6 +1131,8 @@ class HomeController extends CollegeBaseController
                 $obtain_mark_practical = $subject->obtain_mark_practical;
                 $absent_practical = $subject->absent_practical;
 
+                
+
                 //$subject->totalMark = $totalMark = $ca_test1 + $ca_test2 + $assign + $class_exe + $affective + $physc + $obtain_mark_theory;
 
                 /*th absent*/
@@ -1140,10 +1142,10 @@ class HomeController extends CollegeBaseController
                         $subject->obtain_score_theory = $th_per; //==0?'*NG':$this->getGrade($semester, $th_per);
                     }
                 } else {
-                    $subject->obtain_score_theory = "*AB";
+                    $subject->obtain_score_theory = $subject->obtain_score_theory;
                 }
 
-                // dd($subject->obtain_score_theory, $th_per);
+                 //dd($subject->obtain_score_theory, $th_per);
 
                 /*pr absent*/
                 if ($absent_practical != 1) {
@@ -1153,7 +1155,7 @@ class HomeController extends CollegeBaseController
                     }
                 } else {
                     $pr_per = 0;
-                    $subject->obtain_score_practical = "*AB";
+                    $subject->obtain_score_practical = $subject->obtain_score_theory;
                 }
 
                 /*check absent on theory & practical*/
@@ -1167,6 +1169,7 @@ class HomeController extends CollegeBaseController
                 $subject->obtainedMark = $obtainedMark = 40 + 60;
                 $subject->percentage = $percentage = (28 * 100) / $totalMark;
 
+                
 
                 //verify both th & pr absent
                 if ($absentBoth == false) {
@@ -1181,11 +1184,14 @@ class HomeController extends CollegeBaseController
                     $subject->remark = "-";
                 }
 
+               
+
                 return $subject;
             });
 
             //order subject order on schedule
             $value->subjects = $filteredSubject->sortBy('sorting_order');
+
 
             /*calculate GPA*/
             /*calculate total mark & percentage*/
@@ -1208,6 +1214,7 @@ class HomeController extends CollegeBaseController
 
             /*calculate total mark & percentage*/
             $otm = array_pluck($value->subjects, 'obtain_mark_theory');
+
 
             $filtered_otm = array_where($otm, function ($value, $key) {
                 return is_numeric($value);
@@ -1240,7 +1247,7 @@ class HomeController extends CollegeBaseController
 
         $get_student_id = $id;
 
-        $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
+        $totalmarks = ExamMarkLedger::where('students_id', $id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
 
@@ -1252,7 +1259,7 @@ class HomeController extends CollegeBaseController
 
         $get_student_reg_id = $reg_id;
         $get_student_id = $id;
-        $total_count = ExamMarkLedger::where('students_id', $get_student_id)
+        $total_count = ExamMarkLedger::where('students_id', $id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 

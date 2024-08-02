@@ -138,7 +138,7 @@
                 @include('print.includes.studentinfo')
                 <div class="space-6"></div>
 
-                <hr>
+
 
                 <div class="my-4 row mt-8">
 

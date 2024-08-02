@@ -265,10 +265,6 @@
 
                 </div>
 
-
-                <hr class="">
-
-
                 <div class="row">
                 <div class="d-flex justify-content-start col-4">
                     <h3 class="mt-6 text-uppercase"

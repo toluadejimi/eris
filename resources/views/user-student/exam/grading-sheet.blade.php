@@ -123,7 +123,7 @@
                                      src="{{ asset('images'.DIRECTORY_SEPARATOR.$folder_name.DIRECTORY_SEPARATOR.$student_image) }}"
                                      alt="HTML5 Icon" style="width:125px;height:125px;">
                             @else
-                                <img id="avatar" class="editable img-responsive" alt="image"
+                                <img id="avatar" class="editable img-responsive mb-3" alt="image"
                                      src="{{ asset('assets/images/avatars/profile-pic.jpg') }}"/>
                             @endif
                         </div>
@@ -132,11 +132,9 @@
                 </div>
 
 
-                <br>
-                <br>
 
 
-                <div class="space-6"></div>
+                <div class="space-6 mt-3"></div>
                 @include('print.includes.studentinfo')
                 <div class="space-6"></div>
 
@@ -148,12 +146,12 @@
 
 
 
-                        <div class="col-4 text-center">
-                            <h3 class="mt-6 text-uppercase"
-                                style="font-family: 'Bowlby+One+SC'; font-size: 14px; font-weight: 600">
-                                <strong>ACADEMIC DATA</strong>
-                            </h3>
-                        </div>
+{{--                        <div class="col-4 text-center">--}}
+{{--                            <h3 class="mt-6 text-uppercase"--}}
+{{--                                style="font-family: 'Bowlby+One+SC'; font-size: 14px; font-weight: 600">--}}
+{{--                                <strong>ACADEMIC DATA</strong>--}}
+{{--                            </h3>--}}
+{{--                        </div>--}}
 
 
 

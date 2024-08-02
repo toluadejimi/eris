@@ -140,7 +140,7 @@
 
 
 
-                <div class="my-4 row mt-8">
+                <div class="my-3 row mt-8">
 
                     <td class="text-right"><strong style="border-top:1px rgb(255, 255, 255) solid;"></strong>
 

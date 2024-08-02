@@ -243,7 +243,7 @@
                 </div>
 
 
-                <div class="smaller-100">
+                <div class="smaller-100 d-flex justify-content-center my-2">
 
                     @if ($average >= 90)
                         PRINCIPAL'S COMMENT: | Excellent. Excellent result, ERIS is proud of you. Keep
@@ -268,7 +268,7 @@
                 <div class="row">
                 <div class="d-flex justify-content-start col-4">
                     <h3 class="mt-6 text-uppercase"
-                        style="font-family: 'Bowlby+One+SC'; color: red; font-size: 12px; font-weight: 600">
+                        style="font-family: 'Bowlby+One+SC'; color: red; font-size: 12px; font-weight: 300">
                         <strong>VACATION DATE : {{"25th July, 2024"}}</strong>
                     </h3>
                 </div>
@@ -280,7 +280,7 @@
                 </div>
                 <div class="col-4 text-center col-4">
                     <h3 class="mt-6 text-uppercase"
-                        style="font-family: 'Bowlby+One+SC'; color: red; font-size: 14px; font-weight: 600">
+                        style="font-family: 'Bowlby+One+SC'; color: red; font-size: 12px; font-weight: 300">
                         <strong>RESUMPTION DATE : {{"9th September, 2024"}}</strong>
                     </h3>
 

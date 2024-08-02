@@ -1184,7 +1184,7 @@ class HomeController extends CollegeBaseController
                     $subject->remark = "-";
                 }
 
-               
+
 
                 return $subject;
             });
@@ -1238,6 +1238,7 @@ class HomeController extends CollegeBaseController
 
             $value->gpa_average = $this->getGrade($semester, $percentage);
             $value->remark = $this->getRemark($semester, $percentage);
+
 
             return $value;
 
@@ -1301,7 +1302,8 @@ class HomeController extends CollegeBaseController
 
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
 
-        
+
+        //dd($data);
 
         if(Auth::user()->role_id != 6){
 

@@ -1248,9 +1248,13 @@ class HomeController extends CollegeBaseController
 
         $get_student_id = $id;
 
+
+
         $totalmarks = ExamMarkLedger::where('students_id', $id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
+
+
 
         // $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
         // $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;

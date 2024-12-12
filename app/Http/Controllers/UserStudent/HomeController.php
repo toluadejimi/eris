@@ -1005,7 +1005,6 @@ class HomeController extends CollegeBaseController
     {
 
 
-        dd('hello');
 
         if($userid == null){
             $id = auth()->user()->hook_id;
@@ -1318,8 +1317,7 @@ class HomeController extends CollegeBaseController
         $data['resumption_day'] = Setting::where('id', 1)->first()->resumption_day;
 
 
-
-        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'vacation_day', 'resumption_day',  'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }
 
     /*assignment group*/

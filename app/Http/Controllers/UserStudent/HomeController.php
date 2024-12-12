@@ -1011,8 +1011,6 @@ class HomeController extends CollegeBaseController
         $resumption_day = Setting::where('id', 1)->first()->resumption_day;
 
 
-        dd($vacation_day, $resumption_day);
-
 
         if($userid == null){
             $id = auth()->user()->hook_id;

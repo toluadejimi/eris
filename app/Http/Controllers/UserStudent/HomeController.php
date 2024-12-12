@@ -1307,17 +1307,14 @@ class HomeController extends CollegeBaseController
 
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
 
-
-        //dd($data);
-
         if(Auth::user()->role_id != 6){
 
             return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
         }
 
-
         $data['vacation_day'] = Setting::where('id', 1)->first()->vacation_day;
         $data['resumption_day'] = Setting::where('id', 1)->first()->resumption_day;
+
 
 
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));

@@ -1007,9 +1007,6 @@ class HomeController extends CollegeBaseController
 
 
 
-        $vacation_day = Setting::where('id', 1)->first()->vacation_day;
-        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
-
 
 
         if($userid == null){
@@ -1288,6 +1285,9 @@ class HomeController extends CollegeBaseController
         //dd($class, $term);
 
 
+        $vacation_day = Setting::where('id', 1)->first()->vacation_day;
+        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
+
 
         $average = number_format($totalmarks / $total_count, 2);
         $get_student_reg_id = $reg_id;
@@ -1316,7 +1316,7 @@ class HomeController extends CollegeBaseController
 
         if(Auth::user()->role_id != 6){
 
-            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'vacation_day', 'resumption_day', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
         }
 
 

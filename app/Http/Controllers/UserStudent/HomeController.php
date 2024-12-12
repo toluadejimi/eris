@@ -35,6 +35,7 @@ use App\Models\Notice;
 use App\Models\OnlinePayment;
 use App\Models\ResidentHistory;
 use App\Models\Semester;
+use App\Models\Setting;
 use App\Models\Student;
 use App\Models\StudentBatch;
 use App\Models\StudentGuardian;
@@ -1313,6 +1314,11 @@ class HomeController extends CollegeBaseController
 
             return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
         }
+
+
+        $data['vacation_day'] = Setting::where('id', 1)->first()->vacation_day;
+        $data['resumption_day'] = Setting::where('id', 1)->first()->resumption_day;
+
 
         return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }

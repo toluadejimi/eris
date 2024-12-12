@@ -269,7 +269,7 @@
                 <div class="d-flex justify-content-start col-4">
                     <h3 class="mt-6 text-uppercase"
                         style="font-family: 'Bowlby+One+SC'; color: red; font-size: 12px; font-weight: 300">
-                        <strong>VACATION DATE : {{"25th July, 2024"}}</strong>
+                        <strong>VACATION DATE : {{$vacation_day}}</strong>
                     </h3>
                 </div>
                 <div class="d-flex justify-content-center col-4">
@@ -281,7 +281,7 @@
                 <div class="col-4 text-center col-4">
                     <h3 class="mt-6 text-uppercase"
                         style="font-family: 'Bowlby+One+SC'; color: red; font-size: 12px; font-weight: 300">
-                        <strong>RESUMPTION DATE : {{"9th September, 2024"}}</strong>
+                        <strong>RESUMPTION DATE : {{$resumption_day}}</strong>
                     </h3>
 
                 </div>

@@ -36,6 +36,14 @@ Route::get('fee-resolve', [HomeController::class, 'fee_resolve']);
 
 
 Route::get('adjust-result', [AdjustResultController::class, 'adjust_result']);
+Route::post('ajust-vacation-day', [AdjustResultController::class, 'adjust_vacation']);
+Route::post('ajust-resumption-day', [AdjustResultController::class, 'adjust_resumption']);
+
+
+
+
+
+
 Route::post('delete-exam', [AdjustResultController::class, 'delete_exam']);
 
 

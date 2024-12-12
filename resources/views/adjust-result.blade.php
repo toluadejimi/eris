@@ -19,8 +19,29 @@
 
     <div class="row">
 
-   
-      
+
+        <div class="col-6 my-3">
+            <form action="ajust-vacation-day" method="post">
+                @csrf
+                <label>Adjust Vacation Day</label>
+                <input name="vacation_day" class="form-control my-2" type="text" value="{{$vacation_day}}">
+                <button type="submit" class="btn btn-success">Update</button>
+            </form>
+        </div>
+
+        <div class="col-6 my-3">
+            <form action="ajust-resumption-day" method="post">
+                @csrf
+                <label>Adjust Resumption Day</label>
+                <input name="resumption_day" class="form-control my-2" type="text" value="{{$resumption_day}}">
+                <button type="submit" class="btn btn-success">Update</button>
+
+            </form>
+        </div>
+
+
+        <hr class="my-3">
+
 
 
     <div class="col-6">
@@ -29,7 +50,6 @@
 
 
     <div class="mt-4">
-
 
 
 

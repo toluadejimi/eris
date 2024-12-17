@@ -78,7 +78,7 @@
 
         <div class="row g-5">
             <div class="col-md-7 col-lg-12">
-                <form enctype="multipart/form-data" method="POST" action="/update-reg-info">
+                <form enctype="multipart/form-data" method="POST" action="/public/update-reg-info">
                     @csrf
 
                     <h4 class="mb-3">SCHOLAR'S

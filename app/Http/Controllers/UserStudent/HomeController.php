@@ -1316,7 +1316,7 @@ class HomeController extends CollegeBaseController
 
         if(Auth::user()->role_id != 6){
 
-            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'vacation_day', 'resumption_day',gp 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'vacation_day', 'resumption_day','get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
         }
 
 

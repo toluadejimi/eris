@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExamMarkLedger;
+use App\Models\ParentDetail;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,44 @@ class AdjustResultController extends Controller
 
 
         return view('adjust-result', $data);
+
+
+    }
+
+
+    public function reg_info(request $request)
+    {
+
+
+        $pd_ck = ParentDetail::where('students_id', $request->id)->first() ?? null;
+        if($pd_ck != null){
+            return back()->with('error', "Parent Info already esist");
+        }
+
+       $pd =  new ParentDetail();
+       $pd->students_id = $request->id;
+        $pd->father_first_name = $request->father_first_name;
+        $pd->father_middle_name = $request->father_middle_name;
+        $pd->father_last_name = $request->father_last_name ?? "Name";
+        $pd->father_residence_number = $request->father_residence_number;
+        $pd->father_email = $request->father_email;
+        $pd->father_mobile_1 = $request->father_mobile_1;
+        $pd->father_occupation = $request->father_occupation;
+        $pd->father_office_number = $request->father_office_number;
+        $pd->father_office = $request->father_office;
+        $pd->mother_first_name = $request->mother_first_name;
+        $pd->mother_middle_name = $request->mother_middle_name;
+        $pd->mother_last_name = $request->mother_last_name;
+        $pd->mother_residence_number = $request->mother_residence_number;
+        $pd->mother_email = $request->mother_email;
+        $pd->mother_mobile_1 = $request->mother_mobile_1;
+        $pd->mother_occupation = $request->mother_occupation;
+        $pd->mother_office_number = $request->mother_office_number;
+        $pd->mother_office = $request->mother_office;
+        $pd->save();
+
+
+        return back()->with('message', "Information has been  successfully updated");
 
 
     }

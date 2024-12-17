@@ -39,7 +39,7 @@ Route::get('adjust-result', [AdjustResultController::class, 'adjust_result']);
 Route::post('ajust-vacation-day', [AdjustResultController::class, 'adjust_vacation']);
 Route::post('ajust-resumption-day', [AdjustResultController::class, 'adjust_resumption']);
 
-
+Route::post('update-reg-info', [AdjustResultController::class, 'reg_info']);
 
 
 

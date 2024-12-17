@@ -279,6 +279,16 @@ class StudentController extends CollegeBaseController
 
 
 
+
+        $pd = ParentDetail::where('students_id', $id)->first() ?? null;
+
+        if($pd == null){
+
+            $data['student'] = Student::where('id', $id)->first();
+           return view('student.public-registration.update-registration', $data);
+
+        }
+
         $data = [];
         $data['student'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.pick_image',   'students.f_image', 'students.m_image', 'students.middle_name',
@@ -301,10 +311,17 @@ class StudentController extends CollegeBaseController
             ->join('guardian_details as gd', 'gd.id', '=', 'sg.guardians_id')
             ->first();
 
-        if (!$data['student']){
+
+
+
+
+        if ($data['student'] == null ){
             request()->session()->flash($this->message_warning, "Not a Valid Student");
             return redirect()->route($this->base_route);
         }
+
+
+
 
         $data['fee_master'] = $data['student']->feeMaster()->orderBy('fee_due_date','desc')->get();
         $data['fee_collection'] = $data['student']->feeCollect()->get();
@@ -353,6 +370,8 @@ class StudentController extends CollegeBaseController
 
             return $attendance;
         });
+
+
 
         $data['attendance'] = $filteredAttendance;
         $data['attendanceStatus'] = $attendanceStatus;

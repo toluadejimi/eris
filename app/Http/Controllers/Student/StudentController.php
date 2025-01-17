@@ -289,6 +289,7 @@ class StudentController extends CollegeBaseController
 
         }
 
+
         $data = [];
         $data['student'] = Student::select('students.id','students.reg_no', 'students.reg_date', 'students.university_reg',
             'students.faculty','students.semester','students.batch', 'students.academic_status', 'students.first_name', 'students.pick_image',   'students.f_image', 'students.m_image', 'students.middle_name',
@@ -310,7 +311,6 @@ class StudentController extends CollegeBaseController
             ->join('student_guardians as sg', 'sg.students_id','=','students.id')
             ->join('guardian_details as gd', 'gd.id', '=', 'sg.guardians_id')
             ->first();
-
 
 
 

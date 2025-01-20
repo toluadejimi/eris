@@ -265,7 +265,7 @@ class StudentAttendanceController extends CollegeBaseController
         $month = Carbon::createFromFormat('Y-m-d H:i:s', $date)->month;
         $day = "day_".Carbon::createFromFormat('Y-m-d H:i:s', $date)->day;
         $yearTitle = Carbon::createFromFormat('Y-m-d H:i:s', $date)->year;
-        $year = Year::where('title',$yearTitle)->first()->id;
+        $year = Year::where('status',1)->first()->id;
 
         $attendanceStatus = AttendanceStatus::get();
 

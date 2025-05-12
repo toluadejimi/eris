@@ -1631,7 +1631,7 @@ class HomeController extends CollegeBaseController
     
            
             // $message =  Auth::user()->name . "| is trying to fund  with | $request->trx_id  | " . number_format($request->amount, 2) . "\n\n IP ====> " . $request->ip();
-            // send_notification($message);
+            // Log::info($message);
     
             return redirect('user/deposit/history')->with('error', 'Transaction already confirmed or not found');
       

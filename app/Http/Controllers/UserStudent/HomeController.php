@@ -1059,7 +1059,7 @@ class HomeController extends CollegeBaseController
         $data = [];
         $whereCondition = [
             ['years_id', '=', $year],
-            //['months_id', '=', $month],
+            ['months_id', '=', $month],
             ['exams_id', '=', $exam],
             ['faculty_id', '=', $faculty],
             //['semesters_id', '=', $semester],

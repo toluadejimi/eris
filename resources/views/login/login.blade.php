@@ -74,7 +74,7 @@
 
 					<div class="form-group mb-3">
 						<label class="label" for="password">Select Academic Session</label>
-						<select class="form-control"  name="session"  required>
+						<select class="form-control" name="session"  required>
 							<option value="{{$current_session->session}}">{{$current_session->title}}</option>
 							@foreach($all_session as $data)
 								<option value="{{$data->session}}">{{$data->title}}</option>

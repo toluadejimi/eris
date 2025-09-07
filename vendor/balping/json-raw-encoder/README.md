@@ -24,8 +24,8 @@ Suppose you need to pass a callback to a JSON object.
     ];
 ?>
 
-<scrtip>
-    let bar = <?php echo $json_encode($array); ?>
+<script>
+    let bar = <?php echo json_encode($array); ?>;
     bar.callback('hello'); //error
 </script>
 ```
@@ -52,13 +52,13 @@ To get around this problem, use `Raw` objects provided by this package:
     ];
 ?>
 
-<scrtip>
-    let bar = <?php echo Encoder::encode($array); ?>
+<script>
+    let bar = <?php echo Encoder::encode($array); ?>;
     bar.callback('hello'); //prints hello
 </script>
 ```
 
-Now, the encoded JSON looks like this. Notice, that there are no parentheses around the function.
+Now, the encoded JSON looks like this. Notice, that there are no quotation marks around the function.
 
 ```js
 {"type":"cat","count":42,"callback":function(a){alert(a);}}
@@ -100,3 +100,7 @@ Result:
 ## License
 
 This package is licensed under GPLv3.
+
+## Download statistics
+
+[![statistics](https://packagist-statistics.dura.hu/balping/json-raw-encoder/10days.svg)](https://packagist-statistics.dura.hu/balping/json-raw-encoder/10days.svg)

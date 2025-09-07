@@ -30,6 +30,14 @@ You'll then need to run `composer install` or `composer update` to download it a
 
 Once Laravel Paystack is installed, you need to register the service provider. Open up `config/app.php` and add the following to the `providers` key.
 
+```php
+'providers' => [
+    ...
+    Unicodeveloper\Paystack\PaystackServiceProvider::class,
+    ...
+]
+```
+
 > If you use **Laravel >= 5.5** you can skip this step and go to [**`configuration`**](https://github.com/unicodeveloper/laravel-paystack#configuration)
 
 * `Unicodeveloper\Paystack\PaystackServiceProvider::class`
@@ -87,22 +95,22 @@ return [
 ```
 
 
-##General payment flow
+## General payment flow
 
 Though there are multiple ways to pay an order, most payment gateways expect you to follow the following flow in your checkout process:
 
-###1. The customer is redirected to the payment provider
+### 1. The customer is redirected to the payment provider
 After the customer has gone through the checkout process and is ready to pay, the customer must be redirected to site of the payment provider.
 
-The redirection is accomplished by submitting a form with some hidden fields. The form must post to the site of the payment provider. The hidden fields minimally specify the amount that must be paid, the order id and a hash.
+The redirection is accomplished by submitting a form with some hidden fields. The form must send a POST request to the site of the payment provider. The hidden fields minimally specify the amount that must be paid, the order id and a hash.
 
 The hash is calculated using the hidden form fields and a non-public secret. The hash used by the payment provider to verify if the request is valid.
 
 
-###2. The customer pays on the site of the payment provider
-The customer arrived on the site of the payment provider and gets to choose a payment method. All steps necessary to pay the order are taken care of by the payment provider.
+### 2. The customer pays on the site of the payment provider
+The customer arrives on the site of the payment provider and gets to choose a payment method. All steps necessary to pay the order are taken care of by the payment provider.
 
-###3. The customer gets redirected back
+### 3. The customer gets redirected back to your site
 After having paid the order the customer is redirected back. In the redirection request to the shop-site some values are returned. The values are usually the order id, a paymentresult and a hash.
 
 The hash is calculated out of some of the fields returned and a secret non-public value. This hash is used to verify if the request is valid and comes from the payment provider. It is paramount that this hash is thoroughly checked.
@@ -118,6 +126,7 @@ PAYSTACK_SECRET_KEY=xxxxxxxxxxxxx
 PAYSTACK_PAYMENT_URL=https://api.paystack.co
 MERCHANT_EMAIL=unicodeveloper@gmail.com
 ```
+*If you are using a hosting service like heroku, ensure to add the above details to your configuration variables.*
 
 Set up routes and controller methods like so:
 
@@ -127,7 +136,7 @@ Note: Make sure you have `/payment/callback` registered in Paystack Dashboard [h
 
 ```php
 // Laravel 5.1.17 and above
-Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay'); 
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
 ```
 
 OR
@@ -149,7 +158,7 @@ OR
 // Laravel 5.0
 Route::get('payment/callback', [
     'uses' => 'PaymentController@handleGatewayCallback'
-]); 
+]);
 ```
 
 ```php
@@ -196,10 +205,15 @@ Let me explain the fluent methods this package provides a bit here.
 /**
  *  This fluent method does all the dirty work of sending a POST request with the form data
  *  to Paystack Api, then it gets the authorization Url and redirects the user to Paystack
- *  Payment Page. I abstracted all of it, so you don't have to worry about that.
+ *  Payment Page. We've abstracted all of it, so you don't have to worry about that.
  *  Just eat your cookies while coding!
  */
 Paystack::getAuthorizationUrl()->redirectNow();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAuthorizationUrl()->redirectNow();
 
 /**
  * This fluent method does all the dirty work of verifying that the just concluded transaction was actually valid,
@@ -210,10 +224,21 @@ Paystack::getAuthorizationUrl()->redirectNow();
 Paystack::getPaymentData();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->getPaymentData();
+
+/**
  * This method gets all the customers that have performed transactions on your platform with Paystack
  * @returns array
  */
 Paystack::getAllCustomers();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllCustomers();
+
 
 /**
  * This method gets all the plans that you have registered on Paystack
@@ -222,10 +247,21 @@ Paystack::getAllCustomers();
 Paystack::getAllPlans();
 
 /**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllPlans();
+
+
+/**
  * This method gets all the transactions that have occurred
  * @returns array
  */
 Paystack::getAllTransactions();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->getAllTransactions();
 
 /**
  * This method generates a unique super secure cryptograhical hash token to use as transaction reference
@@ -234,30 +270,57 @@ Paystack::getAllTransactions();
 Paystack::genTranxRef();
 
 /**
-* This method creates a subaccount to be used for split payments 
+ * Alternatively, use the helper.
+ */
+paystack()->genTranxRef();
+
+
+/**
+* This method creates a subaccount to be used for split payments
 * @return array
 */
 Paystack::createSubAccount();
 
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->createSubAccount();
+
 
 /**
-* This method fetches the details of a subaccount  
+* This method fetches the details of a subaccount
 * @return array
 */
 Paystack::fetchSubAccount();
 
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->fetchSubAccount();
+
 
 /**
-* This method lists the subaccounts associated with your paystack account 
+* This method lists the subaccounts associated with your paystack account
 * @return array
 */
 Paystack::listSubAccounts();
 
 /**
-* This method Updates a subaccount to be used for split payments 
+ * Alternatively, use the helper.
+ */
+paystack()->listSubAccounts();
+
+
+/**
+* This method Updates a subaccount to be used for split payments
 * @return array
 */
 Paystack::updateSubAccount();
+
+/**
+ * Alternatively, use the helper.
+ */
+paystack()->updateSubAccount();
 ```
 
 A sample form will look like so:
@@ -276,9 +339,9 @@ A sample form will look like so:
             <input type="hidden" name="orderID" value="345">
             <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
             <input type="hidden" name="quantity" value="3">
+            <input type="hidden" name="currency" value="NGN">
             <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
             <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-            <input type="hidden" name="key" value="{{ config('paystack.secretKey') }}"> {{-- required --}}
             {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
 
              <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}

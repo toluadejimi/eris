@@ -100,11 +100,11 @@ class Paystack
         );
     }
 
-   
+
      /**
-     
+
      * Initiate a payment request to Paystack
-     * Included the option to pass the payload to this method for situations 
+     * Included the option to pass the payload to this method for situations
      * when the payload is built on the fly (not passed to the controller from a view)
      * @return Paystack
      */
@@ -112,14 +112,25 @@ class Paystack
     public function makePaymentRequest( $data = null)
     {
         if ( $data == null ) {
+
+            $quantity = intval(request()->quantity);
+
             $data = [
-                "amount" => intval(request()->amount),
+                "amount" => intval(request()->amount) * $quantity,
                 "reference" => request()->reference,
                 "email" => request()->email,
                 "plan" => request()->plan,
                 "first_name" => request()->first_name,
                 "last_name" => request()->last_name,
                 "callback_url" => request()->callback_url,
+                "currency" => (request()->currency != ""  ? request()->currency : "NGN"),
+                /*
+                    Paystack allows for transactions to be split into a subaccount -
+                    The following lines trap the subaccount ID - as well as the ammount to charge the subaccount (if overriden in the form)
+                    both values need to be entered within hidden input fields
+                */
+                "subaccount" => request()->subaccount,
+                "transaction_charge" => request()->transaction_charge,
                 /*
                 * to allow use of metadata on Paystack dashboard and a means to return additional data back to redirect url
                 * form need an input field: <input type="hidden" name="metadata" value="{{ json_encode($array) }}" >
@@ -130,7 +141,7 @@ class Paystack
                 *                                                            .
                 *                                                            .
                 *                                                        ]
-                *                                        
+                *
                 *                                  ]
                 */
                 'metadata' => request()->metadata
@@ -179,10 +190,10 @@ class Paystack
 
         return $this;
     }
-    
+
      /**
      * Get the authorization callback response
-     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect 
+     * In situations where Laravel serves as an backend for a detached UI, the api cannot redirect
      * and might need to take different actions based on the success or not of the transaction
      * @return array
      */
@@ -590,13 +601,13 @@ class Paystack
 
      /**
      * Creates a subaccount to be used for split payments . Required    params are business_name , settlement_bank , account_number ,   percentage_charge
-     * 
+     *
      * @return array
      */
-    
+
     public function createSubAccount(){
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,
@@ -639,13 +650,13 @@ class Paystack
 
     /**
      * Updates a subaccount to be used for split payments . Required params are business_name , settlement_bank , account_number , percentage_charge
-     * @param subaccount code 
+     * @param subaccount code
      * @return array
      */
-    
+
     public function updateSubAccount($subaccount_code){
         $data = [
-            "business_name" => request()->business_name, 
+            "business_name" => request()->business_name,
             "settlement_bank" => request()->settlement_bank,
             "account_number" => request()->account_number,
             "percentage_charge" => request()->percentage_charge,

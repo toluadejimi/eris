@@ -2,6 +2,39 @@
 
 All notable changes to `db-dumper` will be documented in this file
 
+## 2.21.1 - 2021-02-24
+
+- fix attempt to generate dump over http connection when using socket (#145)
+
+## 2.21.0 - 2021-01-27
+
+- fix: make the process more extensible, avoid touching anything (#141)
+
+## 2.20.0 - 2021-01-26
+
+- revert changes in 2.19.0
+
+## 2.19.0 - 2021-01-25
+
+- fix: add some public functions that allow extensibility (#139)
+
+## 2.18.0 - 2020-10-10
+
+- support PHP 8
+
+## 2.17.0 - 2020-09-10
+
+- add `doNotUseColumnStatistics`
+
+## 2.16.1 - 2020-05-15
+
+- fix using gzip compression on windows (#130)
+
+## 2.16.0 - 2020-04-15
+
+- allow for adding options after the db name (#129)
+
+
 ## 2.15.3 - 2020-01-26
 
 - Fix incomplete credential guard (#126)

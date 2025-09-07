@@ -30,6 +30,9 @@ Route::get('/clear', function() {
 });
 
 
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+
 Route::get('print-recepit', [HomeController::class, 'print_recepit']);
 
 Route::get('fee-resolve', [HomeController::class, 'fee_resolve']);

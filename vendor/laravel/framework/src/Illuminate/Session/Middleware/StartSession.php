@@ -148,7 +148,6 @@ class StartSession
      * @param  \Illuminate\Contracts\Session\Session  $session
      * @return void
      */
-    
     protected function addCookieToResponse(Response $response, Session $session)
     {
         if ($this->sessionIsPersistent($config = $this->manager->getSessionConfig())) {

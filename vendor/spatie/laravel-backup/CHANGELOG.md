@@ -2,6 +2,51 @@
 
 All notable changes to `laravel-backup` will be documented in this file.
 
+## 6.12.0 - 2020-11-19
+
+- allow a `CleanupStrategy` to access its intended `BackupDestination` (#1149)
+
+## 6.11.6 - 2020-10-19
+
+- add funding section
+
+## 6.11.4 - 2020-09-30
+
+- add Portuguese translations
+
+## 6.11.3 - 2020-09-29
+
+- add Japanse translations
+
+## 6.11.2 - 2020-09-07
+
+- add support for Laravel 8
+
+## 6.11.1 - 2020-06-17
+
+- reduce number of filesystem calls for Backup `exists` and `date` (#1084)
+
+## 6.11.0 - 2020-06-15
+
+- avoid unreadable folders errors, can be set from config (#1081)
+
+## 6.10.0 - 2020-05-20
+
+- add support for the `unix_socket` database config option (#1072)
+
+## 6.9.0 - 2020-04-20
+
+- add right-aligned numbers in console output
+- don't resolve notifications from the IoC container, as per Laravel docs
+
+## 6.8.1 - 2020-03-11
+
+- added support to set execution timeout (#1046)
+
+## 6.8.0 - 2020-03-02
+
+- add support for Laravel 7
+
 ## 6.7.8 - 2020-02-19
 
 - add Finnish localization (#1039)
@@ -37,7 +82,6 @@ All notable changes to `laravel-backup` will be documented in this file.
 ## 6.7.0 - 2019-10-16
 
 - handle database urls for database connections (#980)
->>>>>>> 1f3d26cad457083fc18889db96335c293b6290d4
 
 ## 6.6.1 - 2019-10-09
 

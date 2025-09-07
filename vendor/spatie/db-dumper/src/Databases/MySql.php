@@ -21,6 +21,9 @@ class MySql extends DbDumper
     protected $skipLockTables = false;
 
     /** @var bool */
+    protected $doNotUseColumnStatistics = false;
+
+    /** @var bool */
     protected $useQuick = false;
 
     /** @var string */
@@ -37,6 +40,9 @@ class MySql extends DbDumper
 
     /** @var bool */
     protected $createTables = true;
+
+    /** @var false|resource */
+    private $tempFileHandle;
 
     public function __construct()
     {
@@ -116,6 +122,16 @@ class MySql extends DbDumper
     /**
      * @return $this
      */
+    public function doNotUseColumnStatistics()
+    {
+        $this->doNotUseColumnStatistics = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function dontSkipLockTables()
     {
         $this->skipLockTables = false;
@@ -178,12 +194,9 @@ class MySql extends DbDumper
         $this->guardAgainstIncompleteCredentials();
 
         $tempFileHandle = tmpfile();
-        fwrite($tempFileHandle, $this->getContentsOfCredentialsFile());
-        $temporaryCredentialsFile = stream_get_meta_data($tempFileHandle)['uri'];
+        $this->setTempFileHandle($tempFileHandle);
 
-        $command = $this->getDumpCommand($dumpFile, $temporaryCredentialsFile);
-
-        $process = Process::fromShellCommandline($command, null, null, null, $this->timeout);
+        $process = $this->getProcess($dumpFile);
 
         $process->run();
 
@@ -250,6 +263,10 @@ class MySql extends DbDumper
             $command[] = '--skip-lock-tables';
         }
 
+        if ($this->doNotUseColumnStatistics) {
+            $command[] = '--column-statistics=0';
+        }
+
         if ($this->useQuick) {
             $command[] = '--quick';
         }
@@ -283,6 +300,10 @@ class MySql extends DbDumper
             $command[] = "--tables {$includeTables}";
         }
 
+        foreach ($this->extraOptionsAfterDbName as $extraOptionAfterDbName) {
+            $command[] = $extraOptionAfterDbName;
+        }
+
         return $this->echoToFile(implode(' ', $command), $dumpFile);
     }
 
@@ -292,14 +313,17 @@ class MySql extends DbDumper
             '[client]',
             "user = '{$this->userName}'",
             "password = '{$this->password}'",
-            "host = '{$this->host}'",
             "port = '{$this->port}'",
         ];
+
+        if ($this->socket === '') {
+            $contents[] = "host = '{$this->host}'";
+        }
 
         return implode(PHP_EOL, $contents);
     }
 
-    protected function guardAgainstIncompleteCredentials()
+    public function guardAgainstIncompleteCredentials()
     {
         foreach (['userName', 'host'] as $requiredProperty) {
             if (strlen($this->$requiredProperty) === 0) {
@@ -310,5 +334,35 @@ class MySql extends DbDumper
         if (strlen($this->dbName) === 0 && ! $this->allDatabasesWasSetAsExtraOption) {
             throw CannotStartDump::emptyParameter('dbName');
         }
+    }
+
+    /**
+     * @param string $dumpFile
+     * @return Process
+     */
+    public function getProcess(string $dumpFile): Process
+    {
+        fwrite($this->getTempFileHandle(), $this->getContentsOfCredentialsFile());
+        $temporaryCredentialsFile = stream_get_meta_data($this->getTempFileHandle())['uri'];
+
+        $command = $this->getDumpCommand($dumpFile, $temporaryCredentialsFile);
+
+        return Process::fromShellCommandline($command, null, null, null, $this->timeout);
+    }
+
+    /**
+     * @return false|resource
+     */
+    public function getTempFileHandle()
+    {
+        return $this->tempFileHandle;
+    }
+
+    /**
+     * @param false|resource $tempFileHandle
+     */
+    public function setTempFileHandle($tempFileHandle)
+    {
+        $this->tempFileHandle = $tempFileHandle;
     }
 }

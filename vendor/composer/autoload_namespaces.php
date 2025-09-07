@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Swagger' => array($vendorDir . '/thefrozenfire/swagger-client/src', $vendorDir . '/thefrozenfire/swagger/src'),
     'SimpleSoftwareIO\\QrCode\\' => array($vendorDir . '/simplesoftwareio/simple-qrcode/src'),
-    'Requests' => array($vendorDir . '/rmccue/requests/library'),
     'Rap2hpoutre\\LaravelLogViewer\\' => array($vendorDir . '/rap2hpoutre/laravel-log-viewer/src'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),

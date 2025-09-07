@@ -38,13 +38,6 @@ class Authenticate
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if($request->user() != null && $request->user()->status != 'active'){
-            // either abort with simple 403 access denied page
-            // abort(403, "You don't have permissions to access this area");
-
-            // OR force Logout and redirect back to the login page
-            return redirect('login')->with($this->auth->logout());
-        }
         $this->authenticate($request, $guards);
 
         return $next($request);

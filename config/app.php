@@ -184,7 +184,9 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
 
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-        Unicodeveloper\Paystack\PaystackServiceProvider::class
+        Unicodeveloper\Paystack\PaystackServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+
 
 
     ],

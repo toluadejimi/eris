@@ -140,12 +140,10 @@ trait AuthenticatesUsers
     {
         $session = $request->input('session'); // e.g. "2024_2025"
 
-        if (in_array($session, ['2023_2024', '2024_2025'])) {
-            // Store selected DB connection in Laravel session
+        if (in_array($session, ['eriscomn_2023_2024', 'eriscomn_2024_2025'])) {
             $connection = 'session_' . $session;
             session(['db_connection' => $connection]);
 
-            // Apply connection immediately so the user starts using correct DB
             \Config::set('database.default', $connection);
             \DB::purge($connection);
             \DB::reconnect($connection);

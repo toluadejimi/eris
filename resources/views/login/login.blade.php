@@ -76,8 +76,8 @@
 						<label class="label" for="password">Select Academic Session</label>
 						<select class="form-control" name="session"  required>
 							<option value="{{$current_session->session}}">{{$current_session->title}}</option>
-							<option value="2022_2023">2022/2023</option>
 							<option value="2023_2024">2023/2024</option>
+							<option value="2023_2024">2024/2025</option>
 {{--							<option value="2024_2025">2024/2025</option>--}}
 {{--							<option value="2025_2026">2025/2026</option>--}}
 {{--							<option value="2026_2027">2026/2027</option>--}}

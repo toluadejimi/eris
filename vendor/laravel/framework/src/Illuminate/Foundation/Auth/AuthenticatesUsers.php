@@ -138,9 +138,9 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        $session = $request->input('session'); 
+        $session = $request->input('session');
 
-        if (in_array($session, ['2022_2023', '2023_2024', '2024_2025', '2025_2026', '2025_2027', '2025_2028'])) {
+        if (in_array($session, ['2022_2023','2023_2024','2024_2025','2025_2026','2026_2027','2027_2028'])) {
             $connection = 'session_' . $session;
             session(['db_connection' => $connection]);
 

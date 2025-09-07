@@ -30,6 +30,7 @@ use App\Models\FeeMaster;
 use App\Models\GuardianDetail;
 use App\Models\LibraryMember;
 use App\Models\Meeting;
+use App\Models\Month;
 use App\Models\Note;
 use App\Models\Notice;
 use App\Models\OnlinePayment;
@@ -48,6 +49,7 @@ use App\Traits\LibraryScope;
 use App\Traits\PaymentGatewayScope;
 use App\Traits\StudentScopes;
 use App\User;
+use App\Vacation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -891,6 +893,7 @@ class HomeController extends CollegeBaseController
     public function current_exam()
     {
 
+
         $this->panel = "Current_Exam";
         $id = auth()->user()->hook_id;
         $data = [];
@@ -911,16 +914,13 @@ class HomeController extends CollegeBaseController
             ->orderBy('months_id', 'asc')
             ->get();
 
+
         //return view('user-student.exam.current-exam', compact('data', 'owing'));
         return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data'));
     }
 
     public function examSchedule(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null)
     {
-
-       
-
-
 
 
         $this->panel = "Exam Schedule";
@@ -1008,7 +1008,6 @@ class HomeController extends CollegeBaseController
 
 
 
-
         if($userid == null){
             $id = auth()->user()->hook_id;
         }else{
@@ -1029,6 +1028,7 @@ class HomeController extends CollegeBaseController
         $semester_id =  $semester;
         $student_id = Student::where('reg_no', $reg_id)
         ->first()->id;
+
 
 
 
@@ -1064,6 +1064,8 @@ class HomeController extends CollegeBaseController
             ['faculty_id', '=', $faculty],
             //['semesters_id', '=', $semester],
         ];
+
+
 
         $examSchedule = ExamSchedule::where($whereCondition)
             ->where('publish_status', 1)
@@ -1284,10 +1286,10 @@ class HomeController extends CollegeBaseController
 
         //dd($class, $term);
 
-
-        $vacation_day = Setting::where('id', 1)->first()->vacation_day;
-        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
-
+//
+//        $vacation_day = Setting::where('id', 1)->first()->vacation_day;
+//        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
+//
 
         $average = number_format($totalmarks / $total_count, 2);
         $get_student_reg_id = $reg_id;
@@ -1312,15 +1314,29 @@ class HomeController extends CollegeBaseController
         $data['faculty'] = $faculty;
         $data['semester'] = $semester->id;
 
+        $semster = Semester::where('id', $term)->first()->slug;
+        $get_month = Month::where('id', $month)->first()->title;
+        $vacation = Vacation::where('session', $year)->where('month', $get_month)->first();
+
+        if(!$vacation){
+
+            return 'Vacation data has not being set';
+
+        }
+
+
         $term = Semester::where('id', $semester->id)->first()->semester ?? null;
 
         if(Auth::user()->role_id != 6){
 
-            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'vacation_day', 'resumption_day','get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+            return view(parent::loadDataToView('user-student.exam.grading-sheet'), compact('data', 'term', 'year', 'vacation', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
         }
 
 
-        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'vacation_day', 'resumption_day',  'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
+
+
+
+        return view(parent::loadDataToView($this->view_path . '.exam.grading-sheet'), compact('data', 'vacation',  'term', 'year', 'get_year', 'average', 'totalmarks', 'student_image', 'term', 'class'));
     }
 
     /*assignment group*/

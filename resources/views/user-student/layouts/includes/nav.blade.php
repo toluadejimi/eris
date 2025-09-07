@@ -1,25 +1,37 @@
 <div id="navbar" class="navbar navbar-default    navbar-collapse       h-navbar ace-save-state">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <div class="navbar-header pull-left">
+
+            @php
+                use App\Models\Year;
+                $current_session = Year::where('status', 1)->first();
+
+            @endphp
+
+
+
             <a href="{{ route('home') }}" class="navbar-brand">
                 <small class="text-capitalize">
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     @if(isset($generalSetting->institute))
                         {{$generalSetting->institute}}
-                        <strong class="text-capitalize orange2"> ERIS IMS </strong>
+                        <strong class="text-capitalize orange2"> ERIS IMS | Session {{ $current_session->title }} </strong>
                     @else
-                        ERIS IMS
+                        ERIS IMS | Session {{ $current_session->title }}
                     @endif
                 </small>
             </a>
 
-            <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
+            <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse"
+                    data-target=".navbar-buttons,.navbar-menu">
                 <span class="sr-only">Toggle user menu</span>
 
-                            <img id="avatar" class="nav-user-photo" alt="" src="{{ asset('assets/images/avatars/book.png') }}" width="300px" />
+                <img id="avatar" class="nav-user-photo" alt="" src="{{ asset('assets/images/avatars/book.png') }}"
+                     width="300px"/>
             </button>
 
-            <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#sidebar">
+            <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse"
+                    data-target="#sidebar">
                 <span class="sr-only">Toggle sidebar</span>
 
                 <span class="icon-bar"></span>
@@ -35,9 +47,11 @@
                 <li class="light-blue dropdown-modal user-min">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         @if(isset($profileImageSrc) && $profileImageSrc !== null)
-                        <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/images/user/{{Auth::user()->profile_image}}" width="300px" />
+                            <img id="avatar" class="nav-user-photo" alt=""
+                                 src="{{url('')}}/images/user/{{Auth::user()->profile_image}}" width="300px"/>
                         @else
-                        <img id="avatar" class="nav-user-photo" alt="" src="{{url('')}}/assets/images/avatars/avatar2.png" width="300px" />
+                            <img id="avatar" class="nav-user-photo" alt=""
+                                 src="{{url('')}}/assets/images/avatars/avatar2.png" width="300px"/>
                         @endif
                         <span class="user-info">
                             <small>Welcome,</small>
@@ -50,7 +64,8 @@
                     <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         @if(isset($profileImageSrc) && $profileImageSrc !== '')
                             <li>
-                                <img id="avatar" class="img-responsive" alt="" src="{{ asset($profileImageSrc) }}" width="300px" />
+                                <img id="avatar" class="img-responsive" alt="" src="{{ asset($profileImageSrc) }}"
+                                     width="300px"/>
                             </li>
                         @endif
                         <li>
@@ -63,7 +78,8 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="#"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="ace-icon fa fa-power-off"></i>
                                 Logout
                             </a>

@@ -45,6 +45,9 @@ Route::post('update-reg-info', [AdjustResultController::class, 'reg_info']);
 
 
 Route::post('delete-exam', [AdjustResultController::class, 'delete_exam']);
+Route::get('vacation', [AdjustResultController::class, 'index_vacation']);
+Route::post('set-vacation', [AdjustResultController::class, 'set_vacation']);
+Route::post('delete-vacation', [AdjustResultController::class, 'delete_vacation']);
 
 
 Route::get('verify-payment', [HomeController::class, 'verify_payment']);

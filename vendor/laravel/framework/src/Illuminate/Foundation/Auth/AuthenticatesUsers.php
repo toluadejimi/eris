@@ -78,8 +78,20 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
+
+
+
+        $login = $request->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'reg_id';
+
+
+
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            [
+                $field => $login,
+                'password' => $request->input('password'),
+            ],
+            $request->filled('remember')
         );
     }
 
@@ -91,7 +103,14 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        $login = $request->input('login');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'student_id';
+
+        return [
+            $field => $login,
+            'password' => $request->input('password'),
+        ];
     }
 
     /**
@@ -119,7 +138,23 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        $session = $request->input('session'); // e.g. "2024_2025"
+
+        if (in_array($session, ['2023_2024', '2024_2025'])) {
+            // Store selected DB connection in Laravel session
+            $connection = 'session_' . $session;
+            session(['db_connection' => $connection]);
+
+            // Apply connection immediately so the user starts using correct DB
+            \Config::set('database.default', $connection);
+            \DB::purge($connection);
+            \DB::reconnect($connection);
+
+            \Log::info("✅ User {$user->id} switched to DB: {$connection}");
+
+            return redirect()->intended($this->redirectPath());
+
+        }
     }
 
     /**

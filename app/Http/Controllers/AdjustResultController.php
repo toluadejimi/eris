@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ExamMarkLedger;
 use App\Models\ParentDetail;
 use App\Models\Setting;
+use App\Vacation;
 use Illuminate\Http\Request;
 
 class AdjustResultController extends Controller
@@ -44,7 +45,37 @@ class AdjustResultController extends Controller
 
 
 
-    public function delete_exam(request $request)
+    public function delete_vacation(request $request)
+    {
+        Vacation::where('id', $request->delete)->delete();
+        return back()->with('messsage', 'Vacation Date deleted successfully');
+
+    }
+        public function set_vacation(request $request)
+    {
+
+        $vac = new Vacation();
+        $vac->session = $request->year;
+        $vac->month = $request->month;
+        $vac->vacation_day = $request->vacation_day;
+        $vac->resumption_day = $request->resumption_day;
+        $vac->save();
+
+        return back()->with('messsage', 'Vacation Date updated successfully');
+
+    }
+
+        public function index_vacation(request $request)
+    {
+
+        $data['vacations'] = Vacation::all();
+        return view('vacation', $data);
+
+
+    }
+
+
+        public function delete_exam(request $request)
     {
 
 

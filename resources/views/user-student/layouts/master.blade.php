@@ -13,6 +13,18 @@
     </script>
     @include('user-student.layouts.includes.menu')
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     @yield('content')
 
     @include('layouts.includes.footer')

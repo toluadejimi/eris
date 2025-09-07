@@ -1,3 +1,4 @@
+@php use App\Models\Year; @endphp
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
+	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
 	<link rel="stylesheet" href="css/style.css">
 
 	</head>
@@ -17,17 +17,44 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">ERIS PORTAL</h2>
-				</div>
+					<a href="/"><h2 class="heading-section">ERIS PORTAL</h2>
+				</a>
 			</div>
+
+
+
 			<div class="row justify-content-center">
+
 				<div class="col-md-12 col-lg-10">
+
+					@if ($message != null)
+						<div class="text-center alert alert-danger" role="alert">
+							<span>{{ $message }}</span>
+						</div>
+					@endif
+
+
 					<div class="wrap d-md-flex">
+
+
+
+
+
+
+
 						<div class="img" style="background-image: url(images/bg-1.jpg);">
 			      </div>
 						<div class="login-wrap p-4 p-md-5">
 			      	<div class="d-flex">
+
 			      		<div class="w-100">
+
+							@php
+								$current_session = Year::where('status', 1)->first();
+								$all_session = Year::where('status', 0)->get();
+
+							@endphp
+							<span class=" badge text-bg-success">Active Year:- {{$current_session->title}}</span>
 			      			<h3 class="mb-4">Sign In</h3>
 			      		</div>
 							
@@ -35,15 +62,28 @@
 				<form action="login" method="POST" class="signin-form">
                     @csrf
 			      		<div class="form-group mb-3">
-			      			<label class="label" for="name">EMAIL</label>
-			      			<input type="email" class="form-control"  name="email"  placeholder="Email" required>
+			      			<label class="label" for="name">STUDENT ID / EMAIL</label>
+			      			<input type="text" class="form-control"  name="login"  placeholder="Email or Student ID" required>
 			      		</div>
-
 
 		            <div class="form-group mb-3">
 		            	<label class="label" for="password">Password</label>
 		              <input type="password" class="form-control"  name="password"  placeholder="Password" required>
 		            </div>
+
+
+					<div class="form-group mb-3">
+						<label class="label" for="password">Select Academic Session</label>
+						<select class="form-control"  name="session"  required>
+							<option value="{{$current_session->session}}">{{$current_session->title}}</option>
+							@foreach($all_session as $data)
+								<option value="{{$data->session}}">{{$data->title}}</option>
+							@endforeach
+
+
+						</select>
+					</div>
+
 		            <div class="form-group">
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
 		            </div>

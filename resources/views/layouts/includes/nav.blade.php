@@ -1,14 +1,21 @@
 <div id="navbar" class="navbar navbar-default    navbar-collapse       h-navbar ace-save-state">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <div class="navbar-header pull-left">
+
+            @php
+                use App\Models\Year;
+                $current_session = Year::where('status', 1)->first();
+            @endphp
+
+
             <a href="{{ route('home') }}" class="navbar-brand">
                 <small class="text-capitalize">
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     @if(isset($generalSetting->institute))
                         {{$generalSetting->institute}}
-                    <strong class="text-capitalize orange2"> IMS </strong>
+                    <strong class="text-capitalize orange2"> | Session {{ $current_session->title }} </strong>
                     @else
-                        UNLIMITED Edu Firm
+                        ERIS IMS
                     @endif
                 </small>
             </a>

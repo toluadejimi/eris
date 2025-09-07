@@ -20,6 +20,8 @@
 
 
 
+
+
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/font-awesome/4.5.0/css/font-awesome.min.css') }}" />
@@ -99,3 +101,14 @@
 </head>
 {{--<header class="onlyprint">header text for print<!--Content Goes Here--></header>--}}
 
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif

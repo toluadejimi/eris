@@ -47,7 +47,7 @@ class AdjustResultController extends Controller
 
     public function delete_vacation(request $request)
     {
-        Vacation::where('id', $request->delete)->delete();
+        Vacation::where('id', $request->id)->delete();
         return back()->with('messsage', 'Vacation Date deleted successfully');
 
     }

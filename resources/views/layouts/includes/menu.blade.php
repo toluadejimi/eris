@@ -997,6 +997,22 @@
                         </a>
                         <b class="arrow"></b>
                     </li>
+
+                    <li class=" hover">
+                        <a href="vacation">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Vacation / Resumption
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+
+                    <li class=" ">
+                        <a href="/">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            Exam Score Adjuster
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
                 </ul>
             </li>
             @endif

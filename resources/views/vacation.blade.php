@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -27,9 +26,11 @@
 
             <div class="row">
 
+
+                <a href="/" class="btn btn-primary">Dashboard</a>
+
                 <div class="col">
                     <label>Year</label>
-
                     @php $year = Year::all() @endphp
                     @php $month = Month::all() @endphp
                     <select name="year" class="form-control my-2" type="text" value="">

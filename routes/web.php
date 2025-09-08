@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\LogViewerController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AdjustResultController;
@@ -28,6 +29,9 @@ Route::get('/clear', function() {
     return "creared";
     // return what you want
 });
+
+Route::get('/logs', [LogViewerController::class, 'index'])->name('logs.index');
+Route::post('/logs/clear', [LogViewerController::class, 'clear'])->name('logs.clear');
 
 
 Route::get('print-recepit', [HomeController::class, 'print_recepit']);

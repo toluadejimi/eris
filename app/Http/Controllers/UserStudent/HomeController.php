@@ -1005,9 +1005,6 @@ class HomeController extends CollegeBaseController
     {
 
 
-
-
-
         if($userid == null){
             $id = auth()->user()->hook_id;
         }else{

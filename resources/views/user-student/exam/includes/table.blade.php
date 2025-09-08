@@ -50,7 +50,7 @@
                                         &nbsp;&nbsp;&nbsp;
                                         <a href="{{ route('user-student.exam-score', ['year' => $exam->years_id,
                                         'month' => $exam->months_id, 'exam' => $exam->exams_id,'faculty' => $exam->faculty_id,
-                                         'semester' => $exam->semesters_id]) }}" title="AdmitCard" class="btn-primary btn-sm">
+                                         'semester' => $exam->semesters_id, 'user' => auth()->id() ]) }}" title="AdmitCard" class="btn-primary btn-sm">
                                             <i class="fa fa-line-chart" aria-hidden="true"></i> Click here to view result
                                         </a>
                                     </div>

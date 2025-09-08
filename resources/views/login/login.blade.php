@@ -101,11 +101,14 @@
 
 
 	<!-- Session Select Modal -->
+
 	<div class="modal fade" id="sessionModal" tabindex="-1" aria-labelledby="sessionModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content rounded-3 shadow">
 				<div class="modal-header">
 					<h5 class="modal-title" id="sessionModalLabel">Welcome to ERIS</h5>
+					<!-- Close button -->
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body text-center">
 					<p>Please select your academic session:</p>
@@ -116,27 +119,25 @@
 							<option value="2024_2025">2024/2025</option>
 							<option value="2023_2024">2023/2024</option>
 							<option value="2022_2023">2022/2023</option>
-						@else
-
 						@endif
-
 					</select>
 				</div>
 				<div class="modal-footer">
 					<button id="confirmSession" class="btn btn-primary">Continue</button>
+					<!-- Optional: cancel button -->
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
-			// Show modal on page load
-			var sessionModal = new bootstrap.Modal(document.getElementById('sessionModal'), {
-				backdrop: 'static', // Prevent closing by clicking outside
-				keyboard: false     // Prevent closing with Esc
+			let sessionModalElement = document.getElementById('sessionModal');
+			let sessionModal = new bootstrap.Modal(sessionModalElement, {
+				backdrop: 'static',
+				keyboard: false
 			});
 			sessionModal.show();
 
@@ -144,7 +145,6 @@
 			document.getElementById('confirmSession').addEventListener('click', function () {
 				var selected = document.getElementById('sessionSelect').value;
 				if (selected) {
-					// Convert session 2024_2025 → 2024-2025
 					var subdomain = selected.replace('_', '-');
 					var redirectUrl = "https://" + subdomain + ".eris.com.ng/public/login";
 					window.location.href = redirectUrl;
@@ -152,7 +152,15 @@
 					alert("Please select a session.");
 				}
 			});
+
+			// Force close modal when user clicks X or Close button
+			sessionModalElement.querySelectorAll('[data-bs-dismiss="modal"]').forEach(btn => {
+				btn.addEventListener('click', function () {
+					sessionModal.hide();
+				});
+			});
 		});
+
 	</script>
 
 

@@ -36,12 +36,6 @@
 
 					<div class="wrap d-md-flex">
 
-
-
-
-
-
-
 						<div class="img" style="background-image: url(images/bg-1.jpg);">
 			      </div>
 						<div class="login-wrap p-4 p-md-5">
@@ -72,20 +66,14 @@
 		            </div>
 
 
-					<div class="form-group mb-3">
-						<label class="label" for="password">Select Academic Session</label>
-						<select class="form-control" name="session"  required>
-							<option value="{{$current_session->session}}">{{$current_session->title}}</option>
-							<option value="2023_2024">2023/2024</option>
-							<option value="2024_2025">2024/2025</option>
+{{--					<div class="form-group mb-3">--}}
+{{--						<label class="label" for="password">Select Academic Session</label>--}}
+{{--						<select class="form-control" name="session"  required>--}}
+{{--							<option value="{{$current_session->session}}">{{$current_session->title}}</option>--}}
+{{--							<option value="2023_2024">2023/2024</option>--}}
 {{--							<option value="2024_2025">2024/2025</option>--}}
-{{--							<option value="2025_2026">2025/2026</option>--}}
-{{--							<option value="2026_2027">2026/2027</option>--}}
-{{--							<option value="2028_2029">2028/2029</option>--}}
-{{--							<option value="2030_2031">2030/2031</option>--}}
-{{--							<option value="2032_2033">2032/2033</option>--}}
-						</select>
-					</div>
+{{--						</select>--}}
+{{--					</div>--}}
 
 		            <div class="form-group">
 		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
@@ -109,6 +97,60 @@
 			</div>
 		</div>
 	</section>
+
+
+
+	<!-- Session Select Modal -->
+	<div class="modal fade" id="sessionModal" tabindex="-1" aria-labelledby="sessionModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content rounded-3 shadow">
+				<div class="modal-header">
+					<h5 class="modal-title" id="sessionModalLabel">Welcome to ERIS</h5>
+				</div>
+				<div class="modal-body text-center">
+					<p>Please select your academic session:</p>
+					<select id="sessionSelect" class="form-control">
+						<option value="">-- Select Session --</option>
+						<option value="{{$current_session->session}}">{{$current_session->title}}</option>
+						<option value="2023_2024">2023/2024</option>
+						<option value="2024_2025">2024/2025</option>
+						<option value="2025_2026">2025/2026</option>
+					</select>
+				</div>
+				<div class="modal-footer">
+					<button id="confirmSession" class="btn btn-primary">Continue</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			// Show modal on page load
+			var sessionModal = new bootstrap.Modal(document.getElementById('sessionModal'), {
+				backdrop: 'static', // Prevent closing by clicking outside
+				keyboard: false     // Prevent closing with Esc
+			});
+			sessionModal.show();
+
+			// Handle session selection
+			document.getElementById('confirmSession').addEventListener('click', function () {
+				var selected = document.getElementById('sessionSelect').value;
+				if (selected) {
+					// Convert session 2024_2025 → 2024-2025
+					var subdomain = selected.replace('_', '-');
+					var redirectUrl = "https://" + subdomain + ".eris.com.ng/public/login";
+					window.location.href = redirectUrl;
+				} else {
+					alert("Please select a session.");
+				}
+			});
+		});
+	</script>
+
+
 
 	<script src="js/jquery.min.js"></script>
   <script src="js/popper.js"></script>

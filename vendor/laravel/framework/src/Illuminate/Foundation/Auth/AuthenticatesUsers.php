@@ -79,12 +79,8 @@ trait AuthenticatesUsers
     protected function attemptLogin(Request $request)
     {
 
-
-
         $login = $request->input('login');
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'reg_id';
-
-
 
         return $this->guard()->attempt(
             [
@@ -141,18 +137,16 @@ trait AuthenticatesUsers
 //        $session = $request->input('session');
 //
 //        if (in_array($session, ['2022_2023','2023_2024','2024_2025','2025_2026','2026_2027','2027_2028'])) {
-//            $connection = 'session_' . $session;
-//            session(['db_connection' => $connection]);
+//            // Convert session "2024_2025" → "2024-2025"
+//            $subdomain = str_replace('_', '-', $session);
 //
-//            \Config::set('database.default', $connection);
-//            \DB::purge($connection);
-//            \DB::reconnect($connection);
+//            // Build redirect URL
+//            $url = "https://{$subdomain}.eris.com.ng/public/login";
 //
-//            \Log::info("✅ User {$user->id} switched to DB: {$connection}");
+//            \Log::info("✅ User {$user->id} redirected to {$url}");
 //
-//            return redirect()->intended($this->redirectPath());
-//
-//        }
+//            return redirect()->away($url);
+        
     }
 
     /**

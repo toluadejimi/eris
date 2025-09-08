@@ -1288,7 +1288,6 @@ class HomeController extends CollegeBaseController
 //        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
 //
 
-        $average = number_format($totalmarks / $total_count, 2);
         $get_student_reg_id = $reg_id;
         $student_image = Student::where('reg_no', $reg_id)->first()->student_image;
         //$student_image  = ExamMarkLedger::where('students_id', $get_student_id)

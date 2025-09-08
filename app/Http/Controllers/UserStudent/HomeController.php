@@ -1005,11 +1005,15 @@ class HomeController extends CollegeBaseController
     {
 
 
-        if($userid == null){
-            $id = auth()->user()->hook_id;
-        }else{
-            $id = $userid;
-        }
+//        if($userid == null){
+//            $id = auth()->user()->hook_id;
+//        }else{
+//            $id = $userid;
+//        }
+
+
+        $id = $userid;
+
 
         $data = [];
         $data['student'] = Student::find($id);

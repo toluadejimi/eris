@@ -1005,13 +1005,6 @@ class HomeController extends CollegeBaseController
     {
 
 
-//        if($userid == null){
-//            $id = auth()->user()->hook_id;
-//        }else{
-//            $id = $userid;
-//        }
-
-
         $id = $userid;
 
 
@@ -1257,33 +1250,36 @@ class HomeController extends CollegeBaseController
         $get_student_id = $id;
 
 
-
         $totalmarks = ExamMarkLedger::where('students_id', $id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->sum('total');
 
-
-
-        // $get_student_reg_id = User::where('id', Auth::id())->first()->reg_id;
-        // $get_student_id = Student::where('reg_no', $get_student_reg_id)->first()->id;
-        // $totalmarks = ExamMarkLedger::where('students_id', $get_student_id)
-        //     ->whereIn('exam_schedule_id', $exam_schedule_id)
-        //     ->sum('total');
-
-        $get_student_reg_id = $reg_id;
-        $get_student_id = $id;
         $total_count = ExamMarkLedger::where('students_id', $id)
             ->whereIn('exam_schedule_id', $exam_schedule_id)
             ->count('total');
 
-
-           //dd($totalmarks, $total_count);
-
-
         if ($total_count == 0) {
-            $totalmarks = 0;
-            $total_count = 0;
+            $average = 0;
+        } else {
+            $average = number_format($totalmarks / $total_count, 2);
         }
+
+
+
+//        $totalmarks = ExamMarkLedger::where('students_id', $id)
+//            ->whereIn('exam_schedule_id', $exam_schedule_id)
+//            ->sum('total');
+//
+//        $get_student_reg_id = $reg_id;
+//        $get_student_id = $id;
+//        $total_count = ExamMarkLedger::where('students_id', $id)
+//            ->whereIn('exam_schedule_id', $exam_schedule_id)
+//            ->count('total');
+//
+//        if ($total_count == 0) {
+//            $totalmarks = 0;
+//            $total_count = 0;
+//        }
 
         //dd($class, $term);
 

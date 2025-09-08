@@ -107,11 +107,20 @@
 			<div class="modal-content rounded-3 shadow">
 				<div class="modal-header">
 					<h5 class="modal-title" id="sessionModalLabel">Welcome to ERIS</h5>
+
+					@php
+						$current_session = Year::where('status', 1)->first();
+                        $all_session = Year::where('status', 0)->get();
+
+					@endphp
+
 					<!-- Close button -->
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body text-center">
 					<p>Please select your academic session:</p>
+					<span class=" badge text-bg-success mb-3">Active Year:- {{$current_session->title}}</span>
+
 					<select id="sessionSelect" class="form-control">
 						<option value="">-- Select Session --</option>
 						@if($current_session->session == "2025_2026")

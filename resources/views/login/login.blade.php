@@ -111,10 +111,15 @@
 					<p>Please select your academic session:</p>
 					<select id="sessionSelect" class="form-control">
 						<option value="">-- Select Session --</option>
-						<option value="{{$current_session->session}}">{{$current_session->title}}</option>
-						<option value="2023_2024">2023/2024</option>
-						<option value="2024_2025">2024/2025</option>
-						<option value="2025_2026">2025/2026</option>
+						@if($current_session->session == "2025_2026")
+							<option value="portal">Current session / {{$current_session->session}}</option>
+							<option value="2024_2025">2024/2025</option>
+							<option value="2023_2024">2023/2024</option>
+							<option value="2022_2023">2022/2023</option>
+						@else
+
+						@endif
+
 					</select>
 				</div>
 				<div class="modal-footer">

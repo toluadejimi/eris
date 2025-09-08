@@ -153,7 +153,7 @@
 
                     <td>
                         <div class="col-lg-12">
-                            <form method="POST" action="/public/delete-vacation?id={{ $data->id }}">
+                            <form method="POST" action="/public/delete-vacation?id={{ $user->id }}">
                                 @csrf
                                 @method('POST')
 

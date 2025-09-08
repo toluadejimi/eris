@@ -138,21 +138,21 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        $session = $request->input('session');
-
-        if (in_array($session, ['2022_2023','2023_2024','2024_2025','2025_2026','2026_2027','2027_2028'])) {
-            $connection = 'session_' . $session;
-            session(['db_connection' => $connection]);
-
-            \Config::set('database.default', $connection);
-            \DB::purge($connection);
-            \DB::reconnect($connection);
-
-            \Log::info("✅ User {$user->id} switched to DB: {$connection}");
-
-            return redirect()->intended($this->redirectPath());
-
-        }
+//        $session = $request->input('session');
+//
+//        if (in_array($session, ['2022_2023','2023_2024','2024_2025','2025_2026','2026_2027','2027_2028'])) {
+//            $connection = 'session_' . $session;
+//            session(['db_connection' => $connection]);
+//
+//            \Config::set('database.default', $connection);
+//            \DB::purge($connection);
+//            \DB::reconnect($connection);
+//
+//            \Log::info("✅ User {$user->id} switched to DB: {$connection}");
+//
+//            return redirect()->intended($this->redirectPath());
+//
+//        }
     }
 
     /**

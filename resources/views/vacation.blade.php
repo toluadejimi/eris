@@ -24,10 +24,12 @@
         <form action="set-vacation" method="post">
             @csrf
 
+            <a href="/" class="btn btn-primary my-5 btn-sm">Dashboard</a>
+
+
             <div class="row">
 
 
-                <a href="/" class="btn btn-primary">Dashboard</a>
 
                 <div class="col">
                     <label>Year</label>

@@ -128,7 +128,7 @@ Route::group(['prefix' => 'user-student/',          'as' => 'user-student',     
     Route::get('current_exams',                                                    ['as' => '.current_exam',               'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@current_exam']);
     Route::get('exam-schedule/{year}/{month}/{exam}/{faculty}/{semester}',         ['as' => '.exam-schedule',       'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@examSchedule']);
     Route::get('exam-admit-card/{year}/{month}/{exam}/{faculty}/{semester}',       ['as' => '.exam-admit-card',     'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@admitCard']);
-    Route::get('exam-score/{year}/{month}/{exam}/{faculty}/{semester}/{user}',            ['as' => '.exam-score',          'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@examScore']);
+    Route::get('exam-score/{year}/{month}/{exam}/{faculty}/{semester}',            ['as' => '.exam-score',          'middleware' => ['permission:student-exam'],     'uses' => 'HomeController@examScore']);
 
     Route::get('hostel',                ['as' => '.hostel',             'middleware' => ['permission:student-hostel'],         'uses' => 'HomeController@hostel']);
     Route::get('transport',             ['as' => '.transport',          'middleware' => ['permission:student-transport'],         'uses' => 'HomeController@transport']);

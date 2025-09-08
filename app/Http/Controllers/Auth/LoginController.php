@@ -56,9 +56,6 @@ class LoginController extends Controller
         $user = User::where($field, $login)->first();
 
 
-
-
-
         if (! $user) {
             $message = ucfirst($field) . ' not found.';
         } else {

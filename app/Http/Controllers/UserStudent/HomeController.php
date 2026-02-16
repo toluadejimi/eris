@@ -880,15 +880,18 @@ class HomeController extends CollegeBaseController
         $id = auth()->user()->hook_id;
         $data = [];
         $data['student'] = Student::find($id);
-        $semester = Semester::find($data['student']->semester);
-        $falculty = Faculty::find($data['student']->faculty);
-        $semester_id = $semester->id;
 
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->where('faculty_id', $falculty->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
+        // Only show exams where this student has at least one mark ledger (same logic as admin).
+        // Use faculty/semester from ledger's schedule - avoids "no result" when student moved class.
+        $data['schedule_exams'] = ExamSchedule::select('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
+            ->join('exam_mark_ledgers', function ($join) use ($id) {
+                $join->on('exam_mark_ledgers.exam_schedule_id', '=', 'exam_schedules.id')
+                    ->where('exam_mark_ledgers.students_id', '=', $id);
+            })
+            ->where('exam_schedules.publish_status', 1)
+            ->groupBy('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
+            ->orderBy('exam_schedules.years_id', 'desc')
+            ->orderBy('exam_schedules.months_id', 'asc')
             ->get();
 
         return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
@@ -901,13 +904,18 @@ class HomeController extends CollegeBaseController
         $data = [];
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
-        $falculty = Faculty::find($data['student']->faculty);
 
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->where('semesters_id', $semester->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
+        // Only show current-semester exams where this student has mark ledgers (same logic as admin).
+        $data['schedule_exams'] = ExamSchedule::select('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
+            ->join('exam_mark_ledgers', function ($join) use ($id) {
+                $join->on('exam_mark_ledgers.exam_schedule_id', '=', 'exam_schedules.id')
+                    ->where('exam_mark_ledgers.students_id', '=', $id);
+            })
+            ->where('exam_schedules.semesters_id', $semester->id)
+            ->where('exam_schedules.publish_status', 1)
+            ->groupBy('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
+            ->orderBy('exam_schedules.years_id', 'desc')
+            ->orderBy('exam_schedules.months_id', 'asc')
             ->get();
 
         return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data'));

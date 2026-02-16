@@ -528,11 +528,17 @@ class StudentController extends CollegeBaseController
         $semester_id = $semester->id;
         
         $user_id = $data['student']->id;
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status', DB::raw("$user_id as user_id"))
-            ->where('faculty_id', $falculty->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
+        // Only show exams where this student has at least one mark ledger (avoids "no result" for empty exams)
+        $data['schedule_exams'] = ExamSchedule::select('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status', DB::raw("$user_id as user_id"))
+            ->join('exam_mark_ledgers', function ($join) use ($user_id) {
+                $join->on('exam_mark_ledgers.exam_schedule_id', '=', 'exam_schedules.id')
+                    ->where('exam_mark_ledgers.students_id', '=', $user_id);
+            })
+            ->where('exam_schedules.faculty_id', $falculty->id)
+            ->where('exam_schedules.publish_status', 1)
+            ->groupBy('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
+            ->orderBy('exam_schedules.years_id', 'desc')
+            ->orderBy('exam_schedules.months_id', 'asc')
             ->get();
 
         $examAccess = \App\Models\StudentExamAccess::where('students_id', $user_id)->get()->keyBy(function ($r) {

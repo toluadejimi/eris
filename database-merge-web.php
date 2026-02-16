@@ -229,21 +229,31 @@ if ($execute) {
             echo "Exam schedules: " . count($schedMap) . "\n";
             
             $ledgerCount = 0;
+            $skippedNoStudent = 0;
+            $skippedNoSchedule = 0;
             $ledgers = $src->query("SELECT * FROM exam_mark_ledgers")->fetchAll(PDO::FETCH_ASSOC);
-            $lCols = array_diff(array_keys($ledgers[0] ?? []), ['id']);
+            $lCols = array_values(array_diff(array_keys($ledgers[0] ?? []), ['id']));
             $insLedger = $targetConn->prepare("INSERT INTO exam_mark_ledgers (" . implode(',', $lCols) . ") VALUES (" . implode(',', array_fill(0, count($lCols), '?')) . ")");
             foreach ($ledgers as $row) {
                 $sid = $studentMap[$row['students_id']] ?? null;
                 $eid = $schedMap[$row['exam_schedule_id']] ?? null;
+                if (!$sid) $skippedNoStudent++;
+                if (!$eid) $skippedNoSchedule++;
                 if ($sid && $eid) {
                     unset($row['id']);
                     $row['students_id'] = $sid;
                     $row['exam_schedule_id'] = $eid;
-                    $insLedger->execute(array_values($row));
+                    $vals = [];
+                    foreach ($lCols as $c) { $vals[] = $row[$c] ?? null; }
+                    $insLedger->execute($vals);
                     $ledgerCount++;
                 }
             }
-            echo "Exam mark ledgers: {$ledgerCount}\n";
+            echo "Exam mark ledgers: {$ledgerCount}";
+            if ($skippedNoStudent > 0 || $skippedNoSchedule > 0) {
+                echo " (skipped: {$skippedNoStudent} no student map, {$skippedNoSchedule} no schedule map)";
+            }
+            echo "\n";
             
         } catch (Exception $e) {
             echo "ERROR: " . $e->getMessage() . "\n";

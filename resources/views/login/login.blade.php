@@ -249,7 +249,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <small class="text-muted d-block mt-1">This selects which database the app will use</small>
+                    <small class="text-muted d-block mt-1">This selects which Academic Year the portal will use</small>
                     @error('session_key')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror

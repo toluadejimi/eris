@@ -80,20 +80,6 @@ Route::get('public-registration-success', [StudentPublicController::class, 'succ
 /*Auth Routes*/
 Auth::routes();
 
-/*Switch academic session / database (when logged in)*/
-Route::post('switch-year', function (\Illuminate\Http\Request $req) {
-    $req->validate(['session_key' => 'required|string']);
-    $conn = 'session_' . $req->session_key;
-    if (!array_key_exists($conn, config('database.connections'))) {
-        return redirect()->back()->with('error', 'Invalid session.');
-    }
-    $req->session()->put('db_connection', $conn);
-    \Illuminate\Support\Facades\Config::set('database.default', $conn);
-    \Illuminate\Support\Facades\DB::purge($conn);
-    \Illuminate\Support\Facades\DB::reconnect($conn);
-    return redirect()->back()->with('success', 'Session switched. Using database: ' . $req->session_key);
-})->name('switch.year')->middleware('auth');
-
 /*for Dashboard's*/
 Route::get('/',                             ['as' => 'home',   'uses' => 'HomeController@index']);
 
@@ -121,6 +107,8 @@ Route::post('user/bulk-action',             ['as' => 'user.bulk-action',      'm
 
 /*user-student route group*/
 Route::group(['prefix' => 'user-student/',          'as' => 'user-student',         'middleware' => ['role:student'],     'namespace' => 'UserStudent\\'], function () {
+
+    Route::get('switch-back-to-admin',               ['as' => '.switch-back',                                                       'uses' => 'HomeController@switchBackToAdmin']);
 
     Route::get('',                                  ['as' => '',                        'middleware' => ['permission:student-dashboard'],           'uses' => 'HomeController@index']);
 
@@ -305,6 +293,7 @@ Route::group(['prefix' => 'student/',                                   'as' => 
     Route::get('{id}/user/active',         ['as' => '.user.active',                  'middleware' => ['ability:super-admin,user-active'],                 'uses' => 'StudentController@activeUser']);
     Route::get('{id}/user/in-active',      ['as' => '.user.in-active',               'middleware' => ['ability:super-admin,user-in-active'],              'uses' => 'StudentController@inActiveUser']);
     Route::get('{id}/user/delete',         ['as' => '.user.delete',                  'middleware' => ['ability:super-admin,user-delete'],                 'uses' => 'StudentController@deleteUser']);
+    Route::get('{id}/login-as',            ['as' => '.login-as',                     'middleware' => ['ability:super-admin,student-view'],                  'uses' => 'StudentController@loginAsStudent']);
 
     /*Guardian login access*/
     Route::post('guardian/user/create',             ['as' => '.guardian.user.create',                  'middleware' => ['ability:super-admin,user-add'],                    'uses' => 'StudentController@createUser']);
@@ -821,6 +810,8 @@ Route::group(['prefix' => 'exam/',                                      'as' => 
     Route::get('mark-ledger/{exam}/{student}/in-active',                           ['as' => '.mark-ledger.in-active',           'middleware' => ['ability:super-admin,exam-mark-ledger-in-acctive'],            'uses' => 'ExamMarkLedgerController@inActive']);
     Route::post('mark-ledger/find-subject',                                        ['as' => '.mark-ledger.find-subject',                                                                                        'uses' => 'ExamMarkLedgerController@findSubject']);
     Route::post('mark-ledger/student-html',                                        ['as' => '.mark-ledger.student-html',                                                                                        'uses' => 'ExamMarkLedgerController@studentHtmlRow']);
+    Route::get('mark-ledger/import',                                               ['as' => '.mark-ledger.import',                 'middleware' => ['ability:super-admin,exam-mark-ledger-add'],                   'uses' => 'ExamMarkLedgerController@importResult']);
+    Route::post('mark-ledger/bulk/import',                                          ['as' => '.mark-ledger.bulk.import',            'middleware' => ['ability:super-admin,exam-mark-ledger-add'],                   'uses' => 'ExamMarkLedgerController@handleImportResult']);
 
 });
 

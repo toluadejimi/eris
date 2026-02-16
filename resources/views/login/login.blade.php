@@ -240,21 +240,6 @@
                     <label for="password">Password</label>
                 </div>
 
-                <div class="year-selector mb-3">
-                    <label for="session_key">Academic Session (Database)</label>
-                    <select class="form-select" id="session_key" name="session_key" required>
-                        @foreach($sessions ?? [] as $s)
-                            <option value="{{ $s }}" {{ old('session_key', $defaultSession ?? '') == $s ? 'selected' : '' }}>
-                                {{ str_replace('_', '/', $s) }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <small class="text-muted d-block mt-1">This selects which Academic Year the portal will use</small>
-                    @error('session_key')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <button type="submit" class="btn btn-primary btn-login">Sign In</button>
 
                 <div class="login-footer">

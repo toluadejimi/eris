@@ -1,0 +1,4 @@
+reg_no,ca_test1,ca_test2,assign,class_exe,affective,physc,obtain_mark_theory,total,obtain_mark_practical,absent_theory,absent_practical
+STU001,5,5,2,3,5,5,25,50,0,0,0
+STU002,4,6,2,4,6,4,28,54,0,0,0
+STU003,0,0,0,0,0,0,0,0,0,1,0

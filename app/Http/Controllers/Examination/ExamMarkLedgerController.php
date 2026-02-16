@@ -25,6 +25,7 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use URL;
 
 class ExamMarkLedgerController extends CollegeBaseController
@@ -416,6 +417,153 @@ class ExamMarkLedgerController extends CollegeBaseController
 
 
         return response()->json(json_encode($response));
+    }
+
+    /**
+     * Bulk upload result - show import form
+     */
+    public function importResult(Request $request)
+    {
+        $data = [];
+        $data['years'] = $this->activeYears();
+        $data['months'] = $this->activeMonths();
+        $data['exams'] = $this->activeExams();
+        $data['faculties'] = $this->activeFaculties();
+        $data['url'] = URL::current();
+        $data['filter_query'] = $this->filter_query;
+        return view(parent::loadDataToView($this->view_path . '.import'), compact('data'));
+    }
+
+    /**
+     * Process bulk upload CSV
+     */
+    public function handleImportResult(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|max:2048',
+            'years_id' => 'required|exists:years,id',
+            'months_id' => 'required|exists:months,id',
+            'exams_id' => 'required|exists:exams,id',
+            'faculty' => 'required|exists:faculties,id',
+            'semester_select' => 'required|exists:semesters,id',
+            'schedule_subject' => 'required|exists:subjects,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $examScheduleCondition = [
+            ['years_id', '=', $request->years_id],
+            ['months_id', '=', $request->months_id],
+            ['exams_id', '=', $request->exams_id],
+            ['faculty_id', '=', $request->faculty],
+            ['semesters_id', '=', $request->semester_select],
+            ['subjects_id', '=', $request->schedule_subject],
+        ];
+
+        $examSchedule = ExamSchedule::where($examScheduleCondition)->first();
+        if (!$examSchedule) {
+            return redirect()->back()->with($this->message_warning, 'Exam not scheduled for the selected criteria. Please schedule the exam first.')->withInput();
+        }
+
+        $file = $request->file('file');
+        $csvData = file_get_contents($file->getRealPath());
+        $csvData = preg_replace('/^\xEF\xBB\xBF/', '', $csvData); // Remove BOM if present
+        $rows = array_map('str_getcsv', explode("\n", $csvData));
+        $header = array_shift($rows);
+
+        if (!$header || !in_array('reg_no', $header)) {
+            return redirect()->back()->with($this->message_warning, 'Invalid CSV format. First row must contain header with "reg_no" column.')->withInput();
+        }
+
+        $imported = 0;
+        $skipped = 0;
+        $errors = [];
+
+        foreach ($rows as $rowIndex => $row) {
+            if (count($row) < count($header)) {
+                $row = array_pad($row, count($header), '');
+            }
+            if (count($row) != count($header)) {
+                continue;
+            }
+
+            $row = array_combine($header, $row);
+            $regNo = trim($row['reg_no'] ?? '');
+            if (empty($regNo)) {
+                continue;
+            }
+
+            $student = Student::where('reg_no', $regNo)
+                ->where('faculty', $request->faculty)
+                ->where('semester', $request->semester_select)
+                ->first();
+
+            if (!$student) {
+                $skipped++;
+                $errors[] = "Row " . ($rowIndex + 2) . ": Student with Reg.No. {$regNo} not found.";
+                continue;
+            }
+
+            $absentTheory = isset($row['absent_theory']) && in_array(strtoupper(trim($row['absent_theory'])), ['1', 'Y', 'YES', 'A', 'ABSENT']) ? 1 : 0;
+            $absentPractical = isset($row['absent_practical']) && in_array(strtoupper(trim($row['absent_practical'])), ['1', 'Y', 'YES', 'A', 'ABSENT']) ? 1 : 0;
+
+            $caTest1 = (int) ($row['ca_test1'] ?? 0);
+            $caTest2 = (int) ($row['ca_test2'] ?? 0);
+            $assign = (int) ($row['assign'] ?? 0);
+            $classExe = (int) ($row['class_exe'] ?? 0);
+            $affective = (int) ($row['affective'] ?? 0);
+            $physc = (int) ($row['physc'] ?? 0);
+            $obtainMarkTheory = (int) ($row['obtain_mark_theory'] ?? 0);
+            $obtainMarkPractical = (int) ($row['obtain_mark_practical'] ?? 0);
+            $total = isset($row['total']) && $row['total'] !== '' ? (int) $row['total'] : ($caTest1 + $caTest2 + $assign + $classExe + $affective + $physc + $obtainMarkTheory);
+
+            $ledgerWhere = [
+                ['exam_schedule_id', '=', $examSchedule->id],
+                ['students_id', '=', $student->id],
+            ];
+            $ledgerExist = ExamMarkLedger::where($ledgerWhere)->first();
+
+            $ledgerData = [
+                'exam_schedule_id' => $examSchedule->id,
+                'students_id' => $student->id,
+                'ca_test1' => $caTest1,
+                'ca_test2' => $caTest2,
+                'assign' => $assign,
+                'class_exe' => $classExe,
+                'affective' => $affective,
+                'physc' => $physc,
+                'obtain_mark_theory' => $obtainMarkTheory,
+                'obtain_mark_practical' => $obtainMarkPractical,
+                'total' => $total,
+                'absent_theory' => $absentTheory,
+                'absent_practical' => $absentPractical,
+                'sorting_order' => $imported + 1,
+            ];
+
+            if ($ledgerExist) {
+                $ledgerData['last_updated_by'] = auth()->id();
+                $ledgerExist->update($ledgerData);
+            } else {
+                $ledgerData['created_by'] = auth()->id();
+                ExamMarkLedger::create($ledgerData);
+            }
+            $imported++;
+        }
+
+        $message = "{$imported} result(s) imported successfully.";
+        if ($skipped > 0) {
+            $message .= " {$skipped} row(s) skipped.";
+        }
+        if (count($errors) > 0 && count($errors) <= 5) {
+            $message .= ' ' . implode(' ', array_slice($errors, 0, 5));
+        } elseif (count($errors) > 5) {
+            $message .= ' First 5 errors: ' . implode(' ', array_slice($errors, 0, 5));
+        }
+
+        $request->session()->flash($imported > 0 ? $this->message_success : $this->message_warning, $message);
+        return redirect()->route($this->base_route);
     }
 
 }

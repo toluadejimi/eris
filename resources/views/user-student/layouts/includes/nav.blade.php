@@ -67,6 +67,15 @@
                             <img class="img-responsive dropdown-avatar" alt="" src="{{ $avatarSrc }}"/>
                             <div class="dropdown-user-name">{{ auth()->user()->name ?? 'Student' }}</div>
                         </li>
+                        @if(session('impersonate_from'))
+                        <li>
+                            <a href="{{ route('user-student.switch-back') }}">
+                                <i class="ace-icon fa fa-arrow-left"></i>
+                                Switch back to admin
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        @endif
                         <li>
                             <a href="{{ route('user-student.profile') }}">
                                 <i class="ace-icon fa fa-user"></i>

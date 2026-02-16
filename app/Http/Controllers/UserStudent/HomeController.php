@@ -134,6 +134,20 @@ class HomeController extends CollegeBaseController
 
     }
 
+    /**
+     * Switch back to admin when impersonating a student
+     */
+    public function switchBackToAdmin(Request $request)
+    {
+        $adminId = $request->session()->get('impersonate_from');
+        if (!$adminId) {
+            return redirect()->route('user-student')->with('warning', 'Not impersonating.');
+        }
+        $request->session()->forget('impersonate_from');
+        Auth::loginUsingId($adminId);
+        return redirect()->route('home')->with('success', 'Switched back to admin account.');
+    }
+
     public function profile()
     {
         $this->panel = "Profile";
@@ -860,8 +874,6 @@ class HomeController extends CollegeBaseController
     /*Exam group*/
     public function exams(request $request)
     {
-
-
         $owing = null;
 
         $this->panel = "Exams";
@@ -872,30 +884,24 @@ class HomeController extends CollegeBaseController
         $falculty = Faculty::find($data['student']->faculty);
         $semester_id = $semester->id;
 
-
-       // dd($semester->id, Auth::id());
-
-        //$year = Year::where('active_status', 1)->first();
-        // if (!$year) {
-        //     return back();
-        //}
-
-
-
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->where('faculty_id', $falculty->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
-            ->get();
+        $currentYear = Year::where('active_status', 1)->first();
+        if (!$currentYear) {
+            $data['schedule_exams'] = collect();
+        } else {
+            $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+                ->where('faculty_id', $falculty->id)
+                ->where('years_id', $currentYear->id)
+                ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+                ->orderBy('years_id', 'desc')
+                ->orderBy('months_id', 'asc')
+                ->get();
+        }
 
         return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
     }
 
     public function current_exam()
     {
-
-
         $this->panel = "Current_Exam";
         $id = auth()->user()->hook_id;
         $data = [];
@@ -903,21 +909,19 @@ class HomeController extends CollegeBaseController
         $semester = Semester::find($data['student']->semester);
         $falculty = Faculty::find($data['student']->faculty);
 
-        //$year = Year::where('active_status', 1)->first();
-        // if (!$year) {
-        //     return back();
-        //}
+        $currentYear = Year::where('active_status', 1)->first();
+        if (!$currentYear) {
+            $data['schedule_exams'] = collect();
+        } else {
+            $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+                ->where('semesters_id', $semester->id)
+                ->where('years_id', $currentYear->id)
+                ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+                ->orderBy('years_id', 'desc')
+                ->orderBy('months_id', 'asc')
+                ->get();
+        }
 
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-        //->where([['semesters_id',$semester->id],['years_id',$year->id]])
-            ->where('semesters_id', $semester->id)
-            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-            ->orderBy('years_id', 'desc')
-            ->orderBy('months_id', 'asc')
-            ->get();
-
-
-        //return view('user-student.exam.current-exam', compact('data', 'owing'));
         return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data'));
     }
 

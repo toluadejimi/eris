@@ -447,10 +447,15 @@ class StudentController extends CollegeBaseController
 
 
         /*Exam Score*/
-        /*filter student with schedule subject markledger*/
+        /*filter student with schedule subject markledger - scoped to active year to avoid mixed results*/
+        $currentYearForMarks = Year::where('active_status', 1)->first();
         $subject = $data['student']->markLedger()
-            ->select( 'exam_schedule_id',  'obtain_mark_theory', 'ca_test1', 'ca_test2', 'assign', 'class_exe','affective','physc','total')
-            ->get();
+            ->select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.obtain_mark_theory', 'exam_mark_ledgers.ca_test1', 'exam_mark_ledgers.ca_test2', 'exam_mark_ledgers.assign', 'exam_mark_ledgers.class_exe', 'exam_mark_ledgers.affective', 'exam_mark_ledgers.physc', 'exam_mark_ledgers.total')
+            ->join('exam_schedules', 'exam_schedules.id', '=', 'exam_mark_ledgers.exam_schedule_id');
+        if ($currentYearForMarks) {
+            $subject->where('exam_schedules.years_id', $currentYearForMarks->id);
+        }
+        $subject = $subject->get();
 
 
             
@@ -516,7 +521,10 @@ class StudentController extends CollegeBaseController
 
         $data['student']->markLedger->subjects = $filteredSubject;
 
-        $data['examScore'] = $data['student']->markLedger->subjects->groupBY('months_id');
+        // Group by years_id and months_id to avoid mixing results from different academic years
+        $data['examScore'] = $data['student']->markLedger->subjects->groupBy(function ($item) {
+            return ($item->years_id ?? '') . '_' . ($item->months_id ?? '');
+        });
 
         $data['student'] = Student::find($id);
         $semester = Semester::find($data['student']->semester);
@@ -524,8 +532,13 @@ class StudentController extends CollegeBaseController
         $semester_id = $semester->id;
         
         $user_id = $data['student']->id;
-        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status',DB::raw("$user_id as user_id"))
-            ->where('faculty_id', $falculty->id)
+        $currentYear = Year::where('active_status', 1)->first();
+        $scheduleQuery = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status', DB::raw("$user_id as user_id"))
+            ->where('faculty_id', $falculty->id);
+        if ($currentYear) {
+            $scheduleQuery->where('years_id', $currentYear->id);
+        }
+        $data['schedule_exams'] = $scheduleQuery
             ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
             ->orderBy('years_id', 'desc')
             ->orderBy('months_id', 'asc')
@@ -1732,5 +1745,34 @@ class StudentController extends CollegeBaseController
         }
 
         abort(501);
+    }
+
+    /**
+     * Login as student - admin impersonation to view student portal
+     */
+    public function loginAsStudent(Request $request, $id)
+    {
+        if (!auth()->user()->hasRole(['super-admin', 'admin', 'college_admin'])) {
+            return redirect()->back()->with($this->message_warning, 'Unauthorized.');
+        }
+
+        $student = Student::find($id);
+        if (!$student) {
+            return redirect()->back()->with($this->message_warning, 'Student not found.');
+        }
+
+        $studentUser = User::where(['role_id' => 6, 'hook_id' => $student->id])->first();
+        if (!$studentUser) {
+            return redirect()->back()->with($this->message_warning, 'Student has no login account. Create login access first.');
+        }
+
+        if ($studentUser->status != 'active') {
+            return redirect()->back()->with($this->message_warning, 'Student login is locked. Unlock first to login as student.');
+        }
+
+        $request->session()->put('impersonate_from', auth()->id());
+        auth()->loginUsingId($studentUser->id);
+
+        return redirect()->route('user-student')->with($this->message_success, 'Logged in as ' . $student->first_name . ' ' . $student->last_name . '. Use "Switch back to admin" to return.');
     }
 }

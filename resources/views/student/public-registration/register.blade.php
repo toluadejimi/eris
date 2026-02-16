@@ -1,152 +1,228 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
-    <title>Checkout example · Bootstrap v5.0</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="{{ url('') }}/public/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Online admission application - New Scholar Registration">
+    <title>Online Application for Admission | {{ isset($generalSetting) && $generalSetting ? $generalSetting->institute : 'ERIS' }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .bd-placeholder-img {
+        :root {
+            --eris-primary: #0f766e;
+            --eris-primary-hover: #0d5d56;
+            --eris-accent: #14b8a6;
+            --eris-bg: #f0fdfa;
+            --eris-card: #ffffff;
+            --eris-text: #134e4a;
+            --eris-muted: #64748b;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #f0fdfa 0%, #e0f2f1 100%);
+            min-height: 100vh;
+            color: var(--eris-text);
+        }
+        .reg-header {
+            background: linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(15, 118, 110, 0.25);
+        }
+        .reg-header .logo {
+            max-width: 100px;
+            max-height: 90px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+        .reg-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+        }
+        .reg-header .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+        .reg-header .title-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        .req-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+        }
+        .req-card h6 {
+            color: var(--eris-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .req-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .req-card li {
+            padding: 0.35rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .req-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--eris-accent);
+            font-weight: 700;
+        }
+        .form-section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .form-section-card h4 {
+            color: var(--eris-primary);
+            font-weight: 700;
             font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--eris-accent);
         }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
+        .form-label { font-weight: 500; color: #334155; }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0.6rem 0.9rem;
         }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--eris-accent);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        .btn-submit:hover { background: #0d5d56; color: white; }
+        .alert { border-radius: 8px; }
+        .btn-scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--eris-primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(15,118,110,0.4);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .btn-scroll-top:hover { background: var(--eris-primary-hover); color: white; }
+        .btn-scroll-top.visible { display: flex; }
     </style>
-
-
-    <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet">
 </head>
+<body>
 
-<body class="bg-light">
+<div class="reg-header">
+    <div class="container">
+        @php
+            $logoUrl = (isset($generalSetting) && $generalSetting && isset($generalSetting->logo)) ? asset('images/setting/general/'.$generalSetting->logo) : null;
+        @endphp
+        @if($logoUrl)
+            <img class="logo" src="{{ $logoUrl }}" alt="{{ $generalSetting->institute ?? 'School' }}">
+        @else
+            <i class="fa fa-graduation-cap fa-3x mb-3" style="opacity:0.9"></i>
+        @endif
+        <h1>{{ isset($generalSetting) && $generalSetting ? ($generalSetting->institute ?? 'ERIS IMS') : 'ERIS IMS' }}</h1>
+        @if(isset($generalSetting) && $generalSetting && !empty($generalSetting->address))
+            <p class="subtitle mb-1">{{ $generalSetting->address }}</p>
+        @endif
+        @if(isset($generalSetting) && $generalSetting && (($generalSetting->phone ?? null) || ($generalSetting->email ?? null)))
+            <p class="subtitle small">
+                @if(!empty($generalSetting->phone)) {{ $generalSetting->phone }} @endif
+                @if(!empty($generalSetting->phone) && !empty($generalSetting->email)) · @endif
+                @if(!empty($generalSetting->email)) {{ $generalSetting->email }} @endif
+            </p>
+        @endif
+        <span class="title-badge">Online Application for Admission</span>
+    </div>
+</div>
 
+<div class="container py-4">
+    <div class="req-card">
+        <h6><i class="fa fa-list-check me-2"></i>Application Requirements</h6>
+        <ul>
+            <li>A completed application form</li>
+            <li>A copy of report from previous school</li>
+            <li>2 passport-size photographs</li>
+            <li>A copy of birth certificate or international equivalent</li>
+            <li>Immunization record</li>
+            <li>Completed medical form</li>
+        </ul>
+    </div>
 
-<div class="container">
-    <main>
-
-
-        <div class="py-5 text-center">
-
-
-            <img class="d-block mx-auto mb-4" src="https://portal.eris.com.ng/images/setting/general/6835.png"
-                 alt="" width="90" height="80">
-
-            <div class="text-center" style="font-family: 'futura', strong; font-size: 40px"> EMERALD ROYAL INT'L
-                SCHOOL
-            </div>
-            <div class="text-center" style="font-family: 'futura', normal; font-size: 18px"> Plot 437, Cadastral
-                Zone. 08-04, Mpape 2. Jikoko Layout by New Standard Hotel, Abuja. <br> 08111111964, 08111111965 <br>
-                info@eris.com.ng
-            </div>
-
-
-            <hr>
-
-
-            <div class="text-center mt" style="font-family: 'futura', bold; font-size: 22px"> ONLINE
-                APPLICATION FOR ADMISSION
-            </div>
-
-            <hr>
-
-
-        </div>
-
-
-        <div class="text-center" style="font-family: 'futura', normal; font-size: 12px">
-
-            <div class="col-sm-12 mt-3 mb-3">
-                <h6 class="">APPLICATION REQUIRMENTS</h6>
-            </div>
-
-
-            <ul>
-
-                <p>A Completed Application Form<br>
-                    A Copy of report from previous school<br>
-                    2 passport size photographs<br>
-                    A Copy of birth cerificate or international<br>
-                    Immunization Record<br>
-                    A Completed Emerald Royal International School Medical Form<br>
-                </p>
-
-
-            </ul>
-
-            <div>
+    <div>
                 @if ($message = Session::get('success'))
-                    <div class="alert alert-success alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-
-
                 @if ($message = Session::get('error'))
-                    <div class="alert alert-danger alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-
-
                 @if ($message = Session::get('warning'))
-                    <div class="alert alert-warning alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert alert-warning alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-
-
                 @if ($message = Session::get('info'))
-                    <div class="alert alert-info alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert alert-info alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
 
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         Please check the form below for errors
                     </div>
                 @endif
             </div>
+    </div>
 
+    <form enctype="multipart/form-data" method="POST" action="{{ url('register-now') }}" id="registration-form">
+        @csrf
 
-        </div>
-
-
-        <div class="row g-5">
-            <div class="col-md-7 col-lg-12">
-                <hr>
-                <form enctype="multipart/form-data" method="POST" action="register-now">
-                    @csrf
-
-                    <h4 class="mb-3">SCHOLAR'S
-                        INFORMATION</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-user-graduate me-2"></i>Scholar's Information</h4>
 
                     <div class="row g-3">
 
@@ -257,9 +333,10 @@
                     </div>
 
 
-                    <hr>
-                    <h4 class="mb-3 mt-3">EDUCATION
-                        INFORMATION</h4>
+        </div>
+
+        <div class="form-section-card">
+            <h4><i class="fa fa-book me-2"></i>Education Information</h4>
 
 
                     <div class="row g-3 mt-3">
@@ -318,9 +395,10 @@
                     </div>
 
 
-                    <hr class="my-4">
+        </div>
 
-                    <h4 class="">LAST SCHOOL ATTENDED</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-school me-2"></i>Last School Attended</h4>
 
 
                     <div class="row">
@@ -374,10 +452,10 @@
 
                     </div>
 
-                    <hr class="my-4">
+        </div>
 
-
-                    <h4 class="">SIBLINGS ATTTENDING EMERALD ROYAL INT. SCHOOL</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-users me-2"></i>Siblings Attending {{ isset($generalSetting) && $generalSetting ? ($generalSetting->institute ?? 'School') : 'School' }}</h4>
 
 
                     <div class="row g-3 mt-3">
@@ -456,9 +534,10 @@
 
                     </div>
 
-                    <hr class="my-4">
+        </div>
 
-                    <h4 class=""> OTHER DETAILS</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-info-circle me-2"></i>Other Details</h4>
 
                     <div class="row g-3 mt-3">
 
@@ -498,10 +577,10 @@
                     </div>
 
 
-                    <hr class="my-4">
+        </div>
 
-
-                    <h4 class=""> FATHER'S DETAIL</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-user me-2"></i>Father's Detail</h4>
 
                     <div class="row g-3 mt-3">
 
@@ -578,10 +657,10 @@
                     </div>
 
 
-                    <hr class="my-4">
+        </div>
 
-
-                    <h4 class=""> MOTHER'S DETAIL</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-user me-2"></i>Mother's Detail</h4>
 
                     <div class="row g-3 mt-3">
 
@@ -658,10 +737,10 @@
                     </div>
 
 
-                    <hr class="my-4">
+        </div>
 
-
-                    <h4 class=""> GUARDIAN'S DETAIL</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-user-shield me-2"></i>Guardian's Detail</h4>
 
                     <div class="control-group col-sm-12 mb-3">
                         <div class="radio">
@@ -768,10 +847,10 @@
                     </div>
 
 
-                    <hr class="my-4">
+        </div>
 
-
-                    <h4 class=""> CHILD'S INFORMATION</h4>
+        <div class="form-section-card">
+            <h4><i class="fa fa-child me-2"></i>Child's Information & Emergency Contacts</h4>
 
 
                     <div class="col-sm-12 mt-2 mb-3">
@@ -987,16 +1066,11 @@
                     </div>
 
 
-                    <hr>
-                    <div class="col-sm-12 mt-2 mb-3">
-                        <h4 class="">WEBSITE AND PUBLICITY PHOTOGRAPH PERMISSION</h4>
-                    </div>
+        </div>
 
-
-                    <div class="col-sm-12 mt-5 mb-3">
-                        <h6 class="">MY Child Photograph on Emerald Royal International School website or
-                            any other display.</h6>
-                    </div>
+        <div class="form-section-card">
+            <h4><i class="fa fa-camera me-2"></i>Website & Publicity Photograph Permission</h4>
+            <p class="text-muted small mb-3">My child's photograph on {{ isset($generalSetting) && $generalSetting ? ($generalSetting->institute ?? 'school') : 'school' }} website or any other display.</p>
 
 
                     <div class="row g-3 mt-3">
@@ -1037,14 +1111,11 @@
                     </div>
 
 
-                    <hr class="hr-8">
-                    <div class="col-sm-12 mt-2 mb-3">
-                        <h4 class="">MEDICAL INFORMATION</h4>
-                        <h6 class="">Please complete all section of the form and notify the school
-                            immediately of any change of
-                            Phone Numbers, Address and Medical Status</h6>
+        </div>
 
-                    </div>
+        <div class="form-section-card">
+            <h4><i class="fa fa-heart-pulse me-2"></i>Medical Information</h4>
+            <p class="text-muted small mb-3">Please complete all sections and notify the school immediately of any change to phone numbers, address, or medical status.</p>
 
 
                     <div class="row g-3 mt-3">
@@ -1350,27 +1421,32 @@
                     </div>
 
 
-                    <hr>
-
-                    <div class="row g-3 mt-3 center">
-                        <div class="col-sm-6 center">
-                            <button class="w-10 btn btn-success btn-lg btn-block" type="submit">Register
-                                Scholar
-                            </button>
-                        </div>
-
-                        <div class="col-sm-6 center">
-                            <a class="btn btn-primary w-10 btn btn-secondary btn-lg btn-block" href="login"
-                               role="button">Login to portal</a>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
         </div>
 
+        <div class="form-section-card">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <button class="btn btn-submit btn-lg w-100" type="submit">
+                        <i class="fa fa-paper-plane me-2"></i>Register Scholar
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-outline-secondary btn-lg w-100" href="{{ url('login') }}">
+                        <i class="fa fa-sign-in me-2"></i>Login to Portal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
-    </main>
+<div class="text-center py-4 text-muted small">
+    <a href="{{ url('login') }}" class="text-decoration-none">← Back to Sign In</a>
+</div>
+
+<button type="button" class="btn-scroll-top" id="btnScrollTop" title="Back to top">
+    <i class="fa fa-arrow-up"></i>
+</button>
 
 
     <script src="{{ asset('assets/js/select2.min.js') }}"></script>
@@ -1511,11 +1587,7 @@
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-
-    <script src="form-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     <!-- basic scripts -->
     <!--[if !IE]> -->
@@ -1539,10 +1611,6 @@
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
 
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
-</div><!-- /.main-container -->
 
 <!-- page specific plugin scripts -->
 <!-- ace scripts -->
@@ -1553,12 +1621,23 @@
 <script type="text/javascript"></script>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('btnScrollTop');
+        if (btn) {
+            window.addEventListener('scroll', function() {
+                btn.classList.toggle('visible', window.scrollY > 400);
+            });
+            btn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    });
+</script>
 {{-- PReloader JS --}}
 <script>
     $(document).ready(function () {
-        jQuery('#overlay').fadeOut("fast");
-
-
+        if (typeof jQuery !== 'undefined') jQuery('#overlay').fadeOut("fast");
         $('#add-student').click(function () {
             var password = $('input[name="password"]').val();
             var confirmPassword = $('input[name="confirmPassword"]').val();

@@ -62,6 +62,9 @@
     {{--edit--}}
     <div class="col-xs-12">
         <h4 class="header large lighter blue"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Edit Student Login Access</h4>
+        @if($data['student_login']->status == 'active')
+        <a href="{{ route('student.login-as', $data['student']->id) }}" title="Login as Student" class="btn-primary btn-sm"><i class="fa fa-sign-in" aria-hidden="true"></i> Login as Student</a>
+        @endif
         <a href="{{ route('student.user.active', ['id' => $data['student_login']->id]) }}" title="Active" class="btn-success btn-sm"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Un-Lock User</a>
         <a href="{{ route('student.user.in-active', ['id' => $data['student_login']->id]) }}" title="In-Active" class="btn-warning btn-sm"><i class="fa fa-lock" aria-hidden="true"></i> Lock User</a>
         <a href="{{ route('student.user.delete', ['id' => $data['student_login']->id]) }}" title="Delete" class="btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete User</a>

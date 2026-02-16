@@ -241,6 +241,7 @@
     </script>
     <!-- inline scripts related to this page -->
     @include('includes.scripts.dataTable_scripts')
+    @include('includes.scripts.exam_table_sort')
     @include('includes.scripts.delete_confirm')
     @include('includes.scripts.bulkaction_confirm')
     {{--@include('includes.scripts.paymentgateway.khalti')--}}

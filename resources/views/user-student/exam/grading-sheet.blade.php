@@ -46,6 +46,9 @@
         .marks-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 10px; }
         .marks-table th, .marks-table td { border: 1px solid #cbd5e1; padding: 6px 4px; text-align: center; }
         .marks-table th { background: #0f766e; color: white; font-weight: 600; font-size: 10px; }
+        .marks-table th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+        .marks-table th.sortable:hover { background: #0d5c56; }
+        .marks-table th.sortable::after { content: ' \2195'; opacity: 0.5; font-size: 10px; }
         .marks-table td:nth-child(2) { text-align: left; padding-left: 8px; font-size: 11px; }
         .marks-table tbody tr:nth-child(even) { background: #f8fafc; }
         .marks-table tfoot td { background: #e2e8f0; font-weight: 600; padding: 8px 10px; font-size: 11px; }
@@ -115,11 +118,11 @@
         </div>
 
         {{-- Marks Table --}}
-        <table class="marks-table">
+        <table class="marks-table" id="grading-marks-table">
             <thead>
                 <tr>
                     <th style="width:24px">SN</th>
-                    <th>SUBJECT</th>
+                    <th class="sortable" data-sort="text">SUBJECT</th>
                     <th style="width:42px">1ST CA<br>(15)</th>
                     <th style="width:42px">2ND CA<br>(15)</th>
                     <th style="width:38px">ASSIGN<br>(4)</th>
@@ -127,7 +130,7 @@
                     <th style="width:40px">AFFECT<br>(10)</th>
                     <th style="width:42px">PSYCH<br>(10)</th>
                     <th style="width:38px">EXAM<br>(40)</th>
-                    <th style="width:42px">TOTAL<br>(100)</th>
+                    <th style="width:42px" class="sortable" data-sort="num">TOTAL<br>(100)</th>
                     <th style="width:60px">REMARKS</th>
                 </tr>
             </thead>
@@ -203,5 +206,37 @@
     </div>
     @endforeach
 @endif
+    <script>
+    (function() {
+        document.querySelectorAll('.marks-table').forEach(function(table) {
+            var ths = table.querySelectorAll('thead th.sortable');
+            ths.forEach(function(th, idx) {
+                th.addEventListener('click', function() {
+                    var col = [].indexOf.call(th.parentNode.children, th);
+                    var tbody = table.querySelector('tbody');
+                    if (!tbody) return;
+                    var rows = [].slice.call(tbody.querySelectorAll('tr'));
+                    var asc = th.getAttribute('data-dir') !== 'asc';
+                    th.setAttribute('data-dir', asc ? 'asc' : 'desc');
+                    var type = th.getAttribute('data-sort') || 'text';
+                    rows.sort(function(a, b) {
+                        var ac = a.cells[col] ? a.cells[col].textContent.trim() : '';
+                        var bc = b.cells[col] ? b.cells[col].textContent.trim() : '';
+                        if (type === 'num') {
+                            ac = parseFloat(ac) || 0;
+                            bc = parseFloat(bc) || 0;
+                            return asc ? ac - bc : bc - ac;
+                        }
+                        ac = (ac + '').toLowerCase();
+                        bc = (bc + '').toLowerCase();
+                        var cmp = ac.localeCompare(bc);
+                        return asc ? cmp : -cmp;
+                    });
+                    rows.forEach(function(r) { tbody.appendChild(r); });
+                });
+            });
+        });
+    })();
+    </script>
 </body>
 </html>

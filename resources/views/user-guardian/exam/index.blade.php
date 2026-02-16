@@ -42,6 +42,6 @@
 @endsection
 
 @section('js')
-    <!-- page specific plugin scripts -->
-    @include('includes.scripts.dataTable_scripts')
+    @include('includes.scripts.dataTable_assets')
+    @include('includes.scripts.exam_table_sort')
 @endsection

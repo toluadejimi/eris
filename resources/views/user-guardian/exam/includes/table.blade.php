@@ -2,21 +2,17 @@
 <div class="clearfix">
     <span class="pull-right tableTools-container"></span>
 </div>
-{{--<div class="table-header">
-    {{ $panel }}  Record list on table. Filter {{ $panel }} using the filter.
-</div>--}}
-<!-- div.table-responsive -->
 <div class="table-responsive">
-        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>S.N.</th>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th>Exam</th>
-                    <th></th>
-                </tr>
-            </thead>
+    <table id="exam-schedule-table" class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>S.N.</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Exam</th>
+                <th></th>
+            </tr>
+        </thead>
             <tbody>
                 @if (isset($data['schedule_exams']) && $data['schedule_exams']->count() > 0)
                     @php($i=1)

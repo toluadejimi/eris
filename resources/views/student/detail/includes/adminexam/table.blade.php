@@ -10,8 +10,11 @@
     .exam-toggle-cell { white-space: nowrap; }
 </style>
 
+<div class="clearfix">
+    <span class="pull-right tableTools-container"></span>
+</div>
 <div class="table-responsive">
-    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+    <table id="exam-schedule-table" class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
                 <th>S.N.</th>

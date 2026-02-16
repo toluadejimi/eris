@@ -529,12 +529,12 @@ class StudentController extends CollegeBaseController
         
         $user_id = $data['student']->id;
         // Only show exams where this student has at least one mark ledger (avoids "no result" for empty exams)
+        // Use faculty from ledger's schedule, not student's current faculty (students move between classes/years)
         $data['schedule_exams'] = ExamSchedule::select('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status', DB::raw("$user_id as user_id"))
             ->join('exam_mark_ledgers', function ($join) use ($user_id) {
                 $join->on('exam_mark_ledgers.exam_schedule_id', '=', 'exam_schedules.id')
                     ->where('exam_mark_ledgers.students_id', '=', $user_id);
             })
-            ->where('exam_schedules.faculty_id', $falculty->id)
             ->where('exam_schedules.publish_status', 1)
             ->groupBy('exam_schedules.years_id', 'exam_schedules.months_id', 'exam_schedules.exams_id', 'exam_schedules.faculty_id', 'exam_schedules.semesters_id', 'exam_schedules.publish_status', 'exam_schedules.status')
             ->orderBy('exam_schedules.years_id', 'desc')

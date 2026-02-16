@@ -70,7 +70,7 @@ class AdjustResultController extends Controller
     {
 
         Setting::where('id', 1)->update(['resumption_day' => $request->resumption_day]);
-        return back()->with('messsage', 'Resumption Date updated successfully');
+        return back()->with('message', 'Resumption Date updated successfully');
 
     }
 
@@ -78,7 +78,7 @@ class AdjustResultController extends Controller
     {
 
         Setting::where('id', 1)->update(['vacation_day' => $request->vacation_day]);
-        return back()->with('messsage', 'Vacation Date updated successfully');
+        return back()->with('message', 'Vacation Date updated successfully');
 
 
     }
@@ -87,7 +87,7 @@ class AdjustResultController extends Controller
     public function delete_vacation(request $request)
     {
         Vacation::where('id', $request->id)->delete();
-        return back()->with('messsage', 'Vacation Date deleted successfully');
+        return back()->with('message', 'Vacation Date deleted successfully');
 
     }
 
@@ -101,7 +101,7 @@ class AdjustResultController extends Controller
         $vac->resumption_day = $request->resumption_day;
         $vac->save();
 
-        return back()->with('messsage', 'Vacation Date updated successfully');
+        return back()->with('message', 'Vacation Date updated successfully');
 
     }
 

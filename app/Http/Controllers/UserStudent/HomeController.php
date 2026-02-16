@@ -1326,12 +1326,13 @@ class HomeController extends CollegeBaseController
 
         $semster = Semester::where('id', $term)->first()->slug;
         $get_month = Month::where('id', $month)->first()->title;
-        $vacation = Vacation::where('session', $year)->where('month', $get_month)->first();
+        $yearTitle = Year::where('id', $year)->first()->title ?? (string) $year;
+        $vacation = Vacation::where('session', $yearTitle)->where('month', $get_month)->first();
 
         if(!$vacation){
-
-            return 'Vacation data has not being set';
-
+            $vacation = new \stdClass();
+            $vacation->vacation_day = '—';
+            $vacation->resumption_day = '—';
         }
 
 

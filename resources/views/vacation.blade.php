@@ -33,30 +33,22 @@
 
                 <div class="col">
                     <label>Year</label>
-                    @php $year = Year::all() @endphp
-                    @php $month = Month::all() @endphp
-                    <select name="year" class="form-control my-2" type="text" value="">
-
-                        <option value=" ">Select Year</option>
-                        <option value="2022/2023">2022/2023</option>
-                        <option value="2022/2023">2023/2024</option>
-                        <option value="2024/2025">2024/2025</option>
-                        <option value="2025/2026">2025/2026</option>
-                        <option value="2026/2027">2026/2027</option>
-                        <option value="2028/2029">2028/2029</option>
-                        <option value="2030/2031">2030/2031</option>
-                        <option value="2032/2033">2032/2033</option>
-
+                    @php $years = \App\Models\Year::orderBy('id', 'desc')->get(); @endphp
+                    @php $months = Month::all(); @endphp
+                    <select name="year" class="form-control my-2" required>
+                        <option value="">Select Year</option>
+                        @foreach($years as $y)
+                            <option value="{{ $y->title }}">{{ $y->title }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col">
                     <label>Month</label>
-                    <select name="month" class="form-control my-2" type="text" value="">
-                        <option value=" ">Select Month</option>
-                        @foreach($month as $data)
-                            <option value="{{$data->title}} ">{{$data->title}}</option>
+                    <select name="month" class="form-control my-2" required>
+                        <option value="">Select Month</option>
+                        @foreach($months as $m)
+                            <option value="{{ $m->title }}">{{ $m->title }}</option>
                         @endforeach
-
                     </select>
                 </div>
                 <div class="col">
@@ -156,7 +148,7 @@
 
                     <td>
                         <div class="col-lg-12">
-                            <form method="POST" action="/public/delete-vacation?id={{ $user->id }}">
+                            <form method="POST" action="{{ url('delete-vacation') }}?id={{ $user->id }}">
                                 @csrf
                                 @method('POST')
 

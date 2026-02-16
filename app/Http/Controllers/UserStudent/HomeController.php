@@ -884,18 +884,12 @@ class HomeController extends CollegeBaseController
         $falculty = Faculty::find($data['student']->faculty);
         $semester_id = $semester->id;
 
-        $currentYear = Year::where('active_status', 1)->first();
-        if (!$currentYear) {
-            $data['schedule_exams'] = collect();
-        } else {
-            $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-                ->where('faculty_id', $falculty->id)
-                ->where('years_id', $currentYear->id)
-                ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-                ->orderBy('years_id', 'desc')
-                ->orderBy('months_id', 'asc')
-                ->get();
-        }
+        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+            ->where('faculty_id', $falculty->id)
+            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+            ->orderBy('years_id', 'desc')
+            ->orderBy('months_id', 'asc')
+            ->get();
 
         return view(parent::loadDataToView($this->view_path . '.exam.index'), compact('data', 'owing'));
     }
@@ -909,18 +903,12 @@ class HomeController extends CollegeBaseController
         $semester = Semester::find($data['student']->semester);
         $falculty = Faculty::find($data['student']->faculty);
 
-        $currentYear = Year::where('active_status', 1)->first();
-        if (!$currentYear) {
-            $data['schedule_exams'] = collect();
-        } else {
-            $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-                ->where('semesters_id', $semester->id)
-                ->where('years_id', $currentYear->id)
-                ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-                ->orderBy('years_id', 'desc')
-                ->orderBy('months_id', 'asc')
-                ->get();
-        }
+        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+            ->where('semesters_id', $semester->id)
+            ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
+            ->orderBy('years_id', 'desc')
+            ->orderBy('months_id', 'asc')
+            ->get();
 
         return view(parent::loadDataToView($this->view_path . '.exam.current-exam'), compact('data'));
     }

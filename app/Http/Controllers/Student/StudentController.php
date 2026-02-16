@@ -447,15 +447,11 @@ class StudentController extends CollegeBaseController
 
 
         /*Exam Score*/
-        /*filter student with schedule subject markledger - scoped to active year to avoid mixed results*/
-        $currentYearForMarks = Year::where('active_status', 1)->first();
+        /*filter student with schedule subject markledger - show all years*/
         $subject = $data['student']->markLedger()
             ->select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.obtain_mark_theory', 'exam_mark_ledgers.ca_test1', 'exam_mark_ledgers.ca_test2', 'exam_mark_ledgers.assign', 'exam_mark_ledgers.class_exe', 'exam_mark_ledgers.affective', 'exam_mark_ledgers.physc', 'exam_mark_ledgers.total')
-            ->join('exam_schedules', 'exam_schedules.id', '=', 'exam_mark_ledgers.exam_schedule_id');
-        if ($currentYearForMarks) {
-            $subject->where('exam_schedules.years_id', $currentYearForMarks->id);
-        }
-        $subject = $subject->get();
+            ->join('exam_schedules', 'exam_schedules.id', '=', 'exam_mark_ledgers.exam_schedule_id')
+            ->get();
 
 
             
@@ -532,13 +528,8 @@ class StudentController extends CollegeBaseController
         $semester_id = $semester->id;
         
         $user_id = $data['student']->id;
-        $currentYear = Year::where('active_status', 1)->first();
-        $scheduleQuery = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status', DB::raw("$user_id as user_id"))
-            ->where('faculty_id', $falculty->id);
-        if ($currentYear) {
-            $scheduleQuery->where('years_id', $currentYear->id);
-        }
-        $data['schedule_exams'] = $scheduleQuery
+        $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status', DB::raw("$user_id as user_id"))
+            ->where('faculty_id', $falculty->id)
             ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
             ->orderBy('years_id', 'desc')
             ->orderBy('months_id', 'asc')

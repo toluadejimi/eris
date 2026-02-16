@@ -481,13 +481,11 @@ class HomeController extends CollegeBaseController
         $data['student_id'] = $id;
         $data['student'] = Student::find($id);
 
-        $currentYear = Year::where('active_status', 1)->first();
         $facultyId = $data['student']->faculty ?? null;
-        if (!$currentYear || !$facultyId) {
+        if (!$facultyId) {
             $data['schedule_exams'] = collect();
         } else {
             $data['schedule_exams'] = ExamSchedule::select('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
-                ->where('years_id', $currentYear->id)
                 ->where('faculty_id', $facultyId)
                 ->groupBy('years_id', 'months_id', 'exams_id', 'faculty_id', 'semesters_id', 'publish_status', 'status')
                 ->orderBy('years_id', 'desc')

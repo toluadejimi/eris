@@ -995,6 +995,21 @@ class HomeController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path . '.exam.admit-card'), compact('data'));
     }
 
+    /**
+     * Determine redirect target when exam score cannot be shown.
+     * Students get 403 when redirected to admin student.view, so send them to their own exam list.
+     */
+    protected function examScoreRedirectTarget($userid, $studentId)
+    {
+        if ($userid !== null) {
+            return ['name' => 'student.view', 'params' => ['id' => $studentId]];
+        }
+        if (auth()->check() && auth()->user()->hasRole('student') && (int) auth()->user()->hook_id === (int) $studentId) {
+            return ['name' => 'user-student.exams', 'params' => []];
+        }
+        return ['name' => 'student.view', 'params' => ['id' => $studentId]];
+    }
+
     public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null, $userid = null)
     {
         \Log::info('admin-score requested', ['year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $userid]);
@@ -1067,7 +1082,8 @@ class HomeController extends CollegeBaseController
             \Log::warning('admin-score redirect: No published exam schedule', [
                 'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $id
             ]);
-            return redirect()->route('student.view', ['id' => $id])
+            $targetRoute = $this->examScoreRedirectTarget($userid, $id);
+            return redirect()->route($targetRoute['name'], $targetRoute['params'])
                 ->with($this->message_warning, $msg)
                 ->with('message', $msg)
                 ->with('alert', $msg);
@@ -1256,7 +1272,8 @@ class HomeController extends CollegeBaseController
                 'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester_id, 'userid' => $id,
                 'exam_schedule_count' => count($exam_schedule_id), 'mark_ledger_count' => $markLedgerCount
             ]);
-            return redirect()->route('student.view', ['id' => $id])
+            $targetRoute = $this->examScoreRedirectTarget($userid, $id);
+            return redirect()->route($targetRoute['name'], $targetRoute['params'])
                 ->with($this->message_warning, $msg)
                 ->with('message', $msg)
                 ->with('alert', $msg);

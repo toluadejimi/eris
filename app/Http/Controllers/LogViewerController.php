@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,9 @@ class LogViewerController extends Controller
             $logs = array_slice($logs, 0, 500); // limit to last 500 lines
         }
 
-        return view('logs.index', compact('logs'));
+        $panel = 'Log Viewer';
+        $generalSetting = GeneralSetting::first();
+        return view('logs.index', compact('logs', 'panel', 'generalSetting'));
     }
 
     public function clear(Request $request)

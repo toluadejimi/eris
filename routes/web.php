@@ -30,8 +30,8 @@ Route::get('/clear', function() {
     // return what you want
 });
 
-Route::get('/logs', [LogViewerController::class, 'index'])->name('logs.index');
-Route::post('/logs/clear', [LogViewerController::class, 'clear'])->name('logs.clear');
+Route::get('/logs', [LogViewerController::class, 'index'])->name('logs.index')->middleware(['auth', 'ability:super-admin,admin-control']);
+Route::post('/logs/clear', [LogViewerController::class, 'clear'])->name('logs.clear')->middleware(['auth', 'ability:super-admin,admin-control']);
 Route::post('/exam-activate', [AdjustResultController::class, 'exam_activate'])->name('exam.activate');
 Route::post('/exam-visibility-toggle', [AdjustResultController::class, 'toggleExamVisibility'])->name('exam.visibility.toggle')->middleware('auth');
 

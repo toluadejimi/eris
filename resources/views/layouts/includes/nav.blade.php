@@ -234,6 +234,8 @@
                             <li><a href="{{ route('setting.alert') }}"><i class="fa fa-bell bigger-110 blue"></i>&nbsp;Alert Setting</a></li>
                             <li><a href="{{ route('setting.payment-gateway') }}"><i class="fa fa-dollar  bigger-110 blue"></i>&nbsp;Payment Gateway</a></li>
                             <li><a href="{{ route('setting.meeting') }}"><i class="fa fa-video-camera bigger-110 blue"></i>&nbsp;Meeting-Remote Class</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ route('logs.index') }}"><i class="fa fa-file-text-o bigger-110 blue"></i>&nbsp;Log Viewer</a></li>
                         </ul>
                     </li>
             </ul>

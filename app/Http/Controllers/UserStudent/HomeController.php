@@ -1053,7 +1053,7 @@ class HomeController extends CollegeBaseController
             ['months_id', '=', $month],
             ['exams_id', '=', $exam],
             ['faculty_id', '=', $faculty],
-            //['semesters_id', '=', $semester],
+            ['semesters_id', '=', $semester],
         ];
 
 
@@ -1171,18 +1171,16 @@ class HomeController extends CollegeBaseController
                     $absentBoth = true;
                 }
 
-                //Final Grade
-                $subject->totalMark = $totalMark = 40 + 60;
-                $subject->obtainedMark = $obtainedMark = 40 + 60;
-                $subject->percentage = $percentage = (28 * 100) / $totalMark;
-
-                
+                //Final Grade – compute percentage from actual marks
+                $subject->totalMark = $totalMark = $full_mark_theory + $full_mark_practical;
+                $subject->obtainedMark = $obtainedMark = ($total ?? 0) ?: (($obtain_mark_theory ?? 0) + ($obtain_mark_practical ?? 0));
+                $subject->percentage = $percentage = $totalMark > 0 ? ($obtainedMark * 100) / $totalMark : 0;
 
                 //verify both th & pr absent
                 if ($absentBoth == false) {
                     $subject->final_grade = $this->getGrade($semester, $percentage);
-                    $subject->grade_point = $subject->$ca_test1 + $subject->$ca_test2 + $subject->$assign + $subject->$class_exe + $subject->$affective +
-                    $subject->$physc + $subject->$obtain_mark_theory; //number_format((float)$this->getPoint($semester, $percentage),2);
+                    $gp = $this->getPoint($semester, $percentage);
+                    $subject->grade_point = is_numeric($gp) ? number_format((float) $gp, 2) : $gp;
 
                     $subject->remark = $this->getRemark($semester, $percentage);
                 } else {
@@ -1252,9 +1250,11 @@ class HomeController extends CollegeBaseController
         });
 
         if ($filteredStudent->isEmpty()) {
+            $markLedgerCount = ExamMarkLedger::where('students_id', $id)->whereIn('exam_schedule_id', $exam_schedule_id)->count();
             $msg = 'No result data found for this exam. The result may not be published yet or no marks have been entered.';
             \Log::warning('admin-score redirect: filteredStudent empty', [
-                'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $id
+                'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester_id, 'userid' => $id,
+                'exam_schedule_count' => count($exam_schedule_id), 'mark_ledger_count' => $markLedgerCount
             ]);
             return redirect()->route('student.view', ['id' => $id])
                 ->with($this->message_warning, $msg)

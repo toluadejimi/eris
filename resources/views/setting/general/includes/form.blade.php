@@ -11,6 +11,9 @@
             <a data-toggle="tab" href="#print"><i class="fa fa-print bigger-110"></i> Print</a>
         </li>
         <li>
+            <a data-toggle="tab" href="#bank-account"><i class="fa fa-university bigger-110"></i> Bank Account</a>
+        </li>
+        <li>
             <a data-toggle="tab" href="#social"><i class="fa fa-facebook bigger-110"></i> Social Media</a>
         </li>
         {{--<li>
@@ -28,6 +31,9 @@
         </div>
         <div id="print" class="tab-pane">
             @include('setting.general.includes.forms.print')
+        </div>
+        <div id="bank-account" class="tab-pane">
+            @include('setting.general.includes.forms.bank-account')
         </div>
         <div id="social" class="tab-pane">
             @include('setting.general.includes.forms.social')

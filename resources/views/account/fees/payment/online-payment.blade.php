@@ -1,5 +1,5 @@
-    @php($manageSettingStatus = collect(array_pluck($paymentGatewayStatus,'status','identity')))
-    @php($manageSetting = array_pluck($paymentGatewayStatus,'config','identity'))
+    @php($manageSettingStatus = collect(\Illuminate\Support\Arr::pluck($paymentGatewayStatus ?? [], 'status', 'identity')))
+    @php($manageSetting = \Illuminate\Support\Arr::pluck($paymentGatewayStatus ?? [], 'config', 'identity'))
     {{--Stripe--}}
     {{--
     @if($manageSettingStatus['Paypal'] == 'active')

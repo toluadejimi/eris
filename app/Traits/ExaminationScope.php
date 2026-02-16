@@ -7,13 +7,14 @@ use App\Models\ExamSchedule;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Year;
+use Illuminate\Support\Arr;
 
 trait ExaminationScope{
 
     public function activeExams()
     {
         $exams = Exam::Active()->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($exams,'Select Exams','0');
+        return Arr::prepend($exams, 'Select Exams', '0');
     }
 
     public function getExamById($id)
@@ -132,7 +133,7 @@ trait ExaminationScope{
             $examScheduleId = ExamSchedule::select('id')
                 ->where($examScheduleCondition)
                 ->get();
-            $examScheduleId = array_pluck($examScheduleId, 'id');
+            $examScheduleId = $examScheduleId->pluck('id')->all();
             if(count($examScheduleId) > 0){
                 $data['ledger_exist'] = ExamMarkLedger::select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.students_id',
                     'exam_mark_ledgers.obtain_mark_theory', 'exam_mark_ledgers.obtain_mark_practical', 'exam_mark_ledgers.absent_theory','exam_mark_ledgers.absent_practical',
@@ -256,17 +257,17 @@ trait ExaminationScope{
             $value->subjects = $filteredSubject->sortBy('sorting_order');
 
             /*calculate total mark & percentage*/
-            $otm = array_pluck($value->subjects,'obtain_mark_theory');
+            $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-            $filtered_otm  =  array_where($otm, function ($value, $key) {
+            $filtered_otm  = array_filter($otm, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkTh = array_sum($filtered_otm);
 
-            $omp = array_pluck($value->subjects,'obtain_mark_practical');
-            $filtered_otp  =  array_where($omp, function ($value, $key) {
+            $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+            $filtered_otp  = array_filter($omp, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkPr = array_sum($filtered_otp);
 
             $totalMark = $value->subjects->sum('full_mark_theory') + $value->subjects->sum('full_mark_practical');
@@ -311,7 +312,7 @@ trait ExaminationScope{
             }
         });
 
-        return implode(',',array_pluck($returnStudentRank,'rank'));
+        return implode(',', Arr::pluck($returnStudentRank->toArray(), 'rank'));
 
     }
 
@@ -337,7 +338,7 @@ trait ExaminationScope{
             $examScheduleId = ExamSchedule::select('id')
                 ->where($examScheduleCondition)
                 ->get();
-            $examScheduleId = array_pluck($examScheduleId, 'id');
+            $examScheduleId = $examScheduleId->pluck('id')->all();
             if(count($examScheduleId) > 0){
                 $data['ledger_exist'] = ExamMarkLedger::select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.students_id',
                     'exam_mark_ledgers.obtain_mark_theory', 'exam_mark_ledgers.obtain_mark_practical', 'exam_mark_ledgers.absent_theory','exam_mark_ledgers.absent_practical',
@@ -461,17 +462,17 @@ trait ExaminationScope{
             $value->subjects = $filteredSubject->sortBy('sorting_order');
 
             /*calculate total mark & percentage*/
-            $otm = array_pluck($value->subjects,'obtain_mark_theory');
+            $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-            $filtered_otm  =  array_where($otm, function ($value, $key) {
+            $filtered_otm  = array_filter($otm, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkTh = array_sum($filtered_otm);
 
-            $omp = array_pluck($value->subjects,'obtain_mark_practical');
-            $filtered_otp  =  array_where($omp, function ($value, $key) {
+            $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+            $filtered_otp  = array_filter($omp, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkPr = array_sum($filtered_otp);
 
             $totalMark = $value->subjects->sum('full_mark_theory') + $value->subjects->sum('full_mark_practical');
@@ -541,7 +542,7 @@ trait ExaminationScope{
 
         //dd($returnStudentRank);
 
-        return implode(',',array_pluck($returnStudentRank,'Position'));
+        return implode(',', Arr::pluck($returnStudentRank->toArray(), 'Position'));
 
     }
 }

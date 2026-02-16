@@ -4,6 +4,7 @@ namespace App\Traits;
 use App\Models\AccountCategory;
 use App\Models\Addressinfo;
 use App\Models\AlertSetting;
+use Illuminate\Support\Arr;
 use App\Models\Assets;
 use App\Models\Bank;
 use App\Models\FeeCollection;
@@ -73,19 +74,19 @@ trait AccountingScope{
     public function activeFeeHead()
     {
         $feeHead = FeeHead::select('id', 'fee_head_title')->Active()->orderBy('fee_head_title')->pluck('fee_head_title','id')->toArray();
-        return array_prepend($feeHead,'Select Fee Head',0);
+        return Arr::prepend($feeHead, 'Select Fee Head', 0);
     }
 
     public function activePayrollHead()
     {
         $payrollHead = PayrollHead::select('id', 'title')->Active()->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($payrollHead,'Select Payroll Head',0);
+        return Arr::prepend($payrollHead, 'Select Payroll Head', 0);
     }
 
     public function activePaymentMethod()
     {
         $method = PaymentMethod::Active()->orderBy('id')->pluck('title','title')->toArray();
-        return array_prepend($method,'','');
+        return Arr::prepend($method, '', '');
     }
 
     public function getBalanceFeeByStudentId($id)
@@ -247,7 +248,7 @@ trait AccountingScope{
     {
         $village = Addressinfo::select('address')->get();
         if($village->count() > 0){
-            $fetchAddress = array_prepend(array_unique($village->pluck('address','address')->toArray()),'','');
+            $fetchAddress = Arr::prepend(array_unique($village->pluck('address', 'address')->toArray()), '', '');
         }else{
             $fetchAddress = [];
         }

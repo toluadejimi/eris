@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
 use App\Mail\EmailAlerts;
 use App\Models\EmailSetting;
 use App\Models\SmsSetting;
@@ -33,7 +34,6 @@ use App\Traits\SmsGateway\TwillioSMS;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use App\Jobs\AllEmail;
 use Illuminate\Support\Facades\Mail;
@@ -309,7 +309,7 @@ trait SmsEmailScope{
         $data['sms_setting'] = SmsSetting::where('status',1)->get();
         if(isset($data['sms_setting']) && $data['sms_setting']->count() > 0){
             $d = json_decode($data['sms_setting'],true);
-            $manageSetting = array_pluck($d,'config','identity');
+            $manageSetting = Arr::pluck($d, 'config', 'identity');
             return $manageSetting;
         }
     }

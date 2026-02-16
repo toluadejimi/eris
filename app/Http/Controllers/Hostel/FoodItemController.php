@@ -43,7 +43,7 @@ class FoodItemController extends CollegeBaseController
 
         /*Food Category*/
         $category = FoodCategory::Active()->orderBy('title')->get();
-        $data['food_category'] = array_pluck($category,'title','id');
+        $data['food_category'] = $category->pluck('title','id')->all();
 
         return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
     }
@@ -76,7 +76,7 @@ class FoodItemController extends CollegeBaseController
 
         /*Food Category*/
         $category = FoodCategory::Active()->orderBy('title')->get();
-        $data['food_category'] = array_pluck($category,'title','id');
+        $data['food_category'] = $category->pluck('title','id')->all();
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));

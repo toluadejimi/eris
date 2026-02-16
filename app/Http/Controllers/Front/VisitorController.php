@@ -122,8 +122,8 @@ class VisitorController extends CollegeBaseController
         }
 
         $purpose = VisitorPurpose::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($purpose,'title','title');
-        $data['purpose'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $purpose->pluck('title','title')->all();
+        $data['purpose'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -135,8 +135,8 @@ class VisitorController extends CollegeBaseController
         $data = [];
 
         $purpose = VisitorPurpose::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($purpose,'title','title');
-        $data['purpose'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $purpose->pluck('title','title')->all();
+        $data['purpose'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         return view(parent::loadDataToView($this->view_path.'.add'), compact('data'));
     }
@@ -175,8 +175,8 @@ class VisitorController extends CollegeBaseController
             return parent::invalidRequest();
 
         $purpose = VisitorPurpose::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($purpose,'title','title');
-        $data['purpose'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $purpose->pluck('title','title')->all();
+        $data['purpose'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.edit'), compact('data'));

@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
 use App\Mail\EmailAlerts;
 use App\Models\EmailSetting;
 use App\Models\PaymentSetting;
@@ -25,7 +26,6 @@ use App\Traits\SmsGateway\TwillioSMS;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use App\Jobs\AllEmail;
 use Illuminate\Support\Facades\Mail;
@@ -78,7 +78,7 @@ trait PaymentGatewayScope{
             return $d = json_decode($data['payment_setting'],true);
             //dd($d);
             /*$d = json_decode($data['payment_setting'],true);
-            $manageSetting = array_pluck($d,'config','identity');
+            $manageSetting = Arr::pluck($d, 'config', 'identity');
             return $manageSetting;*/
         }
     }

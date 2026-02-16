@@ -5,25 +5,26 @@ use App\Models\BookCategory;
 use App\Models\BookMaster;
 use App\Models\BookStatus;
 use App\Models\LibraryCirculation;
+use Illuminate\Support\Arr;
 
 trait LibraryScope{
 
     public function activeBookCategories()
     {
         $category = BookCategory::Active()->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($category,'Select Category','0');
+        return Arr::prepend($category, 'Select Category', '0');
     }
 
     public function activeBookStatus()
     {
         $status = BookStatus::select('id', 'title')->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($status,'Select Status','0');
+        return Arr::prepend($status, 'Select Status', '0');
     }
 
     public function activeBookMasters()
     {
         $book = BookMaster::select('id', 'title')->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($book,'Select Book','0');
+        return Arr::prepend($book, 'Select Book', '0');
     }
 
     /*Library Views*/

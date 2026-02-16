@@ -47,7 +47,7 @@ class GeneralSettingController extends CollegeBaseController
         $data['url'] = '';
 
         $timezones = TimeZone::pluck('timezone','id')->toArray();
-        $data['timezones'] = array_prepend($timezones,'Select TimeZone','0');
+        $data['timezones'] = \Illuminate\Support\Arr::prepend($timezones, 'Select TimeZone', '0');
 
 
 
@@ -68,7 +68,7 @@ class GeneralSettingController extends CollegeBaseController
         };
 
         $timezones = TimeZone::pluck('timezone','id')->toArray();
-        $data['timezones'] = array_prepend($timezones,'Select TimeZone','0');
+        $data['timezones'] = \Illuminate\Support\Arr::prepend($timezones, 'Select TimeZone', '0');
 
         return view(parent::loadDataToView($this->view_path.'.add'), compact('data'));
     }
@@ -117,7 +117,7 @@ class GeneralSettingController extends CollegeBaseController
             return parent::invalidRequest();
 
         $timezones = TimeZone::pluck('timezone','id')->toArray();
-        $data['timezones'] = array_prepend($timezones,'Select TimeZone','0');
+        $data['timezones'] = \Illuminate\Support\Arr::prepend($timezones, 'Select TimeZone', '0');
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.edit'), compact('data'));

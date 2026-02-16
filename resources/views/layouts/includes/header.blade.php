@@ -48,6 +48,7 @@
     <![endif]-->
 
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/modern-ui.css') }}" />
 
     <!-- ace settings handler -->
     <script src="{{ asset('assets/js/ace-extra.min.js') }}"></script>
@@ -65,7 +66,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}" />
     <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/chosen.min.css') }}" />
-    <link href="https://fonts.googleapis.com/css?family=Fugaz+One|Lobster|Merienda|Righteous|Black+Ops+One|Gilda+Display" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+
+
     <style>
         .chosen-container, [class*=chosen-container]{
             /*width: 400px !important;*/
@@ -101,14 +109,4 @@
 </head>
 {{--<header class="onlyprint">header text for print<!--Content Goes Here--></header>--}}
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+{{-- Flash messages handled by toast in master.blade.php --}}

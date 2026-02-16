@@ -42,19 +42,19 @@ class FoodController extends CollegeBaseController
 
         /*Hostel List*/
         $hostel = Hostel::select('id','name')->orderBy('name')->get();
-        $hostel = array_pluck($hostel,'name','id');
-        $data['hostels'] = array_prepend($hostel,'Select Hostel...','0');
+        $hostel = $hostel->pluck('name','id')->all();
+        $data['hostels'] = \Illuminate\Support\Arr::prepend($hostel, 'Select Hostel...', '0');
 
         /*Day List*/
         $day = Day::select('id','title')->orderBy('id')->get();
-        $day = array_pluck($day,'title','id');
-        $data['days'] = array_prepend($day,'Select Day...','0');
+        $day = $day->pluck('title','id')->all();
+        $data['days'] = \Illuminate\Support\Arr::prepend($day, 'Select Day...', '0');
 
         /*Eating Time List*/
         $time = EatingTime::select('id','title')->orderBy('id')->get();
 
-        $time = array_pluck($time,'title','id');
-        $data['eating_times'] = array_prepend($time,'Select Time...','0');
+        $time = $time->pluck('title','id')->all();
+        $data['eating_times'] = \Illuminate\Support\Arr::prepend($time, 'Select Time...', '0');
 
         return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
     }
@@ -100,19 +100,19 @@ class FoodController extends CollegeBaseController
 
         /*Hostel List*/
         $hostel = Hostel::select('id','name')->orderBy('name')->get();
-        $hostel = array_pluck($hostel,'name','id');
-        $data['hostels'] = array_prepend($hostel,'Select Hostel...','0');
+        $hostel = $hostel->pluck('name','id')->all();
+        $data['hostels'] = \Illuminate\Support\Arr::prepend($hostel, 'Select Hostel...', '0');
 
         /*Day List*/
         $day = Day::select('id','title')->orderBy('id')->get();
-        $day = array_pluck($day,'title','id');
-        $data['days'] = array_prepend($day,'Select Day...','0');
+        $day = $day->pluck('title','id')->all();
+        $data['days'] = \Illuminate\Support\Arr::prepend($day, 'Select Day...', '0');
 
         /*Eating Time List*/
         $time = EatingTime::select('id','title')->orderBy('id')->get();
         //dd($time);
-        $time = array_pluck($time,'title','id');
-        $data['eating_times'] = array_prepend($time,'Select Time...','0');
+        $time = $time->pluck('title','id')->all();
+        $data['eating_times'] = \Illuminate\Support\Arr::prepend($time, 'Select Time...', '0');
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));

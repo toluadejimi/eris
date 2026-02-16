@@ -2,7 +2,7 @@
 @section('top-script')
 
 @endsection
-<body class="no-skin">
+<body class="no-skin user-student-portal">
 {{--<div id="overlay">
     <i class="ace-icon fa fa-spinner fa-spin blue bigger-125"></i>
 </div>--}}

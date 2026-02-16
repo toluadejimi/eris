@@ -1,0 +1,18 @@
+#!/bin/bash
+# Run any command with PHP 7.4 (for Laravel 5.8 compatibility)
+# Usage: ./php74 artisan migrate
+#        ./php74 composer install
+
+PHP74_PATHS=(
+    "/usr/local/opt/php@7.4/bin/php"
+    "/opt/homebrew/opt/php@7.4/bin/php"
+)
+
+for php in "${PHP74_PATHS[@]}"; do
+    if [ -x "$php" ]; then
+        exec "$php" "$@"
+    fi
+done
+
+echo "PHP 7.4 not found. Install: brew tap shivammathur/php && brew install shivammathur/php/php@7.4"
+exit 1

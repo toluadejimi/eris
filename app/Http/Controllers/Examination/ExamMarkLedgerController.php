@@ -68,7 +68,7 @@ class ExamMarkLedgerController extends CollegeBaseController
             $examScheduleId = ExamSchedule::select('id')
                 ->where($examScheduleCondition)
                 ->get();
-            $examScheduleId = array_pluck($examScheduleId, 'id');
+            $examScheduleId = $examScheduleId->pluck('id')->all();
 
             $data['ledger_exist'] = ExamMarkLedger::select('exam_mark_ledgers.exam_schedule_id', 'exam_mark_ledgers.students_id',
                 'exam_mark_ledgers.obtain_mark_theory','exam_mark_ledgers.ca_test1', 'exam_mark_ledgers.ca_test2','exam_mark_ledgers.assign','exam_mark_ledgers.class_exe','exam_mark_ledgers.affective','exam_mark_ledgers.physc', 'exam_mark_ledgers.total','exam_mark_ledgers.obtain_mark_practical', 'exam_mark_ledgers.absent_theory','exam_mark_ledgers.absent_practical',
@@ -282,7 +282,7 @@ class ExamMarkLedgerController extends CollegeBaseController
                 ->get();
 
         /*Get Subjects Ids as Arrays*/
-        $existSubject = array_pluck($row, 'subjects_id');
+        $existSubject = $row->pluck('subjects_id')->all();
 
         /*Find Subject Title with associated Ids*/
         if(auth()->user()->role_id == 5){
@@ -333,7 +333,7 @@ class ExamMarkLedgerController extends CollegeBaseController
         $examScheduleId = ExamSchedule::select('id')
                 ->where($examScheduleCondition)
                 ->get();
-        $examScheduleId  = array_pluck($examScheduleId, 'id');
+        $examScheduleId  = $examScheduleId->pluck('id')->all();
 
         if($examScheduleId){
             $ledgerExist = ExamMarkLedger::select('exam_mark_ledgers.exam_schedule_id',
@@ -355,7 +355,7 @@ class ExamMarkLedgerController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist student id*/
-            $existStudentId  = array_pluck($ledgerExist, 'students_id');
+            $existStudentId  = $ledgerExist->pluck('students_id')->all();
 
             //Get Active Student For Related Faculty and Semester
             $activeStudent = Student::select('id','reg_no','first_name','middle_name','last_name')
@@ -373,14 +373,14 @@ class ExamMarkLedgerController extends CollegeBaseController
                     return $item->absent_theory == 1;
                 });
                 /*get Absent student id*/
-                $trAbsentStudent  = array_pluck($trAbsentStudent, 'students_id');
+                $trAbsentStudent  = $trAbsentStudent->pluck('students_id')->all();
 
                 $prAbsentStudent =  $ledgerExist->filter(function ($item)
                 {
                     return $item->absent_practical == 1;
                 });
                 /*get Absent student id*/
-                $prAbsentStudent  = array_pluck($prAbsentStudent, 'students_id');
+                $prAbsentStudent  = $prAbsentStudent->pluck('students_id')->all();
 
 
 

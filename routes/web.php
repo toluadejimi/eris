@@ -32,6 +32,8 @@ Route::get('/clear', function() {
 
 Route::get('/logs', [LogViewerController::class, 'index'])->name('logs.index');
 Route::post('/logs/clear', [LogViewerController::class, 'clear'])->name('logs.clear');
+Route::post('/exam-activate', [AdjustResultController::class, 'exam_activate'])->name('exam.activate');
+Route::post('/exam-visibility-toggle', [AdjustResultController::class, 'toggleExamVisibility'])->name('exam.visibility.toggle')->middleware('auth');
 
 
 Route::get('print-recepit', [HomeController::class, 'print_recepit']);
@@ -77,6 +79,20 @@ Route::get('public-registration-success', [StudentPublicController::class, 'succ
 
 /*Auth Routes*/
 Auth::routes();
+
+/*Switch academic session / database (when logged in)*/
+Route::post('switch-year', function (\Illuminate\Http\Request $req) {
+    $req->validate(['session_key' => 'required|string']);
+    $conn = 'session_' . $req->session_key;
+    if (!array_key_exists($conn, config('database.connections'))) {
+        return redirect()->back()->with('error', 'Invalid session.');
+    }
+    $req->session()->put('db_connection', $conn);
+    \Illuminate\Support\Facades\Config::set('database.default', $conn);
+    \Illuminate\Support\Facades\DB::purge($conn);
+    \Illuminate\Support\Facades\DB::reconnect($conn);
+    return redirect()->back()->with('success', 'Session switched. Using database: ' . $req->session_key);
+})->name('switch.year')->middleware('auth');
 
 /*for Dashboard's*/
 Route::get('/',                             ['as' => 'home',   'uses' => 'HomeController@index']);

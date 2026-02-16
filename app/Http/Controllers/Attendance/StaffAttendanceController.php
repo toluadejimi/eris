@@ -306,8 +306,8 @@ class StaffAttendanceController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist staff id*/
-            $dayStatus = array_pluck($attendanceExist, $day);
-            $existStaffId = array_pluck($attendanceExist, 'staff_id');
+            $dayStatus = $attendanceExist->pluck($day)->all();
+            $existStaffId = $attendanceExist->pluck('staff_id')->all();
 
             //Get Active Staff For Related Designation
             $activeStaff = Staff::select('id', 'reg_no', 'first_name', 'middle_name', 'last_name', 'staff_image')
@@ -331,8 +331,8 @@ class StaffAttendanceController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist staff id*/
-            $dayStatus = array_pluck($attendanceExist, $day);
-            $existStaffId = array_pluck($attendanceExist, 'staff_id');
+            $dayStatus = $attendanceExist->pluck($day)->all();
+            $existStaffId = $attendanceExist->pluck('staff_id')->all();
 
             //Get Active Staff For Related Designation
             $activeStaff = Staff::select('id', 'reg_no', 'first_name', 'middle_name', 'last_name', 'staff_image')

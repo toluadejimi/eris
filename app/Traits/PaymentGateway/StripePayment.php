@@ -14,7 +14,7 @@ trait StripePayment{
         $setting = PaymentSetting::where(['identity'=> 'Stripe', 'status'=>1])->get();
         if(isset($setting) && $setting->count() > 0){
             $d = json_decode($setting,true);
-            $gatewayConfig = array_pluck($d,'config','identity');
+            $gatewayConfig = \Illuminate\Support\Arr::pluck($d, 'config', 'identity');
             $stripe  = json_decode($gatewayConfig['Stripe']);
         }
 

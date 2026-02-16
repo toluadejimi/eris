@@ -86,8 +86,8 @@ class PostalExchangeController extends CollegeBaseController
         }
 
         $types = PostalExchangeType::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($types,'title','title');
-        $data['exchange_type'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $types->pluck('title','title')->all();
+        $data['exchange_type'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -99,8 +99,8 @@ class PostalExchangeController extends CollegeBaseController
         $data = [];
 
         $types = PostalExchangeType::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($types,'title','title');
-        $data['exchange_type'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $types->pluck('title','title')->all();
+        $data['exchange_type'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         return view(parent::loadDataToView($this->view_path.'.add'), compact('data'));
     }
@@ -139,8 +139,8 @@ class PostalExchangeController extends CollegeBaseController
             return parent::invalidRequest();
 
         $types = PostalExchangeType::select('id', 'title')->Active()->orderBy('title')->get();
-        $map_types = array_pluck($types,'title','title');
-        $data['exchange_type'] = array_prepend($map_types,'Select Type...','');
+        $map_types = $types->pluck('title','title')->all();
+        $data['exchange_type'] = \Illuminate\Support\Arr::prepend($map_types, 'Select Type...', '');
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.edit'), compact('data'));

@@ -67,7 +67,7 @@ class TransactionController extends CollegeBaseController
 
 
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-        $data['th'] =  array_prepend($head,'Select Ledger','0');
+        $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -82,7 +82,7 @@ class TransactionController extends CollegeBaseController
     {
         $data = [];
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-        $data['th'] =  array_prepend($head,'Select Ledger','0');
+        $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -120,7 +120,7 @@ class TransactionController extends CollegeBaseController
 
         if($request->add_transaction_another) {
             $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-            $data['th'] =  array_prepend($head,'Select Ledger','0');
+            $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
             return back();
         }else{
@@ -182,7 +182,7 @@ class TransactionController extends CollegeBaseController
     {
         $data = [];
         $head = TransactionHead::where('status',1)->orderBy('tr_head')->pluck('tr_head','id')->toArray();
-        $data['th'] =  array_prepend($head,'Select Ledger','0');
+        $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -212,7 +212,7 @@ class TransactionController extends CollegeBaseController
 
         if($request->add_transaction_another) {
             $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-            $data['th'] =  array_prepend($head,'Select Ledger','0');
+            $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
             return back();
         }else{

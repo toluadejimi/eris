@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use App\Models\GeneralSetting;
 use App\Models\GuardianDetail;
 use App\Models\PaymentSetting;
@@ -139,7 +140,7 @@ class CollegeBaseController extends Controller
         $data['payment_setting'] = PaymentSetting::where('status',1)->get();
         if(isset($data['payment_setting']) && $data['payment_setting']->count() > 0){
             $d = json_decode($data['payment_setting'],true);
-            $manageSetting = array_pluck($d,'config','identity');
+            $manageSetting = Arr::pluck($d, 'config', 'identity');
             return $manageSetting;
         }
     }
@@ -149,7 +150,7 @@ class CollegeBaseController extends Controller
         $data['sms_setting'] = SmsSetting::where('status',1)->get();
         if(isset($data['sms_setting']) && $data['sms_setting']->count() > 0){
             $d = json_decode($data['sms_setting'],true);
-            $manageSetting = array_pluck($d,'config','identity');
+            $manageSetting = Arr::pluck($d, 'config', 'identity');
             return $manageSetting;
         }
     }

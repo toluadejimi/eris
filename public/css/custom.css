@@ -1,8 +1,14 @@
-a{
+/* Brand accent */
+.orange2 {
+    color: #e67e22 !important;
+    font-weight: 600;
+}
+
+a {
     cursor: pointer !important;
 }
 
-a:hover{
+a:hover {
     text-decoration: underline;
 }
 
@@ -28,10 +34,10 @@ label.col-sm-1.control-label, label.col-sm-2.control-label,label.col-sm-3.contro
     border-left: 4px #fdc06b solid;
     border-right: 1px #fdc06b solid;*/
 
-    background: #b1ddf8a6;
-    font-size: 15px;
-    padding: 5px 12px;
-    color: black;
+    background: transparent;
+    font-size: 14px;
+    padding: 0 0 6px 0;
+    color: #333;
     font-weight: 500;
 
 
@@ -72,11 +78,10 @@ ul.dropdown-menu.mega-dropdown-menu.row {
     width: 100%;
 }
 
-.mega- {
-    padding: 20dropdown-menupx 0px;
+.mega-dropdown-menu {
+    padding: 20px 0px;
     width: 100%;
-    box-shadow: none;
-    -webkit-box-shadow: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,.15);
 }
 
 .mega-dropdown-menu:before {
@@ -150,7 +155,7 @@ ul.dropdown-menu.mega-dropdown-menu.row {
 .header.blue {
     border-bottom-color: #95b7cb;
     font-weight: 400;
-    color: red;
+    color: #333;
 }
 
 .header>.ace-icon {
@@ -158,15 +163,27 @@ ul.dropdown-menu.mega-dropdown-menu.row {
     color: #d67261;
 }
 
+/* Navbar avatar - compact circle */
+.nav-user-photo,
+.navbar .nav-user-photo {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fdc06b;
+}
 img#avatar {
-    width: 200px;
+    width: 120px;
     height: auto;
     border: 1px #fdc06b solid;
+    border-radius: 8px;
 }
 img#avatar-small {
     width: 120px;
     height: auto;
     border: 1px #fdc06b solid;
+    border-radius: 8px;
 }
 
 /*required field error*/
@@ -198,10 +215,10 @@ input:required {
     border-left: 2px red solid;
 }
 
-/*Table Layout Customization*/
+/*Table Layout Customization - overridden by modern-ui.css for modern look*/
 th {
     background: #e0f3ff;
-    border-bottom: 2px red solid !important;
+    border-bottom: 2px solid #ddd;
     text-align: center;
 }
 

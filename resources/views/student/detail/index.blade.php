@@ -1,81 +1,65 @@
 @extends('layouts.master')
 
 @section('css')
-    <style>
-        @page {
-            /* margin-top: 5cm;
-             margin-bottom: 5cm;*/
+<style>
+    @page { }
+    span.receipt-copy { font-family: inherit; font-size: 22px; font-weight: 600; padding: 3px 15px; }
+    @media print {
+        body { margin: 6mm; }
+        .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th,
+        .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th,
+        .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+            border: 0.5px solid #7e7d7d !important;
         }
-
-        span.receipt-copy {
-            font-family:'Alfa+Slab+One';
-            font-size: 22px;
-            font-weight: 600;
-            /*background: #438EB9;
-            color: white;*/
-            padding: 3px 15px;
-        }
-
-       /* .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
-            border: 1px solid #444 !important;
-            padding: 0px 3px 0px 5px;
-        }
-*/
-
-        @media print {
-
-            body {
-                margin-top: 6mm; margin-bottom: 6mm;
-                margin-left: 12.7mm; margin-right: 6mm
-            }
-
-            @page{
-                /*margin-left: 100px !important;*/
-                /* margin: 500px !important;*/
-            }
-
-            .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
-                border: 0.5px solid #7e7d7d1c !important;
-
-            }
-
-            span.receipt-copy {
-                font-size: 22px;
-                font-weight: 600;
-                /*background: black;
-                color: white;*/
-                padding: 3px 15px;
-            }
-        }
-    </style>
+    }
+</style>
 @endsection
 
 @section('content')
-    <div class="main-content">
+    <div class="main-content student-detail-page">
         <div class="main-content-inner">
             <div class="page-content">
                 @include('layouts.includes.template_setting')
-                <div class="page-header hidden-print">
-                    <h1>
-                        Student
-                        <small>
-                            <i class="ace-icon fa fa-angle-double-right"></i>
-                            Detail
-                        </small>
-                    </h1>
+                <div class="page-header hidden-print student-detail-header">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h1 class="no-margin">
+                                @if(isset($data['student']) && $data['student'])
+                                    <span class="student-name">{{ $data['student']->first_name }} {{ $data['student']->middle_name }} {{ $data['student']->last_name }}</span>
+                                    <small class="text-muted">
+                                        <i class="ace-icon fa fa-angle-double-right"></i>
+                                        {{ $data['student']->reg_no ?? 'Student' }} — Detail
+                                    </small>
+                                @else
+                                    Student <small><i class="ace-icon fa fa-angle-double-right"></i> Detail</small>
+                                @endif
+                            </h1>
+                        </div>
+                        <div class="col-sm-4 text-right hidden-xs">
+                            @if(isset($data['student']) && $data['student'])
+                                @if($data['student']->faculty)
+                                    <span class="badge badge-status">{{ ViewHelper::getFacultyTitle($data['student']->faculty) }}</span>
+                                @endif
+                                @if($data['student']->semester)
+                                    <span class="badge badge-status">{{ ViewHelper::getSemesterTitle($data['student']->semester) }}</span>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
                 </div><!-- /.page-header -->
 
                 <div class="row">
-                    <div class="col-xs-12 ">
-                    @include($view_path.'.includes.buttons')
+                    <div class="col-xs-12">
+                    <div class="student-actions-bar">
+                        @include($view_path.'.includes.buttons')
+                    </div>
                     @include('includes.flash_messages')
                     @include('includes.validation_error_messages')
-                        <!-- PAGE CONTENT BEGINS -->
                         <div class="space-2"></div>
 
-                        <div id="user-profile-2" class="user-profile">
+                        <div id="user-profile-2" class="user-profile student-profile-tabs">
                             <div class="tabbable">
-                                <ul class="nav nav-tabs  padding-18 hidden-print ">
+                                <ul class="nav nav-tabs padding-18 hidden-print student-detail-tabs">
                                     <li class="active">
                                         <a data-toggle="tab" href="#profile">
                                             <i class="green ace-icon fa fa-user bigger-140"></i>

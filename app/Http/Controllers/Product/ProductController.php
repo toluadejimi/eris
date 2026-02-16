@@ -99,7 +99,7 @@ class ProductController extends CollegeBaseController
         //->join('stocks','stocks.products_id','products.id')
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -114,7 +114,7 @@ class ProductController extends CollegeBaseController
         $data['blank_ins'] = new Product();
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
 
@@ -130,13 +130,13 @@ class ProductController extends CollegeBaseController
         $data['blank_ins'] = new Product();
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
-        $data['product'] = array_prepend($product,'Select Product',0);
+        $data['product'] = \Illuminate\Support\Arr::prepend($product, 'Select Product', 0);
 
         $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
-        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+        $data['faculty'] = \Illuminate\Support\Arr::prepend($faculty, 'Select Class', 0);
 
 
         $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
@@ -154,13 +154,13 @@ class ProductController extends CollegeBaseController
         $data['blank_ins'] = new Product();
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
-        $data['product'] = array_prepend($product,'Select Product',0);
+        $data['product'] = \Illuminate\Support\Arr::prepend($product, 'Select Product', 0);
 
         $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
-        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+        $data['faculty'] = \Illuminate\Support\Arr::prepend($faculty, 'Select Class', 0);
 
 
         $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
@@ -250,13 +250,13 @@ class ProductController extends CollegeBaseController
         $data['blank_ins'] = new Product();
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
-        $data['product'] = array_prepend($product,'Select Product',0);
+        $data['product'] = \Illuminate\Support\Arr::prepend($product, 'Select Product', 0);
 
         $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
-        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+        $data['faculty'] = \Illuminate\Support\Arr::prepend($faculty, 'Select Class', 0);
 
 
         $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);
@@ -274,13 +274,13 @@ class ProductController extends CollegeBaseController
         $data['blank_ins'] = new Product();
 
         $category = Category::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['category'] = array_prepend($category,'Select Category',0);
+        $data['category'] = \Illuminate\Support\Arr::prepend($category, 'Select Category', 0);
 
         $product = Product::select('id', 'name')->Active()->pluck('name','id')->toArray();
-        $data['product'] = array_prepend($product,'Select Product',0);
+        $data['product'] = \Illuminate\Support\Arr::prepend($product, 'Select Product', 0);
 
         $faculty = Faculty::select('id', 'faculty')->Active()->pluck('faculty','id')->toArray();
-        $data['faculty'] = array_prepend($faculty,'Select Class',0);
+        $data['faculty'] = \Illuminate\Support\Arr::prepend($faculty, 'Select Class', 0);
 
 
         $data['productCode'] = $this->randomNum($this->ProductCodeStart,6);

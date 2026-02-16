@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
 use App\Models\Bed;
 use App\Models\BedStatus;
 use App\Models\EatingTime;
@@ -104,6 +105,6 @@ trait HostelScope{
     public function activeHostel()
     {
         $hostels = Hostel::select('id','name')->Active()->pluck('name','id')->toArray();
-        return array_prepend($hostels,'Select Hostel...','0');
+        return Arr::prepend($hostels, 'Select Hostel...', '0');
     }
 }

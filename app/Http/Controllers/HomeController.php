@@ -266,9 +266,4 @@ class HomeController extends CollegeBaseController
         return view(parent::loadDataToView($this->view_path.'.index'), compact('data'));
 
     }
-
-
- 
-   
-
 }

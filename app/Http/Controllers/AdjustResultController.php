@@ -5,11 +5,53 @@ namespace App\Http\Controllers;
 use App\Models\ExamMarkLedger;
 use App\Models\ParentDetail;
 use App\Models\Setting;
+use App\Models\Student;
+use App\Models\StudentExamAccess;
 use App\Vacation;
 use Illuminate\Http\Request;
 
 class AdjustResultController extends Controller
 {
+    public function exam_activate(request $req)
+    {
+        if ($req->status === 1) {
+            Student::where('id', $req->id)->update(['fee_status' => 1]);
+        } else {
+            Student::where('id', $req->id)->update(['fee_status' => 0]);
+        }
+        return back()->with('success', 'Fee Adjust Successfully');
+    }
+
+    /**
+     * Toggle exam result visibility per student. When disabled, parent/student sees pay-fee message.
+     */
+    public function toggleExamVisibility(Request $req)
+    {
+        $req->validate([
+            'student_id' => 'required|integer',
+            'year' => 'required|integer',
+            'month' => 'required|integer',
+            'exam' => 'required|integer',
+            'faculty' => 'required|integer',
+            'semester' => 'required|integer',
+            'visible' => 'required|in:0,1',
+        ]);
+
+        StudentExamAccess::updateOrCreate(
+            [
+                'students_id' => $req->student_id,
+                'years_id' => $req->year,
+                'months_id' => $req->month,
+                'exams_id' => $req->exam,
+                'faculty_id' => $req->faculty,
+                'semesters_id' => $req->semester,
+            ],
+            ['visible' => (int) $req->visible]
+        );
+
+        return response()->json(['success' => true, 'visible' => (int) $req->visible]);
+    }
+
     public function adjust_result()
     {
 
@@ -42,16 +84,14 @@ class AdjustResultController extends Controller
     }
 
 
-
-
-
     public function delete_vacation(request $request)
     {
         Vacation::where('id', $request->id)->delete();
         return back()->with('messsage', 'Vacation Date deleted successfully');
 
     }
-        public function set_vacation(request $request)
+
+    public function set_vacation(request $request)
     {
 
         $vac = new Vacation();
@@ -65,7 +105,7 @@ class AdjustResultController extends Controller
 
     }
 
-        public function index_vacation(request $request)
+    public function index_vacation(request $request)
     {
 
         $data['vacations'] = Vacation::all();
@@ -75,7 +115,7 @@ class AdjustResultController extends Controller
     }
 
 
-        public function delete_exam(request $request)
+    public function delete_exam(request $request)
     {
 
 
@@ -95,12 +135,12 @@ class AdjustResultController extends Controller
 
 
         $pd_ck = ParentDetail::where('students_id', $request->id)->first() ?? null;
-        if($pd_ck != null){
+        if ($pd_ck != null) {
             return back()->with('error', "Parent Info already esist");
         }
 
-       $pd =  new ParentDetail();
-       $pd->students_id = $request->id;
+        $pd = new ParentDetail();
+        $pd->students_id = $request->id;
         $pd->father_first_name = $request->father_first_name;
         $pd->father_middle_name = $request->father_middle_name;
         $pd->father_last_name = $request->father_last_name ?? "Name";

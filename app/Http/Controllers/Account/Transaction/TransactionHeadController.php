@@ -54,7 +54,7 @@ class TransactionHeadController extends CollegeBaseController
             ->orderBy('tr_head','asc')->get();
 
         $aCat = AccountCategory::where('status',1)->pluck('ac_name','id')->toArray();
-        $data['ac'] =  array_prepend($aCat,'Select Ledger Group','0');
+        $data['ac'] =  \Illuminate\Support\Arr::prepend($aCat, 'Select Ledger Group', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -105,7 +105,7 @@ class TransactionHeadController extends CollegeBaseController
         $data['tr_head'] = TransactionHead::select('id', 'tr_head', 'acc_id', 'status')->orderBy('tr_head','asc')->get();
 
         $aCat = AccountCategory::where('status',1)->pluck('ac_name','id')->toArray();
-        $data['ac'] =  array_prepend($aCat,'Select Ledger Group','0');
+        $data['ac'] =  \Illuminate\Support\Arr::prepend($aCat, 'Select Ledger Group', '0');
 
         $data['url'] = URL::current();
         $data['base_route'] = $this->base_route;
@@ -331,7 +331,7 @@ class TransactionHeadController extends CollegeBaseController
         }
 
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-        $data['th'] =  array_prepend($head,'Select Ledger','0');
+        $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
         $data['url'] = URL::current();
         $data['tag'] = 'today';
@@ -370,10 +370,10 @@ class TransactionHeadController extends CollegeBaseController
 
 
         $head = TransactionHead::where('status',1)->pluck('tr_head','id')->toArray();
-        $data['th'] =  array_prepend($head,'Select Ledger','0');
+        $data['th'] =  \Illuminate\Support\Arr::prepend($head, 'Select Ledger', '0');
 
         $aCat = AccountCategory::where('status',1)->pluck('ac_name','id')->toArray();
-        $data['ac'] =  array_prepend($aCat,'Select Ledger Group','0');
+        $data['ac'] =  \Illuminate\Support\Arr::prepend($aCat, 'Select Ledger Group', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

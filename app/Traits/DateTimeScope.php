@@ -5,6 +5,7 @@ use App\Models\Day;
 use App\Models\Month;
 use App\Models\Year;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 trait DateTimeScope{
 
@@ -51,13 +52,13 @@ trait DateTimeScope{
     public function activeYears()
     {
         $years = Year::Active()->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($years,'Select Year','0');
+        return Arr::prepend($years, 'Select Year', '0');
     }
 
     public function activeMonths()
     {
         $years = Month::Active()->pluck('title','id')->toArray();
-        return array_prepend($years,'Select Year','0');
+        return Arr::prepend($years, 'Select Year', '0');
     }
 
     public function dateToWord($date)

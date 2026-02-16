@@ -3,6 +3,7 @@ namespace App\Traits;
 
 use App\Models\Staff;
 use App\Models\StaffDesignation;
+use Illuminate\Support\Arr;
 
 trait StaffScope
 {
@@ -70,7 +71,7 @@ trait StaffScope
     public function staffDesignationList()
     {
         $designation = StaffDesignation::select('id', 'title')->orderBy('title')->pluck('title', 'id')->toArray();
-        return array_prepend($designation, 'Select Designation', '0');
+        return Arr::prepend($designation, 'Select Designation', '0');
 
     }
 

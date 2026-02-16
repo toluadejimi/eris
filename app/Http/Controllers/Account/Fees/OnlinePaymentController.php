@@ -139,7 +139,7 @@ class OnlinePaymentController extends CollegeBaseController
         $data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $gateway = OnlinePayment::get()->pluck('payment_gateway','payment_gateway')->toArray();
-        $data['payment_gateway'] = array_prepend($gateway,'Select Gateway','');
+        $data['payment_gateway'] = \Illuminate\Support\Arr::prepend($gateway, 'Select Gateway', '');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

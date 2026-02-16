@@ -10,6 +10,7 @@
 
 namespace App\Http\Controllers\Transport;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\CollegeBaseController;
 use App\Http\Requests\Transport\User\AddValidation;
 use App\Http\Requests\Transport\User\EditValidation;
@@ -87,14 +88,14 @@ class TransportUserController extends CollegeBaseController
 
         /*Route List*/
         $routes = Route::select('id','title')->get();
-        $map_routes = array_pluck($routes,'title','id');
-        $data['routes'] = array_prepend($map_routes,'Select Route...','0');
+        $map_routes = $routes->pluck('title','id')->all();
+        $data['routes'] = Arr::prepend($map_routes, 'Select Route...', '0');
 
         /*Active Route For Shift List*/
         /*Route List*/
         $routes = Route::select('id','title')->Active()->get();
-        $map_routes = array_pluck($routes,'title','id');
-        $data['active_routes'] = array_prepend($map_routes,'Select Route...','0');
+        $map_routes = $routes->pluck('title','id')->all();
+        $data['active_routes'] = Arr::prepend($map_routes, 'Select Route...', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

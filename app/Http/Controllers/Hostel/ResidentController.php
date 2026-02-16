@@ -92,8 +92,8 @@ class ResidentController extends CollegeBaseController
 
         /*Active Hostel For Shift List*/
         $hostels = Hostel::select('id','name')->Active()->get();
-        $map_hostels = array_pluck($hostels,'name','id');
-        $data['active_hostels'] = array_prepend($map_hostels,'Select Hostel...','0');
+        $map_hostels = $hostels->pluck('name','id')->all();
+        $data['active_hostels'] = \Illuminate\Support\Arr::prepend($map_hostels, 'Select Hostel...', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -393,8 +393,8 @@ class ResidentController extends CollegeBaseController
 
         /*Hostel List*/
         $hostels = Hostel::select('id','name')->Active()->get();
-        $map_hostels = array_pluck($hostels,'name','id');
-        $data['hostels'] = array_prepend($map_hostels,'Select Hostel...','0');
+        $map_hostels = $hostels->pluck('name','id')->all();
+        $data['hostels'] = \Illuminate\Support\Arr::prepend($map_hostels, 'Select Hostel...', '0');
 
         $data['base_route'] = $this->base_route;
         return view(parent::loadDataToView($this->view_path.'.edit'), compact('data'));

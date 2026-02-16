@@ -57,7 +57,7 @@ class BankTrController extends CollegeBaseController
             ->get();
 
         $banks = Bank::where('status',1)->pluck('bank_name','id')->toArray();
-        $data ['banks'] = array_prepend($banks,'Select Bank','0');
+        $data ['banks'] = \Illuminate\Support\Arr::prepend($banks, 'Select Bank', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -69,7 +69,7 @@ class BankTrController extends CollegeBaseController
     {
         $data = [];
         $banks = Bank::where('status',1)->pluck('bank_name','id')->toArray();
-        $data ['banks'] = array_prepend($banks,'Select Bank','0');
+        $data ['banks'] = \Illuminate\Support\Arr::prepend($banks, 'Select Bank', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

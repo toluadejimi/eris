@@ -351,11 +351,11 @@ class DownloadController extends CollegeBaseController
             $collectSubject = $semester->subjects()->select('subjects.id as subject_id','subjects.title as subject_title')
                 ->where('subjects.staff_id',$id)
                 ->get();
-            $subjects = array_pluck($collectSubject,'subject_title','subject_id');
+            $subjects = $collectSubject->pluck('subject_title','subject_id')->all();
         }else{
             /*Find Subject Title with associated Ids*/
             $collectSubject = $semester->subjects()->select('subjects.id as subject_id','subjects.title as subject_title')->get();
-            $subjects = array_pluck($collectSubject,'subject_title','subject_id');
+            $subjects = $collectSubject->pluck('subject_title','subject_id')->all();
         }
 
 

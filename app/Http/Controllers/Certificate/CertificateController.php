@@ -63,7 +63,7 @@ class CertificateController extends CollegeBaseController
         $data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $certificate = CertificateTemplate::select('id', 'certificate')->Active()->pluck('certificate','id')->toArray();
-        $data['certificates'] = array_prepend($certificate,'Select Certificate',0);
+        $data['certificates'] = \Illuminate\Support\Arr::prepend($certificate, 'Select Certificate', 0);
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

@@ -422,8 +422,8 @@ class StudentAttendanceController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist student id*/
-            $dayStatus  = array_pluck($attendanceExist, $day);
-            $existStudentId  = array_pluck($attendanceExist, 'students_id');
+            $dayStatus  = $attendanceExist->pluck($day)->all();
+            $existStudentId  = $attendanceExist->pluck('students_id')->all();
 
             //Get Active Student For Related Faculty and Semester
             $activeStudent = Student::select('id','reg_no','first_name','middle_name','last_name','student_image')
@@ -480,8 +480,8 @@ class StudentAttendanceController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist student id*/
-            $dayStatus  = array_pluck($attendanceExist, $day);
-            $existStudentId  = array_pluck($attendanceExist, 'students_id');
+            $dayStatus  = $attendanceExist->pluck($day)->all();
+            $existStudentId  = $attendanceExist->pluck('students_id')->all();
 
             //Get Active Student For Related Faculty and Semester
             $studentCondition = $batch!=''?[['faculty', '=' , $faculty], ['semester', '=' , $semester], ['batch', '=' , $batch] ]:[['faculty', '=' , $faculty], ['semester', '=' , $semester] ];

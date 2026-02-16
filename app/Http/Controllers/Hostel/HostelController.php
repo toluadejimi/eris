@@ -52,7 +52,7 @@ class HostelController extends CollegeBaseController
 
         $data = [];
         $roomTypes = RoomType::select('id','title')->get();
-        $data['room_type'] = array_pluck($roomTypes,'title','id');
+        $data['room_type'] = $roomTypes->pluck('title','id')->all();
 
         return view(parent::loadDataToView($this->view_path.'.add'), compact('data'));
     }
@@ -92,7 +92,7 @@ class HostelController extends CollegeBaseController
             return parent::invalidRequest();
 
         $roomTypes = RoomType::select('id','title')->get();
-        $data['room_type'] = array_pluck($roomTypes,'title','id');
+        $data['room_type'] = $roomTypes->pluck('title','id')->all();
 
         return view(parent::loadDataToView($this->view_path.'.edit'), compact('data'));
     }
@@ -195,7 +195,7 @@ class HostelController extends CollegeBaseController
             ->get();
 
         $roomTypes = RoomType::select('id','title')->get();
-        $data['room_type'] = array_pluck($roomTypes,'title','id');
+        $data['room_type'] = $roomTypes->pluck('title','id')->all();
 
         return view(parent::loadDataToView($this->view_path.'.detail.index'), compact('data'));
     }

@@ -11,6 +11,7 @@
 
 namespace App\Http\Controllers\Student;
 
+use Illuminate\Support\Arr;
 use App\Http\Controllers\CollegeBaseController;
 use App\Http\Requests\Student\PublicRegistration\AddValidation;
 use App\Models\AcademicInfo;
@@ -69,10 +70,10 @@ class StudentPublicController extends CollegeBaseController
             $data['faculties'] = $this->activeFaculties();
 
             $academicStatus = StudentStatus::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-            $data['academic_status'] = array_prepend($academicStatus, 'Select Status', 0);
+            $data['academic_status'] = Arr::prepend($academicStatus, 'Select Status', 0);
 
             $studentBatch = StudentBatch::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-            $data['batch'] = array_prepend($studentBatch, 'Select Batch', 0);
+            $data['batch'] = Arr::prepend($studentBatch, 'Select Batch', 0);
 
             return view(parent::loadDataToView($this->view_path . '.register'), compact('data'));
         } else {
@@ -426,13 +427,13 @@ class StudentPublicController extends CollegeBaseController
         $data['faculties'] = $this->activeFaculties();
 
         $semester = Semester::select('id', 'semester')->where('id', '=', $data['row']->semester)->Active()->pluck('semester', 'id')->toArray();
-        $data['semester'] = array_prepend($semester, 'Select Semester', 0);
+        $data['semester'] = Arr::prepend($semester, 'Select Semester', 0);
 
         $academicStatus = StudentStatus::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-        $data['academic_status'] = array_prepend($academicStatus, 'Select Status', 0);
+        $data['academic_status'] = Arr::prepend($academicStatus, 'Select Status', 0);
 
         $studentBatch = StudentBatch::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-        $data['batch'] = array_prepend($studentBatch, 'Select Batch', 0);
+        $data['batch'] = Arr::prepend($studentBatch, 'Select Batch', 0);
 
         $data['academicInfo'] = $data['row']->academicInfo()->orderBy('sorting_order', 'asc')->get();
         $data['academicInfo-html'] = view($this->view_path . '.registration.includes.forms.academic_tr_edit', [

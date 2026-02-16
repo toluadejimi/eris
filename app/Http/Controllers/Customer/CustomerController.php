@@ -95,7 +95,7 @@ class CustomerController extends CollegeBaseController
         $data['CustomerRegCode'] = $this->randomNum($this->CustomerRegCode,6);
 
         $customerStatus = CustomerStatus::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['customer_status'] = array_prepend($customerStatus,'',0);
+        $data['customer_status'] = \Illuminate\Support\Arr::prepend($customerStatus, '', 0);
 
         return view(parent::loadDataToView($this->view_path.'.registration.register'), compact('data'));
     }
@@ -220,7 +220,7 @@ class CustomerController extends CollegeBaseController
             return parent::invalidRequest();
 
         $customerStatus = CustomerStatus::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['customer_status'] = array_prepend($customerStatus,'Select Status',0);
+        $data['customer_status'] = \Illuminate\Support\Arr::prepend($customerStatus, 'Select Status', 0);
 
         //$data['customerInfo'] = $data['row']->customerInfo()->orderBy('sorting_order','asc')->get();
 

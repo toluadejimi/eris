@@ -18,6 +18,7 @@ use App\Models\AttendanceStatus;
 use App\Models\Document;
 use App\Models\Download;
 use App\Models\ExamSchedule;
+use App\Models\StudentExamAccess;
 use App\Models\FeeCollection;
 use App\Models\FeeMaster;
 use App\Models\GuardianDetail;
@@ -75,7 +76,7 @@ class HomeController extends CollegeBaseController
 
         if($data['students']->count() > 0 ) {
 
-            $students_id = array_pluck($data['students'], 'id');
+            $students_id = $data['students']->pluck('id')->all();
 
             $feeMaster = FeeMaster::where('students_id', $students_id)->sum('fee_amount');
             $feeCollection = FeeCollection::where('students_id', $students_id)->sum('paid_amount');
@@ -510,7 +511,7 @@ class HomeController extends CollegeBaseController
         $examSchedule = ExamSchedule::where($whereCondition)
             ->get();
 
-        $exam_schedule_id = array_pluck($examSchedule,'id');
+        $exam_schedule_id = $examSchedule->pluck('id')->all();
 
         $data['subjects'] = ExamSchedule::select('exam_schedules.id','exam_schedules.subjects_id',
             'exam_schedules.date', 'exam_schedules.start_time', 'exam_schedules.end_time',
@@ -603,7 +604,12 @@ class HomeController extends CollegeBaseController
         if ($examSchedule->count() == 0)
             return back()->with($this->message_warning,'Result not published Yet. Please be patient.');
 
-        $exam_schedule_id = array_pluck($examSchedule,'id');
+        if (!StudentExamAccess::isVisible($student_id, $year, $month, $exam, $faculty, $semester)) {
+            $data = ['student_id_encrypted' => Crypt::encryptString($student_id)];
+            return view(parent::loadDataToView($this->view_path . '.exam.pay-fee-required'), compact('data'));
+        }
+
+        $exam_schedule_id = $examSchedule->pluck('id')->all();
 
         $semester = Semester::find($semester);
 
@@ -706,27 +712,27 @@ class HomeController extends CollegeBaseController
 
             /*calculate GPA*/
             /*calculate total mark & percentage*/
-            $gp_collection = array_pluck($value->subjects,'grade_point');
+            $gp_collection = $value->subjects->pluck('grade_point')->all();
 
-            $filtered_gp_collection  =  array_where($gp_collection, function ($value, $key) {
+            $filtered_gp_collection  = array_filter($gp_collection, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
 
             $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
             $value->gpa_point = number_format((float)$gradePoint, 2);
 
             /*calculate total mark & percentage*/
-            $otm = array_pluck($value->subjects,'obtain_mark_theory');
+            $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-            $filtered_otm  =  array_where($otm, function ($value, $key) {
+            $filtered_otm  = array_filter($otm, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkTh = array_sum($filtered_otm);
 
-            $omp = array_pluck($value->subjects,'obtain_mark_practical');
-            $filtered_otp  =  array_where($omp, function ($value, $key) {
+            $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+            $filtered_otp  = array_filter($omp, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkPr = array_sum($filtered_otp);
 
 

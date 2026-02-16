@@ -272,7 +272,7 @@ class ExamScheduleController extends CollegeBaseController
         if (!$row) return parent::invalidRequest();
 
         /*Get Subjects Ids as Arrays*/
-        $deleteSchedule = array_pluck($row, 'id');
+        $deleteSchedule = $row->pluck('id')->all();
 
         $deleteQuery = ExamSchedule::whereIn('id',$deleteSchedule)->delete();
 
@@ -293,7 +293,7 @@ class ExamScheduleController extends CollegeBaseController
         if (!$row) return parent::invalidRequest();
 
         /*Get Subjects Ids as Arrays*/
-        $activeStatus = array_pluck($row, 'id');
+        $activeStatus = $row->pluck('id')->all();
 
         $status = $request->request->add(['status' => 'active']);
 
@@ -318,7 +318,7 @@ class ExamScheduleController extends CollegeBaseController
         if (!$row) return parent::invalidRequest();
 
         /*Get Subjects Ids as Arrays*/
-        $activeStatus = array_pluck($row, 'id');
+        $activeStatus = $row->pluck('id')->all();
 
         $status = $request->request->add(['status' => 'active']);
 
@@ -349,7 +349,7 @@ class ExamScheduleController extends CollegeBaseController
                 ->get();
 
             /*Get Subjects Ids as Arrays*/
-            $existSubject = array_pluck($scheduledSubjects, 'subjects_id');
+            $existSubject = $scheduledSubjects->pluck('subjects_id')->all();
 
             /*Get Semester Related Subjected Which is not scheduled*/
             $semester = Semester::find($request->get('semester_id'));
@@ -439,7 +439,7 @@ class ExamScheduleController extends CollegeBaseController
         if (!$row) return parent::invalidRequest();
 
         /*Get Subjects Ids as Arrays*/
-        $examIds = array_pluck($row, 'id');
+        $examIds = $row->pluck('id')->all();
 
         $this->sendMarkAlert($examIds);
 
@@ -464,7 +464,7 @@ class ExamScheduleController extends CollegeBaseController
         if (!$row) return parent::invalidRequest();
 
         /*Get Subjects Ids as Arrays*/
-        $ids = array_pluck($row, 'id');
+        $ids = $row->pluck('id')->all();
 
 
         ExamSchedule::whereIn('id', $ids)->update([
@@ -610,14 +610,14 @@ class ExamScheduleController extends CollegeBaseController
     //             $value->subjects = $filteredSubject->sortBy('sorting_order');
 
     //             //calculate total mark & percentage
-    //             $otm = array_pluck($value->subjects,'obtain_mark_theory');
+    //             $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-    //             $filtered_otm  =  array_where($otm, function ($value, $key) {
+    //             $filtered_otm  =  array_filter($otm, function ($value, $key) {
     //                 return is_numeric($value);
     //             });
     //             $obtainedMarkTh = array_sum($filtered_otm);
 
-    //             $omp = array_pluck($value->subjects,'obtain_mark_practical');
+    //             $omp = $value->subjects->pluck('obtain_mark_practical')->all();
     //             $filtered_otp  =  array_where($omp, function ($value, $key) {
     //                 return is_numeric($value);
     //             });
@@ -857,17 +857,17 @@ class ExamScheduleController extends CollegeBaseController
                 $value->subjects = $filteredSubject->sortBy('sorting_order');
 
                 //calculate total mark & percentage
-                $otm = array_pluck($value->subjects,'obtain_mark_theory');
+                $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-                $filtered_otm  =  array_where($otm, function ($value, $key) {
+                $filtered_otm  =  array_filter($otm, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkTh = array_sum($filtered_otm);
 
-                $omp = array_pluck($value->subjects,'obtain_mark_practical');
-                $filtered_otp  =  array_where($omp, function ($value, $key) {
+                $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+                $filtered_otp  =  array_filter($omp, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkPr = array_sum($filtered_otp);
 
 

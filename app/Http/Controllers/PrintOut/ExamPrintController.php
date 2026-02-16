@@ -277,17 +277,17 @@ class ExamPrintController extends CollegeBaseController
                 $value->subjects = $filteredSubject->sortBy('sorting_order');
 
                 /*calculate total mark & percentage*/
-                $otm = array_pluck($value->subjects,'obtain_mark_theory');
+                $otm = $value->subjects->pluck('obtain_mark_theory')->all();
                 
-                $filtered_otm  =  array_where($otm, function ($value, $key) {
+                $filtered_otm  =  array_filter($otm, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkTh = array_sum($filtered_otm);
 
-                $omp = array_pluck($value->subjects,'obtain_mark_practical');
-                $filtered_otp  =  array_where($omp, function ($value, $key) {
+                $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+                $filtered_otp  =  array_filter($omp, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkPr = array_sum($filtered_otp);
 
 
@@ -437,26 +437,26 @@ class ExamPrintController extends CollegeBaseController
 
                 /*calculate GPA*/
                 /*calculate total mark & percentage*/
-                $gp_collection = array_pluck($value->subjects,'grade_point');
+                $gp_collection = $value->subjects->pluck('grade_point')->all();
 
-                $filtered_gp_collection  =  array_where($gp_collection, function ($value, $key) {
+                $filtered_gp_collection  =  array_filter($gp_collection, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
 
                 /*calculate total mark & percentage*/
-                $otm = array_pluck($value->subjects,'obtain_mark_theory');
+                $otm = $value->subjects->pluck('obtain_mark_theory')->all();
                 //dd($otm);
 
-                $filtered_otm  =  array_where($otm, function ($value, $key) {
+                $filtered_otm  =  array_filter($otm, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
 
                 $obtainedMarkTh = array_sum($filtered_otm);
 
-                $omp = array_pluck($value->subjects,'obtain_mark_practical');
-                $filtered_otp  =  array_where($omp, function ($value, $key) {
+                $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+                $filtered_otp  =  array_filter($omp, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkPr = array_sum($filtered_otp);
 
                 $totalMark = $value->subjects->sum('totalMark');
@@ -605,17 +605,17 @@ class ExamPrintController extends CollegeBaseController
                 $value->subjects = $filteredSubject->sortBy('sorting_order');
 
                 /*calculate total mark & percentage*/
-                $otm = array_pluck($value->subjects,'obtain_mark_theory');
+                $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
-                $filtered_otm  =  array_where($otm, function ($value, $key) {
+                $filtered_otm  =  array_filter($otm, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkTh = array_sum($filtered_otm);
 
-                $omp = array_pluck($value->subjects,'obtain_mark_practical');
-                $filtered_otp  =  array_where($omp, function ($value, $key) {
+                $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+                $filtered_otp  =  array_filter($omp, function ($value, $key) {
                     return is_numeric($value);
-                });
+                }, ARRAY_FILTER_USE_BOTH);
                 $obtainedMarkPr = array_sum($filtered_otp);
 
                 $totalMark = $value->subjects->sum('full_mark_theory') + $value->subjects->sum('full_mark_practical');

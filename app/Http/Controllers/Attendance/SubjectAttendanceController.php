@@ -361,11 +361,11 @@ class SubjectAttendanceController extends CollegeBaseController
             $collectSubject = $semester->subjects()->select('subjects.id as subject_id','subjects.title as subject_title')
                 ->where('subjects.staff_id',$id)
                 ->get();
-            $subjects = array_pluck($collectSubject,'subject_title','subject_id');
+            $subjects = $collectSubject->pluck('subject_title','subject_id')->all();
         }else{
             /*Find Subject Title with associated Ids*/
             $collectSubject = $semester->subjects()->select('subjects.id as subject_id','subjects.title as subject_title')->get();
-            $subjects = array_pluck($collectSubject,'subject_title','subject_id');
+            $subjects = $collectSubject->pluck('subject_title','subject_id')->all();
         }
 
 
@@ -422,8 +422,8 @@ class SubjectAttendanceController extends CollegeBaseController
                         ->get();
 
                     /*get ledger exist student id*/
-                    $dayStatus  = array_pluck($attendanceExist, $day);
-                    $existStudentId  = array_pluck($attendanceExist, 'students_id');
+                    $dayStatus  = $attendanceExist->pluck($day)->all();
+                    $existStudentId  = $attendanceExist->pluck('students_id')->all();
 
                     $studentCondition = $batch!=''?[['faculty', '=' , $faculty], ['semester', '=' , $semester], ['batch', '=' , $batch] ]:[['faculty', '=' , $faculty], ['semester', '=' , $semester] ];
 
@@ -490,8 +490,8 @@ class SubjectAttendanceController extends CollegeBaseController
                 ->get();
 
             /*get ledger exist student id*/
-            $dayStatus  = array_pluck($attendanceExist, $day);
-            $existStudentId  = array_pluck($attendanceExist, 'students_id');
+            $dayStatus  = $attendanceExist->pluck($day)->all();
+            $existStudentId  = $attendanceExist->pluck('students_id')->all();
 
             //Get Active Student For Related Faculty and Semester
             $studentCondition = $batch!=''?[['faculty', '=' , $faculty], ['semester', '=' , $semester], ['batch', '=' , $batch] ]:[['faculty', '=' , $faculty], ['semester', '=' , $semester] ];

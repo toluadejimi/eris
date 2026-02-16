@@ -53,8 +53,8 @@ class StaffReportController extends CollegeBaseController
     {
         /*get designation*/
         $designation = StaffDesignation::select('id','title')->orderBy('title')->get();
-        $designation = array_pluck($designation,'title','id');
-        $designation = array_prepend($designation,'Select Designation...','0');
+        $designation = $designation->pluck('title','id')->all();
+        $designation = \Illuminate\Support\Arr::prepend($designation, 'Select Designation...', '0');
 
         /*designation represent as list*/
         return $designation;

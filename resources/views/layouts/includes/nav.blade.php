@@ -1,4 +1,4 @@
-<div id="navbar" class="navbar navbar-default    navbar-collapse       h-navbar ace-save-state">
+<div id="navbar" class="navbar navbar-default navbar-collapse h-navbar ace-save-state modern-nav">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <div class="navbar-header pull-left">
 

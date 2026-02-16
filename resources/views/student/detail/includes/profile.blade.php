@@ -1,10 +1,9 @@
 <div class="row">
-    <div class="col-sm-12 align-right hidden-print">
-        <a href="{{ route($base_route.'.edit', ['id' => $data['student']->id]) }}" class="btn-primary btn-sm" >
+    <div class="col-sm-12 align-right hidden-print profile-actions">
+        <a href="{{ route($base_route.'.edit', ['id' => $data['student']->id]) }}" class="btn btn-primary btn-sm">
             <i class="ace-icon fa fa-pencil"></i> Edit
         </a>
-        &nbsp;|&nbsp;
-        <a href="#" class="btn-primary btn-sm" onclick="window.print();">
+        <a href="#" class="btn btn-default btn-sm" onclick="window.print();">
             <i class="ace-icon fa fa-print"></i> Print
         </a>
     </div>

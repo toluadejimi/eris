@@ -158,7 +158,7 @@ class UserActivityController extends CollegeBaseController
 
 
         $faculty = User::where('status',1)->pluck('name','id')->toArray();
-        $data['users'] = array_prepend($faculty,'Select User Name','0');
+        $data['users'] = \Illuminate\Support\Arr::prepend($faculty, 'Select User Name', '0');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;

@@ -531,6 +531,11 @@ class StudentController extends CollegeBaseController
             ->orderBy('months_id', 'asc')
             ->get();
 
+        $examAccess = \App\Models\StudentExamAccess::where('students_id', $user_id)->get()->keyBy(function ($r) {
+            return "{$r->years_id}_{$r->months_id}_{$r->exams_id}_{$r->faculty_id}_{$r->semesters_id}";
+        });
+        $data['exam_access_map'] = $examAccess;
+
 
 
 

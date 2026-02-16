@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -45,6 +45,12 @@
 <div class="container">
     <main>
 
+        @if(session('message_warning') || session('message') || session('alert'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ session('message_warning') ?? session('message') ?? session('alert') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="py-5 text-center">
 

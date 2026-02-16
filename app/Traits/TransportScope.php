@@ -3,6 +3,7 @@ namespace App\Traits;
 
 use App\Models\Route;
 use App\Models\Vehicle;
+use Illuminate\Support\Arr;
 
 trait TransportScope{
 
@@ -30,6 +31,6 @@ trait TransportScope{
     public function activeTransportRoutes()
     {
         $routes = Route::select('id','title')->Active()->pluck('title','id')->toArray();
-        return array_prepend($routes,'Select Route...','0');
+        return Arr::prepend($routes, 'Select Route...', '0');
     }
 }

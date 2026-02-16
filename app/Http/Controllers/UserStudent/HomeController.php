@@ -10,6 +10,7 @@
 
 namespace App\Http\Controllers\UserStudent;
 
+use Illuminate\Support\Arr;
 use App\Charts\FeePayDueChart;
 use App\Http\Controllers\CollegeBaseController;
 use App\Http\Requests\Student\PublicRegistration\EditValidation;
@@ -24,6 +25,7 @@ use App\Models\Document;
 use App\Models\Download;
 use App\Models\ExamMarkLedger;
 use App\Models\ExamSchedule;
+use App\Models\StudentExamAccess;
 use App\Models\Faculty;
 use App\Models\FeeCollection;
 use App\Models\FeeMaster;
@@ -225,13 +227,13 @@ class HomeController extends CollegeBaseController
         //$data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $semester = Semester::select('id', 'semester')->where('id', '=', $data['row']->semester)->Active()->pluck('semester', 'id')->toArray();
-        $data['semester'] = array_prepend($semester, 'Select Semester', 0);
+        $data['semester'] = Arr::prepend($semester, 'Select Semester', 0);
 
         $academicStatus = StudentStatus::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-        $data['academic_status'] = array_prepend($academicStatus, 'Select Status', 0);
+        $data['academic_status'] = Arr::prepend($academicStatus, 'Select Status', 0);
 
         $studentBatch = StudentBatch::select('id', 'title')->Active()->pluck('title', 'id')->toArray();
-        $data['batch'] = array_prepend($studentBatch, 'Select Batch', 0);
+        $data['batch'] = Arr::prepend($studentBatch, 'Select Batch', 0);
 
         $data['academicInfo'] = $data['row']->academicInfo()->orderBy('sorting_order', 'asc')->get();
         $data['academicInfo-html'] = view($this->view_path . '.registration.includes.forms.academic_tr_edit', [
@@ -938,7 +940,7 @@ class HomeController extends CollegeBaseController
         $examSchedule = ExamSchedule::where($whereCondition)
             ->get();
 
-        $exam_schedule_id = array_pluck($examSchedule, 'id');
+        $exam_schedule_id = $examSchedule->pluck('id')->all();
 
         $data['subjects'] = ExamSchedule::select('exam_schedules.id', 'exam_schedules.subjects_id',
             'exam_schedules.date', 'exam_schedules.start_time', 'exam_schedules.end_time',
@@ -1003,6 +1005,7 @@ class HomeController extends CollegeBaseController
 
     public function examScore(Request $request, $year = null, $month = null, $exam = null, $faculty = null, $semester = null, $userid = null)
     {
+        \Log::info('admin-score requested', ['year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $userid]);
 
         if($userid == null){
             $id = auth()->user()->hook_id;
@@ -1068,11 +1071,20 @@ class HomeController extends CollegeBaseController
             ->get();
 
         if ($examSchedule->count() == 0) {
-            return back()->with($this->message_warning, 'Result not published Yet. Please be patient.');
+            $msg = 'Result not published Yet. Please be patient. (No published exam schedule for year=' . $year . ', month=' . $month . ', exam=' . $exam . ', faculty=' . $faculty . ', semester=' . $semester . ')';
+            \Log::warning('admin-score redirect: No published exam schedule', [
+                'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $id
+            ]);
+            return redirect()->route('student.view', ['id' => $id])
+                ->with($this->message_warning, $msg)
+                ->with('message', $msg)
+                ->with('alert', $msg);
         }
 
-
-
+        // When student/parent views (no userid), check if exam result is enabled for them
+        if ($userid === null && !StudentExamAccess::isVisible($id, $year, $month, $exam, $faculty, $semester)) {
+            return view(parent::loadDataToView($this->view_path . '.exam.pay-fee-required'));
+        }
 
 
 
@@ -1089,7 +1101,7 @@ class HomeController extends CollegeBaseController
 
 
 
-        $exam_schedule_id = array_pluck($examSchedule, 'id');
+        $exam_schedule_id = $examSchedule->pluck('id')->all();
         $semester = Semester::find($semester);
         $students = Student::select('id', 'reg_no', 'first_name', 'middle_name', 'last_name', 'date_of_birth',
             'faculty', 'semester')
@@ -1111,7 +1123,7 @@ class HomeController extends CollegeBaseController
                     ->first();
 
                 if (!$joinSub) {
-                    return back();
+                    return false;
                 }
 
                 $subject->subjects_id = $joinSub->subjects_id;
@@ -1198,36 +1210,36 @@ class HomeController extends CollegeBaseController
 
             /*calculate GPA*/
             /*calculate total mark & percentage*/
-            $gp_collection = array_pluck($value->subjects, 'grade_point');
+            $gp_collection = $value->subjects->pluck('grade_point')->all();
 
-            $filtered_gp_collection = array_where($gp_collection, function ($value, $key) {
+            $filtered_gp_collection = array_filter($gp_collection, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
 
-            $gradePoint = array_sum($filtered_gp_collection); // / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection);
             $value->gpa_point = number_format((float) $gradePoint, 2);
 
-            if ($gradePoint == 0) {
-
-                return back();
+            $subjectCount = $value->subjects->count();
+            if ($subjectCount == 0) {
+                return false;
             }
 
-            $gradePoint = array_sum($filtered_gp_collection) / $subject->count();
+            $gradePoint = array_sum($filtered_gp_collection) / $subjectCount;
             $value->average_point = number_format((float) $gradePoint, 2);
 
             /*calculate total mark & percentage*/
-            $otm = array_pluck($value->subjects, 'obtain_mark_theory');
+            $otm = $value->subjects->pluck('obtain_mark_theory')->all();
 
 
-            $filtered_otm = array_where($otm, function ($value, $key) {
+            $filtered_otm = array_filter($otm, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkTh = array_sum($filtered_otm);
 
-            $omp = array_pluck($value->subjects, 'obtain_mark_practical');
-            $filtered_otp = array_where($omp, function ($value, $key) {
+            $omp = $value->subjects->pluck('obtain_mark_practical')->all();
+            $filtered_otp = array_filter($omp, function ($value, $key) {
                 return is_numeric($value);
-            });
+            }, ARRAY_FILTER_USE_BOTH);
             $obtainedMarkPr = array_sum($filtered_otp);
 
             $totalMark = $value->subjects->sum('full_mark_theory') + $value->subjects->sum('full_mark_practical');
@@ -1237,7 +1249,7 @@ class HomeController extends CollegeBaseController
             $value->total_mark_practical = $obtainedMarkPr;
             $value->total_obtain = $obtainedMark;
             /*Calculate percentage*/
-            $value->percentage = $percentage = ($obtainedMark * 100) / $totalMark;
+            $value->percentage = $percentage = $totalMark > 0 ? ($obtainedMark * 100) / $totalMark : 0;
 
             $value->gpa_average = $this->getGrade($semester, $percentage);
             $value->remark = $this->getRemark($semester, $percentage);
@@ -1246,6 +1258,17 @@ class HomeController extends CollegeBaseController
             return $value;
 
         });
+
+        if ($filteredStudent->isEmpty()) {
+            $msg = 'No result data found for this exam. The result may not be published yet or no marks have been entered.';
+            \Log::warning('admin-score redirect: filteredStudent empty', [
+                'year' => $year, 'month' => $month, 'exam' => $exam, 'faculty' => $faculty, 'semester' => $semester, 'userid' => $id
+            ]);
+            return redirect()->route('student.view', ['id' => $id])
+                ->with($this->message_warning, $msg)
+                ->with('message', $msg)
+                ->with('alert', $msg);
+        }
 
         $get_student_reg_id = $reg_id;
 
@@ -1277,7 +1300,6 @@ class HomeController extends CollegeBaseController
 
         if ($total_count == 0) {
             $totalmarks = 0;
-            $total_count = 0;
         }
 
         //dd($class, $term);
@@ -1287,7 +1309,7 @@ class HomeController extends CollegeBaseController
 //        $resumption_day = Setting::where('id', 1)->first()->resumption_day;
 //
 
-        $average = number_format($totalmarks / $total_count, 2);
+        $average = $total_count > 0 ? number_format($totalmarks / $total_count, 2) : 0;
         $get_student_reg_id = $reg_id;
         $student_image = Student::where('reg_no', $reg_id)->first()->student_image;
         //$student_image  = ExamMarkLedger::where('students_id', $get_student_id)

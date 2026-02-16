@@ -69,7 +69,7 @@ class SalaryPayController extends CollegeBaseController
 
         //for fee add modal data
         $pHead = PayrollHead::select('id', 'title')->Active()->pluck('title','id')->toArray();
-        $data['payroll_head'] = array_prepend($pHead,'Select Fee Head',0);
+        $data['payroll_head'] = \Illuminate\Support\Arr::prepend($pHead, 'Select Fee Head', 0);
 
 
         $data['url'] = URL::current();

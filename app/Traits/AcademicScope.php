@@ -5,6 +5,7 @@ use App\Models\AttendanceStatus;
 use App\Models\GradingType;
 use App\Models\StudentStatus;
 use App\Models\Subject;
+use Illuminate\Support\Arr;
 
 trait AcademicScope{
 
@@ -61,7 +62,7 @@ trait AcademicScope{
     public function allSubjectsList()
     {
         $subjects = Subject::Active()->orderBy('title')->pluck('title','id')->toArray();
-        return array_prepend($subjects,'Select Subject','0');
+        return Arr::prepend($subjects, 'Select Subject', '0');
     }
 
 }

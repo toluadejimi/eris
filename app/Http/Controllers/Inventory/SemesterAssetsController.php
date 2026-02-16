@@ -57,7 +57,7 @@ class SemesterAssetsController extends CollegeBaseController
 
         $data['faculties'] = $this->activeFaculties();
         $assets = Assets::Active()->orderBy('title')->pluck('title','id')->toArray();
-        $data['assets'] = array_prepend($assets,'Select Assets','0');
+        $data['assets'] = \Illuminate\Support\Arr::prepend($assets, 'Select Assets', '0');
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
 

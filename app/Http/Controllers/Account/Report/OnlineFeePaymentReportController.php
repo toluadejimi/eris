@@ -100,7 +100,7 @@ class OnlineFeePaymentReportController extends CollegeBaseController
         $data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $gateway = OnlinePayment::get()->pluck('payment_gateway','payment_gateway')->toArray();
-        $data['payment_gateway'] = array_prepend($gateway,'Select Gateway','');
+        $data['payment_gateway'] = \Illuminate\Support\Arr::prepend($gateway, 'Select Gateway', '');
 
         $data['url'] = URL::current();
         $data['filter_query'] = $this->filter_query;
@@ -254,7 +254,7 @@ class OnlineFeePaymentReportController extends CollegeBaseController
         $data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $method = FeeCollection::pluck('payment_mode','payment_mode')->unique()->toArray();
-        $methods = array_prepend($method,'','');
+        $methods = \Illuminate\Support\Arr::prepend($method, '', '');
         $data['payment_method'] = $methods;
 
         $data['fee_heads'] = $this->activeFeeHead();

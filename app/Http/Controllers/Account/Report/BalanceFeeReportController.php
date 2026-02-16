@@ -250,7 +250,7 @@ class BalanceFeeReportController extends CollegeBaseController
         $data['academic_status'] = $this->activeStudentAcademicStatus();
 
         $method = FeeCollection::pluck('payment_mode','payment_mode')->unique()->toArray();
-        $methods = array_prepend($method,'','');
+        $methods = \Illuminate\Support\Arr::prepend($method, '', '');
         $data['payment_method'] = $methods;
 
         $data['fee_heads'] = $this->activeFeeHead();

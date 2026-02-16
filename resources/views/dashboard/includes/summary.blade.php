@@ -5,7 +5,7 @@
     <div class="widget-header widget-header-flat">
         <h4 class="widget-title lighter">
             <i class="ace-icon fa fa-star orange"></i>
-            Overal Summary
+            Overall Summary
         </h4>
 
         <div class="widget-toolbar">

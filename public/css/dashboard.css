@@ -1,84 +1,264 @@
-/*
-.transparent>.widget-header>.widget-toolbar>.nav-tabs>li>a {
-    color: #ffffff;
+/**
+ * Admin Dashboard - Modern Professional Style
+ * ERIS Education Management
+ */
+
+/* Dashboard page layout */
+.admin-dashboard .page-header {
+  margin-bottom: 24px;
 }
 
-.transparent>.widget-header>.widget-toolbar>.nav-tabs>li.active>a {
-    background: azure;
-    border-top-color: red;
-    color: red;
+.admin-dashboard .page-content {
+  padding-top: 8px;
 }
 
-!*widget header color*!
-  .widget-box.transparent>.widget-header {
-      color: #4383B4;
+/* ===== STAT CARDS (Quick Links) ===== */
+.admin-dashboard .dash-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04) !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+  padding: 24px 16px !important;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none !important;
+  overflow: hidden;
+}
+
+.admin-dashboard .dash-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06) !important;
+}
+
+.admin-dashboard .dash-card .card-block {
+  padding: 0 !important;
+  text-align: center;
+  width: 100%;
+}
+
+.admin-dashboard .dash-card .card-title {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin: 0 0 8px 0 !important;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.admin-dashboard .dash-card .card-text {
+  font-size: 0.95rem !important;
+  color: rgba(255,255,255,.95) !important;
+  margin: 0 !important;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.admin-dashboard .dash-card .card-text i {
+  margin-right: 6px;
+  opacity: 0.9;
+}
+
+/* Card color variants - cleaner, modern palette */
+.admin-dashboard .dash-card.card-softred {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-sky {
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-green {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-yellow {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-red {
+  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-blue {
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%) !important;
+}
+
+.admin-dashboard .dash-card.card-purple {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%) !important;
+}
+
+/* Stat cards row spacing */
+.admin-dashboard .dash-card + .dash-card,
+.admin-dashboard .row > [class*="col-"] + [class*="col-"] .dash-card {
+  margin-top: 0;
+}
+
+.admin-dashboard .page-header .row > [class*="col-"] {
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .admin-dashboard .page-header .row > [class*="col-"] {
+    margin-bottom: 20px;
   }
-
-.widget-header>.widget-title {
-    line-height: 36px;
-    padding: 1px 29px;
-    margin: -5px 0px 0px 0px;
-    color: #fd2626;
-    font-size: 14px;
-    font-weight: 600;
-    background: white;
-    display: inline-block;
-    border: 2px solid red;
-}
-*/
-
-/*Dashboard Card*/
-.dash-card{
-    /*border-radius: 25px 0px 25px 0px;*/
-    border-radius: 3px;
-    box-shadow: 2px 4px 7px;
-}
-.dash-card.card-blue {
-    background: #3e5f98;
 }
 
-.dash-card.card-yellow {
-    background: #c17707;
-}
-.dash-card.card-green {
-    background: #38883e;
-}
-.dash-card.card-red {
-    background: #fc4349;
-}
-
-.dash-card.card-softred {
-    background: #FF3D67;
+/* ===== WIDGET BOXES (Account, Library, Attendance, Birthday) ===== */
+.admin-dashboard .widget-box.transparent {
+  background: #fff !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06) !important;
+  margin-bottom: 24px !important;
+  overflow: hidden;
 }
 
-.dash-card.card-sky {
-    background: #0b7594;
-}
-.dash-card.card-purple {
-    background: #59045a;
-}
-
-.card-block {
-    padding: 5px 5px 5px 5px !important;
-    text-align: center;
-}
-.dash-card.card-title {
-    font-size: 28px !important;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    color: #fff;
-    margin: 5px 0 0;
-}
-.dash-card.card-text {
-    font-size: 18px !important;
-    color: #fff;
-    margin: 0;
+.admin-dashboard .widget-box .widget-header {
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 16px 20px !important;
 }
 
-.easy-link-menu{
-    text-decoration: none !important;
+.admin-dashboard .widget-box .widget-title {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
 }
 
-.dash-card.easy-link-menu a{
-    line-height: 30px;
+.admin-dashboard .widget-box .widget-title i {
+  margin-right: 8px;
+  color: #0f766e;
+}
+
+.admin-dashboard .widget-box .widget-body {
+  background: #fff !important;
+}
+
+.admin-dashboard .widget-box .widget-main {
+  padding: 20px !important;
+}
+
+.admin-dashboard .widget-box .nav-tabs {
+  border-bottom: none !important;
+}
+
+.admin-dashboard .widget-box .nav-tabs > li > a {
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+}
+
+.admin-dashboard .widget-box .nav-tabs > li > a:hover {
+  background: rgba(15, 118, 110, 0.08) !important;
+  color: #0f766e !important;
+}
+
+.admin-dashboard .widget-box .nav-tabs > li.active > a {
+  background: rgba(15, 118, 110, 0.12) !important;
+  color: #0f766e !important;
+  border: none !important;
+}
+
+.admin-dashboard .widget-box .tab-content {
+  padding: 16px 0 0 0 !important;
+}
+
+/* Tables inside widgets */
+.admin-dashboard .widget-box .table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-dashboard .widget-box .table > thead > tr > th {
+  background: #f8fafc !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* ===== SUMMARY SIDEBAR ===== */
+.admin-dashboard .widget-box.transparent #recent-box {
+  box-shadow: none;
+}
+
+.admin-dashboard .col-sm-3 .widget-box.transparent {
+  margin-bottom: 20px;
+}
+
+.admin-dashboard .col-sm-3 .widget-box .widget-header {
+  padding: 14px 16px !important;
+}
+
+.admin-dashboard .col-sm-3 .widget-header-flat .widget-title {
+  font-size: 1rem !important;
+}
+
+.admin-dashboard .col-sm-3 .table {
+  font-size: 0.9rem;
+}
+
+.admin-dashboard .col-sm-3 .table td {
+  padding: 10px 12px !important;
+}
+
+.admin-dashboard .col-sm-3 hr.hr-double {
+  margin: 16px 0 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* ===== INFOBOX (Fee/Salary) ===== */
+.admin-dashboard .infobox {
+  border-radius: 12px !important;
+  padding: 20px !important;
+  margin: 0 8px 12px 0 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1) !important;
+  border: none !important;
+  transition: transform 0.2s ease;
+}
+
+.admin-dashboard .infobox:hover {
+  transform: translateY(-2px);
+}
+
+.admin-dashboard .infobox-data .infobox-content {
+  font-weight: 600 !important;
+}
+
+.admin-dashboard .infobox-blue {
+  background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
+}
+
+.admin-dashboard .infobox-orange {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%) !important;
+}
+
+/* ===== CHARTS SECTION ===== */
+.admin-dashboard .row > .col-md-10 > div,
+.admin-dashboard .row > .col-md-2 > div,
+.admin-dashboard .row > .col-md-12 > div {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+/* ===== NOTICE / ALERT ===== */
+.admin-dashboard .alert-block.alert-success {
+  border-radius: 10px !important;
+  border: 1px solid rgba(5, 150, 105, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06) !important;
+}
+
+/* Easy link fix */
+.admin-dashboard .easy-link-menu {
+  text-decoration: none !important;
+  display: block;
+}
+
+.admin-dashboard .easy-link-menu:hover .dash-card {
+  text-decoration: none !important;
 }

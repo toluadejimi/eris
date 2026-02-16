@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />
     @endsection
 @section('content')
-    <div class="main-content">
+    <div class="main-content admin-dashboard">
         <div class="main-content-inner">
             <div class="page-content">
                 @include('layouts.includes.template_setting')

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExamMarkLedger;
+use App\Models\GeneralSetting;
+use App\Models\Month;
 use App\Models\ParentDetail;
 use App\Models\Setting;
 use App\Models\Student;
 use App\Models\StudentExamAccess;
+use App\Models\Year;
 use App\Vacation;
 use Illuminate\Http\Request;
 
@@ -87,7 +90,7 @@ class AdjustResultController extends Controller
     public function delete_vacation(request $request)
     {
         Vacation::where('id', $request->id)->delete();
-        return back()->with('message', 'Vacation Date deleted successfully');
+        return back()->with('message_success', 'Vacation record deleted.');
 
     }
 
@@ -101,17 +104,18 @@ class AdjustResultController extends Controller
         $vac->resumption_day = $request->resumption_day;
         $vac->save();
 
-        return back()->with('message', 'Vacation Date updated successfully');
+        return back()->with('message_success', 'Vacation date saved successfully.');
 
     }
 
     public function index_vacation(request $request)
     {
-
-        $data['vacations'] = Vacation::all();
+        $data['vacations'] = Vacation::orderBy('session', 'desc')->orderBy('month')->get();
+        $data['years'] = Year::orderBy('id', 'desc')->get();
+        $data['months'] = Month::all();
+        $data['panel'] = 'Vacation / Resumption';
+        $data['generalSetting'] = GeneralSetting::first();
         return view('vacation', $data);
-
-
     }
 
 

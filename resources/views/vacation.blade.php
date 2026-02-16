@@ -1,189 +1,151 @@
-@php use App\Models\Month;use App\Models\Year; @endphp
-        <!DOCTYPE html>
-<html lang="en">
+@extends('layouts.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+@section('content')
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="page-content">
+            <div class="page-header">
+                <h1>
+                    Vacation / Resumption
+                    <small><i class="ace-icon fa fa-angle-double-right"></i> Set term break dates for report cards</small>
+                </h1>
+            </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-
-</head>
-
-
-<div class="container">
-
-
-    <h5 class="my-5"></h5>
-
-    <div class="row">
-        <form action="set-vacation" method="post">
-            @csrf
-
-            <a href="/" class="btn btn-primary my-5 btn-sm">Dashboard</a>
-
-
-            <div class="row">
-
-
-
-                <div class="col">
-                    <label>Year</label>
-                    @php $years = \App\Models\Year::orderBy('id', 'desc')->get(); @endphp
-                    @php $months = Month::all(); @endphp
-                    <select name="year" class="form-control my-2" required>
-                        <option value="">Select Year</option>
-                        @foreach($years as $y)
-                            <option value="{{ $y->title }}">{{ $y->title }}</option>
+            @include('includes.flash_messages')
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
                         @endforeach
-                    </select>
+                    </ul>
                 </div>
-                <div class="col">
-                    <label>Month</label>
-                    <select name="month" class="form-control my-2" required>
-                        <option value="">Select Month</option>
-                        @foreach($months as $m)
-                            <option value="{{ $m->title }}">{{ $m->title }}</option>
-                        @endforeach
-                    </select>
+            @endif
+
+            {{-- Add Vacation Form --}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <i class="ace-icon fa fa-calendar-plus-o bigger-110"></i>
+                        Add vacation &amp; resumption dates
+                    </h4>
                 </div>
-                <div class="col">
-                    <label>Vacation Day</label>
-                    <input name="vacation_day" class="form-control my-2" type="text" value="">
-                </div>
-
-                <div class="col">
-                    <label>Resumption Day</label>
-                    <input name="resumption_day" class="form-control my-2" type="text" value="">
-                </div>
-            </div>
-
-
-            <button type="submit" class="btn btn-success">Update</button>
-
-
-        </form>
-    </div>
-
-    <hr class="my-3">
-
-
-    <div class="mt-4">
-
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
-        @endif
-        @if (session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session()->get('error') }}
-            </div>
-        @endif
-
-
-        <table class="table responsive">
-
-
-            <thead>
-
-            <tr>
-
-                <th>Year</th>
-                <th>Month</th>
-                <th>Vacation Day</th>
-                <th>Resumption Day</th>
-                <th>Action</th>
-
-
-            </tr>
-
-            </thead>
-
-            <tbody id="myTable">
-
-            @foreach($vacations as $user)
-
-                <tr>
-
-
-                    <td>
-
-                        {{$user->session}}
-
-
-                    </td>
-
-
-                    <td>
-
-                        {{$user->month}}
-
-                    </td>
-
-                    <td>
-
-                        {{$user->vacation_day}}
-
-                    </td>
-
-                    <td>
-                        {{$user->resumption_day}}
-                    </td>
-
-
-                    <td>
-                        <div class="col-lg-12">
-                            <form method="POST" action="{{ url('delete-vacation') }}?id={{ $user->id }}">
-                                @csrf
-                                @method('POST')
-
-                                <button type="submit" class="btn btn-danger btn-sm mt-2">Delete</button>
-                            </form>
+                <div class="panel-body">
+                    <form action="{{ url('set-vacation') }}" method="post" class="form-horizontal">
+                        @csrf
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Academic Year</label>
+                            <div class="col-sm-3">
+                                <select name="year" class="form-control" required>
+                                    <option value="">Select Year</option>
+                                    @foreach($years as $y)
+                                        <option value="{{ $y->title }}">{{ $y->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </td>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Month / Term</label>
+                            <div class="col-sm-3">
+                                <select name="month" class="form-control" required>
+                                    <option value="">Select Month</option>
+                                    @foreach($months as $m)
+                                        <option value="{{ $m->title }}">{{ $m->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Vacation Day</label>
+                            <div class="col-sm-3">
+                                <input name="vacation_day" type="text" class="form-control" placeholder="e.g. 15th July 2025" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Resumption Day</label>
+                            <div class="col-sm-3">
+                                <input name="resumption_day" type="text" class="form-control" placeholder="e.g. 8th September 2025" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-3">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-
-                </tr>
-
-            @endforeach
-
-            </tbody>
-
-        </table>
-
+            {{-- Existing Vacations Table --}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                        <i class="ace-icon fa fa-list bigger-110"></i>
+                        Scheduled vacations
+                    </span>
+                    @if(!$vacations->isEmpty())
+                    <span class="pull-right">
+                        <input type="text" id="vacation-search" class="input-sm" placeholder="Search..." style="width: 180px; padding: 5px 10px;">
+                    </span>
+                    @endif
+                </div>
+                <div class="panel-body">
+                    @if($vacations->isEmpty())
+                        <p class="text-muted">No vacation dates set yet. Add one above.</p>
+                    @else
+                        <table class="table table-striped table-bordered table-hover" id="vacation-table">
+                            <thead>
+                                <tr>
+                                    <th>Academic Year</th>
+                                    <th>Month / Term</th>
+                                    <th>Vacation Day</th>
+                                    <th>Resumption Day</th>
+                                    <th width="100" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($vacations as $vac)
+                                    <tr>
+                                        <td>{{ $vac->session }}</td>
+                                        <td>{{ $vac->month }}</td>
+                                        <td>{{ $vac->vacation_day }}</td>
+                                        <td>{{ $vac->resumption_day }}</td>
+                                        <td class="text-center">
+                                            <form method="POST" action="{{ url('delete-vacation') }}?id={{ $vac->id }}" style="display:inline;" onsubmit="return confirm('Delete this vacation record?');">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Delete">
+                                                    <i class="ace-icon fa fa-trash-o"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </div>
 
-</body>
+@endsection
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+@section('js')
 <script>
-    $(document).ready(function () {
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+$(document).ready(function() {
+    $("#vacation-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        var $rows = $("#vacation-table tbody tr");
+        if ($rows.length) {
+            $rows.filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
-        });
+        }
     });
+});
 </script>
-
-
-</html>
+@endsection

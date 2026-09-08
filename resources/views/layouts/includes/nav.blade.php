@@ -6,7 +6,7 @@
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     @if(isset($generalSetting->institute))
                         {{$generalSetting->institute}}
-                    <strong class="text-capitalize orange2"> IMS </strong>
+                    <strong class="text-capitalize orange2"> | Session {{ ViewHelper::getActiveYear() }} </strong>
                     @else
                         UNLIMITED Edu Firm
                     @endif

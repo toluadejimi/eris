@@ -4,7 +4,7 @@
 
             @php
                 use App\Models\Year;
-                $current_session = Year::where('status', 1)->first();
+                $current_session = Year::where('active_status', 1)->first();
             @endphp
 
 
@@ -13,7 +13,7 @@
                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                     @if(isset($generalSetting->institute))
                         {{$generalSetting->institute}}
-                    <strong class="text-capitalize orange2"> | Session {{ $current_session->title }} </strong>
+                    <strong class="text-capitalize orange2"> | Session {{ $current_session->title ?? "" }} </strong>
                     @else
                         ERIS IMS
                     @endif

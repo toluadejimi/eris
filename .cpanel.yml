@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - echo "ERIS portal deployment"
+    - /usr/local/bin/php /home/eriscomn/portal.eris.com.ng/artisan view:clear || true
+    - /usr/local/bin/php /home/eriscomn/portal.eris.com.ng/artisan cache:clear || true
